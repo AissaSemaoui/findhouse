@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Form from "../../login/Form";
 
 const LoginSignup = () => {

@@ -35,7 +35,7 @@ const SidebarMenu = () => {
 
   const handleSignOut = () =>
     signOutUser()
-      .then((res) => console.log(res))
+      .then((res) => route.replace("/"))
       .catch((err) => console.log(err));
 
   return (

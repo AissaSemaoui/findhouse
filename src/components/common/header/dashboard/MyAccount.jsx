@@ -14,7 +14,7 @@ const MyAccount = ({ user }) => {
 
   const handleSignOut = () => {
     signOutUser()
-      .then((res) => console.log("signed out successfully"))
+      .then((res) => route.replace("/"))
       .catch((err) => console.log(err));
   };
 

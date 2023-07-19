@@ -359,7 +359,7 @@ const HeaderMenuContent = ({ float = "" }) => {
             <span className="dn-1199 ms-1">{user?.name}</span>
           </a>
           <div className="dropdown-menu">
-            <MyAccount />
+            <MyAccount user={user} />
           </div>
         </div>
       </li>

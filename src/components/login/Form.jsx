@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { signInWithCredentials, signInWithGoogle } from "../../utils/auth";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Form = () => {
   const [userInfo, setUserInfo] = useState({
@@ -9,8 +10,11 @@ const Form = () => {
   });
   const [error, setError] = useState("");
 
+  const route = useRouter();
+
   const onSuccessSignIn = (res) => {
-    if (!res.ok) setError("Email or Password is wrong, Please try again!");
+    if (res.ok) route.replace("/");
+    else setError("Email or Password is wrong, Please try again!");
   };
   const onFailedSignIn = (err) =>
     setError("Something wrong, Please try again!");

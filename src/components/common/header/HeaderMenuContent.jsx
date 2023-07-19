@@ -310,7 +310,7 @@ const HeaderMenuContent = ({ float = "" }) => {
             data-bs-toggle="modal"
             data-bs-target=".bd-example-modal-lg"
           >
-            <span className="dn-lg">Login/Register</span>
+            <span className="dn-lg">Login</span>
           </a>
         </li>
       )}
