@@ -1,7 +1,10 @@
-import Link from 'next/link';
-import MobileMenuContent from './MobileMenuContent';
+import Link from "next/link";
+import MobileMenuContent from "./MobileMenuContent";
+import { useSelector } from "react-redux";
 
 const MobileMenu = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   return (
     // <!-- Main Header Nav For Mobile -->
     <div className="stylehome1 h0 mega-menu-wrapper">
@@ -18,13 +21,23 @@ const MobileMenu = () => {
           {/* main_logo_home2 */}
 
           <ul className="menu_bar_home2">
-            <li className="list-inline-item list_s">
-              <Link href="/login">
-                <a>
-                  <span className="flaticon-user"></span>
-                </a>
-              </Link>
-            </li>
+            {isAuthenticated ? (
+              <li className="list-inline-item list_s">
+                <Link href="/my-dashboard">
+                  <a>
+                    <span className="">Dashboard</span>
+                  </a>
+                </Link>
+              </li>
+            ) : (
+              <li className="list-inline-item list_s">
+                <Link href="/login">
+                  <a>
+                    <span className="flaticon-login"> </span>
+                  </a>
+                </Link>
+              </li>
+            )}
             <li
               className="list-inline-item"
               data-bs-toggle="offcanvas"

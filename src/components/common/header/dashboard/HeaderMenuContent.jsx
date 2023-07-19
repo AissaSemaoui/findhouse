@@ -352,7 +352,7 @@ const HeaderMenuContent = ({ float = "" }) => {
         <div className="dropdown">
           <a className="btn dropdown-toggle" href="#" data-bs-toggle="dropdown">
             <img
-              className="rounded-circle"
+              className="rounded-circle avatar-img"
               src={user?.image}
               alt="admin avatar"
             />

@@ -1,4 +1,4 @@
-import 'react-pro-sidebar/dist/css/styles.css';
+import "react-pro-sidebar/dist/css/styles.css";
 import {
   ProSidebar,
   SidebarHeader,
@@ -7,9 +7,10 @@ import {
   MenuItem,
   SubMenu,
   SidebarContent,
-} from 'react-pro-sidebar';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+} from "react-pro-sidebar";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const home = [
   // {
@@ -32,7 +33,7 @@ const home = [
   //   name: "Home 5",
   //   routerPath: "/home-5",
   // },
-  { name: 'Acasa', routerPath: '/' },
+  { name: "Acasa", routerPath: "/" },
   // {
   //   name: "Home 7",
   //   routerPath: "/home-7",
@@ -54,11 +55,11 @@ const home = [
 const listing = [
   {
     id: 1,
-    title: 'Listing Grid',
+    title: "Listing Grid",
     items: [
       {
-        name: 'Chirie/Vanzare',
-        routerPath: '/listing-grid-v3',
+        name: "Chirie/Vanzare",
+        routerPath: "/listing-grid-v3",
         // },
         // {
         //   name: 'Grid v2',
@@ -183,11 +184,11 @@ const listing = [
 const property = [
   {
     id: 1,
-    title: 'User Admin',
+    title: "User Admin",
     items: [
       {
-        name: 'Dashboard',
-        routerPath: '/my-dashboard',
+        name: "Dashboard",
+        routerPath: "/my-dashboard",
       },
       //     {
       //        name: 'My Properties',
@@ -225,7 +226,7 @@ const property = [
   },
   {
     id: 2,
-    title: 'Listing Single',
+    title: "Listing Single",
     items: [
       //     {
       //       name: 'Single V1',
@@ -236,8 +237,8 @@ const property = [
       //       routerPath: '/listing-details-v2',
       //     },
       {
-        name: 'Single V3',
-        routerPath: '/listing-details-v3',
+        name: "Single V3",
+        routerPath: "/listing-details-v3",
       },
       //     {
       //       name: 'Single V4',
@@ -248,7 +249,7 @@ const property = [
 ];
 
 const blog = [
-  { id: 1, name: 'Blog List 1', routerPath: '/blog-list-1' },
+  { id: 1, name: "Blog List 1", routerPath: "/blog-list-1" },
   // { id: 2, name: "Blog List 2", routerPath: "/blog-list-2" },
   // { id: 3, name: "Blog List 3", routerPath: "/blog-list-3" },
   // {
@@ -260,8 +261,8 @@ const blog = [
 
 const pages = [
   {
-    name: 'Despre Noi',
-    routerPath: '/about-us',
+    name: "Despre Noi",
+    routerPath: "/about-us",
   },
   // {
   //   name: 'Gallery',
@@ -297,7 +298,9 @@ const pages = [
 ];
 
 const MobileMenuContent = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const route = useRouter();
+
   return (
     <ProSidebar>
       <SidebarHeader>
@@ -334,7 +337,7 @@ const MobileMenuContent = () => {
               <Link href={val.routerPath}>
                 <a
                   className={
-                    val.routerPath === route.pathname ? 'ui-active' : undefined
+                    val.routerPath === route.pathname ? "ui-active" : undefined
                   }
                 >
                   {val.name}
@@ -350,7 +353,7 @@ const MobileMenuContent = () => {
               <Link href={val.routerPath}>
                 <a
                   className={
-                    route.pathname === val.routerPath ? 'ui-active' : undefined
+                    route.pathname === val.routerPath ? "ui-active" : undefined
                   }
                 >
                   {val.name}
@@ -446,7 +449,7 @@ const MobileMenuContent = () => {
               <Link href={val.routerPath}>
                 <a
                   className={
-                    route.pathname === val.routerPath ? 'ui-active' : undefined
+                    route.pathname === val.routerPath ? "ui-active" : undefined
                   }
                 >
                   {val.name}
@@ -460,7 +463,7 @@ const MobileMenuContent = () => {
             <Link href="/contact">
               <a
                 className={
-                  route.pathname === '/contact' ? 'ui-active' : undefined
+                  route.pathname === "/contact" ? "ui-active" : undefined
                 }
               >
                 Contacte
@@ -469,15 +472,23 @@ const MobileMenuContent = () => {
           </MenuItem>
 
           <MenuItem>
-            <Link href="/login">
-              <a
-                className={
-                  route.pathname === '/login' ? 'ui-active' : undefined
-                }
-              >
-                <span className="flaticon-user"></span> Login
-              </a>
-            </Link>
+            {isAuthenticated ? (
+              <Link href="/my-dashboard">
+                <a>
+                  <span>Dashboard</span>
+                </a>
+              </Link>
+            ) : (
+              <Link href="/login">
+                <a
+                  className={
+                    route.pathname === "/login" ? "ui-active" : undefined
+                  }
+                >
+                  <span className="flaticon-user"></span> Login
+                </a>
+              </Link>
+            )}
           </MenuItem>
 
           {/* <MenuItem>

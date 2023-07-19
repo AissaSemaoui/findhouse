@@ -30,9 +30,7 @@ const Form = () => {
   };
 
   const handleGoogleSignIn = () => {
-    signInWithGoogle("google", { callbackUrl: "/" })
-      .then(onSuccessSignIn)
-      .catch(onFailedSignIn);
+    signInWithGoogle("google", { callbackUrl: "/" }).catch(onFailedSignIn);
   };
 
   useEffect(() => setError(""), [userInfo]);

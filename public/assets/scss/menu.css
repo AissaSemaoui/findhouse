@@ -132,7 +132,7 @@ header.stylehome1.home4 a {
 }
 .menu_bar_home2 li.list-inline-item:first-child {
   position: absolute;
-  right: 60px;
+  right: 100px;
   top: -15px;
 }
 .menu_bar_home2 li.list-inline-item:first-child a::before {
@@ -182,6 +182,13 @@ header.stylehome1.home4 a {
   --mm-color-background-emphasis: rgba(255, 255, 255, 0.4);
   --mm-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
+
+.avatar-img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+}
+
 .mm-hidden {
   display: none !important;
 }
@@ -599,7 +606,9 @@ header.stylehome1.home4 a {
   min-height: 20px;
   min-height: var(--mm-line-height);
   padding: 6.5px;
-  padding: calc(((var(--mm-listitem-size) * 0.75) - var(--mm-line-height)) * 0.5);
+  padding: calc(
+    ((var(--mm-listitem-size) * 0.75) - var(--mm-line-height)) * 0.5
+  );
   padding-right: 10px;
   padding-left: 20px;
 }
@@ -717,9 +726,21 @@ header.stylehome1.home4 a {
 /* Small devices (min-width: 576px) (max-width: 767.98px) // (landscape phones, less than 992px) */
 @media only screen and (max-width: 992px) {
   .header.stylehome1.dashbord_pages:before {
-    background-image: -moz-linear-gradient(0deg, rgb(52, 82, 255) 0%, rgb(255, 16, 83) 100%);
-    background-image: -webkit-linear-gradient(0deg, rgb(52, 82, 255) 0%, rgb(255, 16, 83) 100%);
-    background-image: -ms-linear-gradient(0deg, rgb(52, 82, 255) 0%, rgb(255, 16, 83) 100%);
+    background-image: -moz-linear-gradient(
+      0deg,
+      rgb(52, 82, 255) 0%,
+      rgb(255, 16, 83) 100%
+    );
+    background-image: -webkit-linear-gradient(
+      0deg,
+      rgb(52, 82, 255) 0%,
+      rgb(255, 16, 83) 100%
+    );
+    background-image: -ms-linear-gradient(
+      0deg,
+      rgb(52, 82, 255) 0%,
+      rgb(255, 16, 83) 100%
+    );
   }
   .mobile-menu .header_user_notif.dashbord_pages_mobile_version li:first-child {
     display: inline-block !important;

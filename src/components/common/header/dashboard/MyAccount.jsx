@@ -22,9 +22,9 @@ const MyAccount = ({ user }) => {
     <>
       <div className="user_set_header">
         <img
-          className="float-start"
+          className="float-start avatar-img"
           src={user?.image || "/assets/images/team/e1.png"}
-          alt="e1.png"
+          alt="admin avatar"
         />
         <p>
           {user?.name || "sample name"} <br />
