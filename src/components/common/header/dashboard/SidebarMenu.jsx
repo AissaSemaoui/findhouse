@@ -4,6 +4,7 @@ import {
   isParentPageActive,
   isSinglePageActive,
 } from "../../../../utils/daynamicNavigation";
+import { signOutUser } from "../../../../utils/auth";
 
 const SidebarMenu = () => {
   const route = useRouter();
@@ -30,8 +31,12 @@ const SidebarMenu = () => {
       route: "/my-profile",
       icon: "flaticon-user",
     },
-    { id: 3, name: "Logout", route: "/login", icon: "flaticon-logout" },
   ];
+
+  const handleSignOut = () =>
+    signOutUser()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
   return (
     <>
@@ -197,6 +202,11 @@ const SidebarMenu = () => {
                 </Link>
               </li>
             ))}
+            <li onClick={handleSignOut} className="cursor-pointer">
+              <a>
+                <i className="flaticon-logout"></i> <span>Logout</span>
+              </a>
+            </li>
           </ul>
         </li>
       </ul>

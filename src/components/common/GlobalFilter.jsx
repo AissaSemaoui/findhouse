@@ -1,18 +1,18 @@
-import Router from 'next/router';
-import { useDispatch } from 'react-redux';
+import Router from "next/router";
+import { useDispatch } from "react-redux";
 import {
   addKeyword,
   addLocation,
-} from '../../features/properties/propertiesSlice';
-import PricingRangeSlider from './PricingRangeSlider';
-import CheckBoxFilter from './CheckBoxFilter';
-import GlobalSelectBox from './GlobalSelectBox';
+} from "../../features/properties/propertiesSlice";
+import PricingRangeSlider from "./PricingRangeSlider";
+import CheckBoxFilter from "./CheckBoxFilter";
+import GlobalSelectBox from "./GlobalSelectBox";
 
-const GlobalFilter = ({ className = '' }) => {
+const GlobalFilter = ({ className = "" }) => {
   const dispatch = useDispatch();
   // submit handler
   const submitHandler = () => {
-    Router.push('/listing-grid-v1');
+    Router.push("/listing-grid-v1");
   };
 
   return (
@@ -55,7 +55,7 @@ const GlobalFilter = ({ className = '' }) => {
               placeholder="Sector"
               onChange={(e) => dispatch(addLocation(e.target.value))}
             />
-            <label for="location">
+            <label htmlFor="location">
               <span className="flaticon-maps-and-flags"></span>
             </label>
           </div>
@@ -72,7 +72,7 @@ const GlobalFilter = ({ className = '' }) => {
               aria-expanded="false"
             >
               <span>Preț</span>
-              <label for="prncgs">
+              <label htmlFor="prncgs">
                 <span className="fa fa-angle-down"></span>
               </label>
             </div>

@@ -354,6 +354,10 @@ address {
   margin: 0 0 10px;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .ff-nunito {
   font-family: "Nunito", sans-serif;
 }
@@ -10521,7 +10525,11 @@ a.btn.btn_error {
 }
 
 .login_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 0;
+  height: 100%;
 }
 
 .login_form hr,

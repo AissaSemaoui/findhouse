@@ -1,15 +1,16 @@
-import MobileMenu from '../common/header/MobileMenu';
-import AgentsTeam from './AgentsTeam';
-import FeaturedProperties from './FeaturedProperties';
-import FindProperties from './FindProperties';
-import Header from './Header';
-import LookingItem from './LookingItem';
-import Blogs from '../common/Blogs';
-import Partners from '../common/Partners';
-import Footer from '../common/footer/Footer';
-import CopyrightFooter from '../common/footer/CopyrightFooter';
-import PopupSignInUp from '../common/PopupSignInUp';
-import Hero from './Hero';
+import MobileMenu from "../common/header/MobileMenu";
+import AgentsTeam from "./AgentsTeam";
+import FeaturedProperties from "./FeaturedProperties";
+import FindProperties from "./FindProperties";
+import Header from "./Header";
+import LookingItem from "./LookingItem";
+import Blogs from "../common/Blogs";
+import Partners from "../common/Partners";
+import Footer from "../common/footer/Footer";
+import CopyrightFooter from "../common/footer/CopyrightFooter";
+import PopupSignInUp from "../common/PopupSignInUp";
+import Hero from "./Hero";
+import { useSession } from "next-auth/react";
 
 const index = () => {
   return (
@@ -34,7 +35,7 @@ const index = () => {
               <div className="main-title mb40">
                 <h2>Featured Properties</h2>
                 <p>
-                  Handpicked properties by our team.{' '}
+                  Handpicked properties by our team.{" "}
                   <a className="float-end" href="#">
                     View All <span className="flaticon-next"></span>
                   </a>
@@ -123,7 +124,7 @@ const index = () => {
               <div className="main-title">
                 <h2>Our Agents</h2>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.{' '}
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.{" "}
                   <a className="float-end" href="#">
                     View All <span className="flaticon-next"></span>
                   </a>

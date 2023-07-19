@@ -259,5 +259,6 @@ const BlogDetailsDynamic = () => {
 };
 
 export default dynamic(() => Promise.resolve(BlogDetailsDynamic), {
+  loading: () => <h1>Loading component...</h1>,
   ssr: false,
 });

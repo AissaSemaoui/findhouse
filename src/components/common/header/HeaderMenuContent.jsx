@@ -1,7 +1,10 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
-const HeaderMenuContent = ({ float = '' }) => {
+const HeaderMenuContent = ({ float = "" }) => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const route = useRouter();
 
   const home = [
@@ -10,7 +13,7 @@ const HeaderMenuContent = ({ float = '' }) => {
     // { id: 3, name: 'Home 3', routerPath: '/home-3' },
     // { id: 4, name: 'Home 4', routerPath: '/home-4' },
     // { id: 5, name: 'Home 5', routerPath: '/home-5' },
-    { id: 6, name: 'Acasa', routerPath: '/' },
+    { id: 6, name: "Acasa", routerPath: "/" },
     // { id: 7, name: 'Home 7', routerPath: '/home-7' },
     // { id: 8, name: 'Home 8', routerPath: '/home-8' },
     // { id: 9, name: 'Home 9', routerPath: '/home-9' },
@@ -20,7 +23,7 @@ const HeaderMenuContent = ({ float = '' }) => {
   const listing = [
     {
       id: 1,
-      title: 'Listing Grid',
+      title: "Listing Grid",
       items: [
         // {
         //   name: 'Grid v1',
@@ -31,8 +34,8 @@ const HeaderMenuContent = ({ float = '' }) => {
         //   routerPath: '/listing-grid-v2',
         // },
         {
-          name: 'Chirie/Vanzare',
-          routerPath: '/listing-grid-v3',
+          name: "Chirie/Vanzare",
+          routerPath: "/listing-grid-v3",
         },
         // {
         //   name: 'Grid v4',
@@ -139,11 +142,11 @@ const HeaderMenuContent = ({ float = '' }) => {
   const property = [
     {
       id: 1,
-      title: 'User Admin',
+      title: "User Admin",
       items: [
         {
-          name: 'Dashboard',
-          routerPath: '/my-dashboard',
+          name: "Dashboard",
+          routerPath: "/my-dashboard",
         },
         // {
         //   name: 'My Properties',
@@ -181,7 +184,7 @@ const HeaderMenuContent = ({ float = '' }) => {
     },
     {
       id: 2,
-      title: 'Listing Single',
+      title: "Listing Single",
       items: [
         //     {
         //       name: 'Single V1',
@@ -192,8 +195,8 @@ const HeaderMenuContent = ({ float = '' }) => {
         //       routerPath: '/listing-details-v2',
         //     },
         {
-          name: 'Single V3',
-          routerPath: '/listing-details-v3',
+          name: "Single V3",
+          routerPath: "/listing-details-v3",
         },
         //     {
         //       name: 'Single V4',
@@ -204,7 +207,7 @@ const HeaderMenuContent = ({ float = '' }) => {
   ];
 
   const blog = [
-    { id: 1, name: 'Blog List 1', routerPath: '/blog-list-1' },
+    { id: 1, name: "Blog List 1", routerPath: "/blog-list-1" },
     // { id: 2, name: 'Blog List 2', routerPath: '/blog-list-2' },
     // { id: 3, name: 'Blog List 3', routerPath: '/blog-list-3' },
     // {
@@ -215,7 +218,7 @@ const HeaderMenuContent = ({ float = '' }) => {
   ];
 
   const pages = [
-    { id: 1, name: 'Despre Noi', routerPath: '/about-us' },
+    { id: 1, name: "Despre Noi", routerPath: "/about-us" },
     // { id: 2, name: 'Gallery', routerPath: '/gallery' },
     // { id: 3, name: 'Faq', routerPath: '/faq' },
     // { id: 4, name: 'LogIn', routerPath: '/login' },
@@ -240,7 +243,7 @@ const HeaderMenuContent = ({ float = '' }) => {
             <a
               href="#"
               className={
-                route.pathname === item.routerPath ? 'ui-active' : undefined
+                route.pathname === item.routerPath ? "ui-active" : undefined
               }
             >
               {item.name}
@@ -255,7 +258,7 @@ const HeaderMenuContent = ({ float = '' }) => {
           <Link href={val.routerPath}>
             <a
               className={
-                route.pathname === val.routerPath ? 'ui-active' : undefined
+                route.pathname === val.routerPath ? "ui-active" : undefined
               }
             >
               {val.name}
@@ -270,7 +273,7 @@ const HeaderMenuContent = ({ float = '' }) => {
           <Link href={item.routerPath}>
             <a
               className={
-                route.pathname === item.routerPath ? 'ui-active' : undefined
+                route.pathname === item.routerPath ? "ui-active" : undefined
               }
             >
               {item.name}
@@ -283,7 +286,7 @@ const HeaderMenuContent = ({ float = '' }) => {
       <li className="last">
         <Link href="/contact">
           <a
-            className={route.pathname === '/contact' ? 'ui-active' : undefined}
+            className={route.pathname === "/contact" ? "ui-active" : undefined}
           >
             Contacte
           </a>
@@ -291,16 +294,26 @@ const HeaderMenuContent = ({ float = '' }) => {
       </li>
       {/* End .dropitem */}
 
-      <li className={`list-inline-item list_s ${float}`}>
-        <a
-          href="#"
-          className="btn flaticon-user"
-          data-bs-toggle="modal"
-          data-bs-target=".bd-example-modal-lg"
-        >
-          <span className="dn-lg">Login/Register</span>
-        </a>
-      </li>
+      {isAuthenticated ? (
+        <li className={`list-inline-item list_s ${float}`}>
+          <Link href="/my-dashboard">
+            <a>
+              <span>Dashboard</span>
+            </a>
+          </Link>
+        </li>
+      ) : (
+        <li className={`list-inline-item list_s ${float}`}>
+          <a
+            href="#"
+            className="btn flaticon-user"
+            data-bs-toggle="modal"
+            data-bs-target=".bd-example-modal-lg"
+          >
+            <span className="dn-lg">Login/Register</span>
+          </a>
+        </li>
+      )}
       {/* End .dropitem */}
 
       {/* <li className={`list-inline-item add_listing ${float}`}>
