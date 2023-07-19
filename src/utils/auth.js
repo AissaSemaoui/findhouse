@@ -2,7 +2,7 @@ import { signIn, signOut } from "next-auth/react";
 
 export const signInWithCredentials = async (userInfo) => {
   return signIn("credentials", {
-    redirect: false,
+    redirect: true,
     ...userInfo,
     callbackUrl: "/",
   });
@@ -15,5 +15,5 @@ export const signInWithGoogle = async () => {
 };
 
 export const signOutUser = async () => {
-  return signOut({ redirect: false, callbackUrl: "/" });
+  return signOut({ redirect: true, callbackUrl: "/" });
 };
