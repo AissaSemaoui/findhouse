@@ -15,9 +15,16 @@ async function handleCredentialsProvider(user) {
 }
 
 async function handleGoogleProvider(user) {
-  const existingAdmin = await AdminDB.exists({
+  const existingAdmin = await AdminDB.findOne({
     email: user.email,
   });
+
+  if (existingAdmin) {
+    existingAdmin.image = user.image;
+    existingAdmin.name = user.name;
+
+    existingAdmin.save();
+  }
 
   return !!existingAdmin;
 }
