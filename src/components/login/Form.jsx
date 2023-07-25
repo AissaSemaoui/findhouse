@@ -2,6 +2,9 @@ import { useState } from "react";
 import { signInWithCredentials, signInWithGoogle } from "../../utils/auth";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { adminSchema } from "../../validations/user.validation";
 
 const Form = () => {
   const [userInfo, setUserInfo] = useState({
@@ -12,6 +15,14 @@ const Form = () => {
 
   const route = useRouter();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(adminSchema),
+  });
+
   const onSuccessSignIn = (res) => {
     if (res.ok) route.replace("/");
     else setError("Email or Password is wrong, Please try again!");
@@ -19,8 +30,7 @@ const Form = () => {
   const onFailedSignIn = (err) =>
     setError("Something wrong, Please try again!");
 
-  const handleSignIn = (event) => {
-    event.preventDefault();
+  const handleSignIn = (userInfo) => {
     signInWithCredentials({
       email: userInfo.email,
       password: userInfo.password,
@@ -37,7 +47,7 @@ const Form = () => {
 
   return (
     <div className="login_form">
-      <form onSubmit={handleSignIn}>
+      <form onSubmit={handleSubmit(handleSignIn)}>
         <div className="heading text-center">
           <h3>Login to your account</h3>
         </div>
@@ -58,17 +68,17 @@ const Form = () => {
 
         <hr />
 
-        <div className="input-group mb-2 mr-sm-2">
+        <div className="input-group mb-3 mr-sm-2">
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${errors?.email ? "is-invalid" : ""}`}
             id="inlineFormInputGroupUsername2"
             placeholder="User Name Or Email"
-            value={userInfo.email}
-            onChange={({ target }) =>
-              setUserInfo((prev) => ({ ...prev, email: target.value }))
-            }
+            {...register("email")}
           />
+          {errors?.email && (
+            <div className="invalid-feedback">{errors?.email.message}</div>
+          )}
           <div className="input-group-prepend">
             <div className="input-group-text">
               <i className="flaticon-user"></i>
@@ -77,17 +87,17 @@ const Form = () => {
         </div>
         {/* End input-group */}
 
-        <div className="input-group form-group">
+        <div className="input-group form-group mb-3">
           <input
             type="password"
-            className="form-control"
+            className={`form-control ${errors?.password ? "is-invalid" : ""}`}
             id="exampleInputPassword1"
             placeholder="Password"
-            value={userInfo.password}
-            onChange={({ target }) =>
-              setUserInfo((prev) => ({ ...prev, password: target.value }))
-            }
+            {...register("password")}
           />
+          {errors?.password && (
+            <div className="invalid-feedback">{errors?.password?.message}</div>
+          )}
           <div className="input-group-prepend">
             <div className="input-group-text">
               <i className="flaticon-password"></i>
