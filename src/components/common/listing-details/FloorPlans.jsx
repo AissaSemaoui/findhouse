@@ -1,8 +1,8 @@
 const FloorPlans = ({ floorPlans }) => {
   return (
     <div className="accordion" id="accordionExample">
-      {floorPlans.map((floorPlan) => (
-        <div className="card floor_plan">
+      {floorPlans.map((floorPlan, index) => (
+        <div key={index} className="card floor_plan">
           <div id="headingOne">
             <h2 className="mb-0">
               <button

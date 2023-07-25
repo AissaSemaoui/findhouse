@@ -1,5 +1,4 @@
 import S3 from "aws-sdk/clients/s3";
-import fs from "fs";
 
 const bucketName = process.env.AWS_BUCKET_NAME;
 const region = process.env.AWS_BUCKET_REGION;

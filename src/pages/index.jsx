@@ -3,7 +3,7 @@ import Seo from "../components/common/seo";
 import HomeMain from "../components/home";
 import { useEffect } from "react";
 
-const index = () => {
+const Index = () => {
   const fetchData = async () => {
     await fetch("/api/listings")
       .then(async (res) => {
@@ -25,4 +25,4 @@ const index = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(index), { ssr: false });
+export default dynamic(() => Promise.resolve(Index), { ssr: false });
