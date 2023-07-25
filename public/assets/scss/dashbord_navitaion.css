@@ -1,6 +1,14 @@
 .dashboard_navigationbar {
   margin-bottom: 30px;
 }
+
+.steps_btns_wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .dashboard_navigationbar .dropbtn {
   background-color: rgb(255, 255, 255);
   border: none;

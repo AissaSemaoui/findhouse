@@ -22,5 +22,24 @@ const adminSchema = new mongoose.Schema({
   },
 });
 
+adminSchema.post("save", async (next) => {
+  try {
+    if (this.isModified()) {
+      await mongoose.models.PropertyListing.updateMany({
+        "poster.id": this._id,
+      }),
+        {
+          "poster.name": this.name,
+          "poster.image": this.image,
+          "poster.email": this.email,
+        };
+    }
+    next();
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
+
 export let AdminDB =
   mongoose.models.Admin || mongoose.model("Admin", adminSchema);

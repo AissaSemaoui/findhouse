@@ -7,7 +7,6 @@ const HeaderMenuContent = ({ float = "" }) => {
   const user = useSelector((state) => state.auth.user);
   const route = useRouter();
 
-  console.log(user);
 
   const home = [
     // { id: 1, name: 'Home 1', routerPath: '/' },

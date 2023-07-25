@@ -1,3 +1,4 @@
+import { getAddressString } from "../../utils/address";
 import Comments from "../blog-details/Comments";
 import Ratings from "../blog-details/Ratings";
 import ReviewBox from "../blog-details/ReviewBox";
@@ -13,17 +14,19 @@ import PropertyVideo from "../common/listing-details/PropertyVideo";
 import WalkScore from "../common/listing-details/WalkScore";
 import WhatsNearby from "../common/listing-details/WhatsNearby";
 
-const DetailsContent = () => {
+const DetailsContent = ({ listing }) => {
   return (
     <>
       <div className="listing_single_description">
         <div className="lsd_list">
-          <PropertyItem />
+          <PropertyItem listing={listing} />
         </div>
         {/* End .lsd_list */}
 
         <h4 className="mb30">Description</h4>
-        <PropertyDescriptions />
+        {listing?.propertyDescription && (
+          <PropertyDescriptions description={listing?.propertyDescription} />
+        )}
       </div>
       {/* End .listing_single_description */}
 
@@ -32,19 +35,19 @@ const DetailsContent = () => {
           <div className="col-lg-12">
             <h4 className="mb15">Property Details</h4>
           </div>
-          <PropertyDetails />
+          <PropertyDetails listing={listing} />
         </div>
       </div>
       {/* End .additional_details */}
 
-      <div className="additional_details">
+      {/* <div className="additional_details">
         <div className="row">
           <div className="col-lg-12">
             <h4 className="mb15">Additional details</h4>
           </div>
           <AdditionalDetails />
         </div>
-      </div>
+      </div> */}
       {/* End .additional_details */}
 
       <div className="property_attachment_area">
@@ -62,34 +65,36 @@ const DetailsContent = () => {
           </div>
           {/* End .col */}
 
-          <PropertyFeatures />
+          <PropertyFeatures features={listing?.amenities} />
         </div>
       </div>
       {/* End .feature_area */}
 
       <div className="application_statics mt30">
         <h4 className="mb30">
-          Location{" "}
+          Location
           <small className="float-end">
-            1421 San Pedro St, Los Angeles, CA 90015
+            {getAddressString(listing?.location)}
           </small>
         </h4>
-        <div className="property_video p0">
+        {/* <div className="property_video p0">
           <PropertyLocation />
-        </div>
+        </div> */}
       </div>
       {/* End .location_area */}
 
-      <div className="application_statics mt30">
-        <h4 className="mb30">Floor plans</h4>
-        <div className="faq_according style2">
-          <FloorPlans />
+      {listing?.floorPlans?.length > 0 && (
+        <div className="application_statics mt30">
+          <h4 className="mb30">Floor plans</h4>
+          <div className="faq_according style2">
+            <FloorPlans floorPlans={listing?.floorPlans} />
+          </div>
         </div>
-      </div>
+      )}
       {/* End .floor_plane */}
 
       <div className="shop_single_tab_content style2 mt30">
-        <PropertyVideo />
+        <PropertyVideo detailedInfo={listing?.detailedInfo} />
       </div>
       {/* End property-video  */}
 

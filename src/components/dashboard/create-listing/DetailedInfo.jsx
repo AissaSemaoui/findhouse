@@ -1,118 +1,169 @@
-import CheckBoxFilter from "../../common/CheckBoxFilter";
+import React from "react";
 
-const DetailedInfo = () => {
+import FormInput from "../../common/FormInput";
+import Amenities from "./Amenities";
+
+const DetailedInfo = ({ register, errors, setValue }) => {
   return (
     <div className="row">
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyId">Property ID</label>
-          <input type="text" className="form-control" id="propertyId" />
-        </div>
+        <FormInput
+          label="Property ID"
+          name="detailedInfo.propertyID"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.propertyID}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="propertyASize">Area Size</label>
-          <input type="text" className="form-control" id="propertyASize" />
-        </div>
+        <FormInput
+          type="number"
+          defaultValue={0}
+          label="Area Size"
+          name="detailedInfo.areaSize"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.areaSize}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="sizePrefix">Size Prefix</label>
-          <input type="text" className="form-control" id="sizePrefix" />
-        </div>
+        <FormInput
+          label="Size Prefix"
+          name="detailedInfo.sizePrefix"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.sizePrefix}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="landArea">Land Area</label>
-          <input type="text" className="form-control" id="landArea" />
-        </div>
+        <FormInput
+          type="number"
+          defaultValue={0}
+          label="Land Area"
+          name="detailedInfo.landArea"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.landArea}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="LASPostfix">Land Area Size Postfix</label>
-          <input type="text" className="form-control" id="LASPostfix" />
-        </div>
+        <FormInput
+          label="Land Area Size Postfix"
+          name="detailedInfo.landAreaSizePostfix"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.landAreaSizePostfix}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="bedRooms">Bedrooms</label>
-          <input type="text" className="form-control" id="bedRooms" />
-        </div>
+        <FormInput
+          type="number"
+          defaultValue={0}
+          label="Bedrooms"
+          name="detailedInfo.bedrooms"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.bedrooms}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="bathRooms">Bathrooms</label>
-          <input type="text" className="form-control" id="bathRooms" />
-        </div>
+        <FormInput
+          type="number"
+          defaultValue={0}
+          label="Bathrooms"
+          name="detailedInfo.bathrooms"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.bathrooms}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="garages">Garages</label>
-          <input type="text" className="form-control" id="garages" />
-        </div>
+        <FormInput
+          type="number"
+          defaultValue={0}
+          label="Garages"
+          name="detailedInfo.garages"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.garages}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="garagesSize">Garages Size</label>
-          <input type="text" className="form-control" id="garagesSize" />
-        </div>
+        <FormInput
+          label="Garages Size"
+          name="detailedInfo.garagesSize"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.garagesSize}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="yearBuild">Year Built</label>
-          <input type="text" className="form-control" id="yearBuild" />
-        </div>
+        <FormInput
+          type="number"
+          defaultValue={0}
+          label="Year Built"
+          name="detailedInfo.yearBuilt"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.yearBuilt}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="videoUrl">Video URL</label>
-          <input type="text" className="form-control" id="videoUrl" />
-        </div>
+        <FormInput
+          label="Video URL"
+          name="detailedInfo.videoURL"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.videoURL}
+        />
       </div>
       {/* End .col */}
 
       <div className="col-lg-6 col-xl-4">
-        <div className="my_profile_setting_input form-group">
-          <label htmlFor="virtualTour">360° Virtual Tour</label>
-          <input type="text" className="form-control" id="virtualTour" />
-        </div>
+        <FormInput
+          label="360° Virtual Tour"
+          name="detailedInfo.virtualTour360"
+          className="my_profile_setting_input"
+          register={register}
+          error={errors?.virtualTour360}
+        />
       </div>
 
       <div className="col-xl-12">
         <h4 className="mb10">Amenities</h4>
       </div>
 
-      <CheckBoxFilter />
+      <Amenities setValue={setValue} />
 
-      <div className="col-xl-12">
-        <div className="my_profile_setting_input overflow-hidden mt20">
-          <button className="btn btn1 float-start">Back</button>
-          <button className="btn btn2 float-end">Next</button>
+      {/* <div className="col-xl-12">
+        <div className="my_profile_setting_input steps_btns_wrapper overflow-hidden mt20">
+          <button className="btn btn1">Back</button>
+          <button className="btn btn2">Next</button>
         </div>
-      </div>
+      </div> */}
       {/* End .col */}
     </div>
   );
 };
 
-export default DetailedInfo;
+export default React.memo(DetailedInfo);

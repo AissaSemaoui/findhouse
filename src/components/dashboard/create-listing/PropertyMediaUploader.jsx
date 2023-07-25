@@ -1,18 +1,17 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
 import selectedFiles from "../../../utils/selectedFiles";
 
-const PropertyMediaUploader = () => {
-  const [propertySelectedImgs, setPropertySelectedImgs] = useState([]);
-
+const PropertyMediaUploader = ({ propertyMedia, setPropertyMedia }) => {
   // multiple image select
   const multipleImage = (e) => {
     // checking is same file matched with old stored array
-    const isExist = propertySelectedImgs?.some((file1) =>
+    const isExist = propertyMedia?.some((file1) =>
       selectedFiles(e)?.some((file2) => file1.name === file2.name)
     );
 
     if (!isExist) {
-      setPropertySelectedImgs((old) => [...old, ...selectedFiles(e)]);
+      setPropertyMedia((old) => [...old, ...selectedFiles(e)]);
     } else {
       alert("You have selected one image already!");
     }
@@ -20,16 +19,16 @@ const PropertyMediaUploader = () => {
 
   // delete image
   const deleteImage = (name) => {
-    const deleted = propertySelectedImgs?.filter((file) => file.name !== name);
-    setPropertySelectedImgs(deleted);
+    const deleted = propertyMedia?.filter((file) => file.name !== name);
+    setPropertyMedia(deleted);
   };
 
   return (
     <div className="row">
       <div className="col-lg-12">
         <ul className="mb-0">
-          {propertySelectedImgs.length > 0
-            ? propertySelectedImgs?.map((item, index) => (
+          {propertyMedia.length > 0
+            ? propertyMedia?.map((item, index) => (
                 <li key={index} className="list-inline-item">
                   <div className="portfolio_item">
                     <img
@@ -88,15 +87,15 @@ const PropertyMediaUploader = () => {
       </div>
       {/* End .col */}
 
-      <div className="col-xl-12">
+      {/* <div className="col-xl-12">
         <div className="my_profile_setting_input">
           <button className="btn btn1 float-start">Back</button>
           <button className="btn btn2 float-end">Next</button>
         </div>
-      </div>
+      </div> */}
       {/* End .col */}
     </div>
   );
 };
 
-export default PropertyMediaUploader;
+export default React.memo(PropertyMediaUploader);

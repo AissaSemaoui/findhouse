@@ -10,19 +10,21 @@ import PopupSignInUp from "../../components/common/PopupSignInUp";
 import properties from "../../data/properties";
 import DetailsContent from "../../components/listing-details-v1/DetailsContent";
 import Sidebar from "../../components/listing-details-v1/Sidebar";
+import { useGetSingleListingQuery } from "../../features/listings/listingsApi";
+import { getAddressString } from "../../utils/address";
 
 const ListingDynamicDetailsV1 = () => {
   const router = useRouter();
-  const [property, setProperty] = useState({});
+
   const id = router.query.id;
 
-  useEffect(() => {
-    if (!id) <h1>Loading...</h1>;
-    else setProperty(properties?.find((item) => item.id == id));
+  const { data, isError, error, isLoading } = useGetSingleListingQuery(id);
 
-    return () => {};
-  }, [id]);
+  if (isLoading) return <h1>Loading...</h1>;
+  if (isError) return <h1>We got an error! {error.message}</h1>;
 
+  const listing = data?.data;
+  console.log(data);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -34,22 +36,22 @@ const ListingDynamicDetailsV1 = () => {
       {/* <!-- Modal --> */}
       <PopupSignInUp />
 
-      {/* <!-- Listing Single Property --> */}
+      {/* <!-- Listing Single listing --> */}
       <section className="listing-title-area mt85 md-mt0">
         <div className="container">
           <Gallery>
             <div className="row mb30">
               <div className="col-lg-7 col-xl-8">
                 <div className="single_property_title mt30-767">
-                  <h2>{property?.title}</h2>
-                  <p>{property?.location}</p>
+                  <h2>{listing?.propertyTitle}</h2>
+                  <p>{getAddressString(listing?.location)}</p>
                 </div>
               </div>
               <div className="col-lg-5 col-xl-4">
                 <div className="single_property_social_share position-static transform-none">
                   <div className="price float-start fn-400">
                     <h2>
-                      ${property?.price}
+                      ${listing?.price}
                       <small>/mo</small>
                     </h2>
                   </div>
@@ -90,8 +92,8 @@ const ListingDynamicDetailsV1 = () => {
                   <div className="col-lg-12">
                     <div className="spls_style_two mb30-520">
                       <Item
-                        original={property?.img}
-                        thumbnail={property?.img}
+                        original={listing?.propertyMedia[0]?.filePath}
+                        thumbnail={listing?.propertyMedia[0]?.filePath}
                         width={752}
                         height={450}
                       >
@@ -99,7 +101,7 @@ const ListingDynamicDetailsV1 = () => {
                           <div role="button" ref={ref} onClick={open}>
                             <img
                               className="img-fluid w100 cover lds-1"
-                              src={property.img}
+                              src={listing?.propertyMedia[0]?.filePath}
                               alt="1.jpg"
                             />
                           </div>
@@ -113,12 +115,12 @@ const ListingDynamicDetailsV1 = () => {
 
               <div className="col-sm-5 col-lg-4">
                 <div className="row">
-                  {property?.imgList?.map((val, i) => (
+                  {listing?.propertyMedia?.map((val, i) => (
                     <div className="col-6" key={i}>
                       <div className="spls_style_two img-gallery-box mb24">
                         <Item
-                          original={val}
-                          thumbnail={val}
+                          original={val?.filePath}
+                          thumbnail={val?.filePath}
                           width={752}
                           height={450}
                         >
@@ -126,7 +128,7 @@ const ListingDynamicDetailsV1 = () => {
                             <div role="button" ref={ref} onClick={open}>
                               <img
                                 className="img-fluid w100"
-                                src={val}
+                                src={val?.filePath}
                                 alt="2.jpg"
                               />
                             </div>
@@ -149,7 +151,7 @@ const ListingDynamicDetailsV1 = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-12 col-lg-8">
-              <DetailsContent />
+              <DetailsContent listing={listing} />
             </div>
             {/* End details content .col-lg-8 */}
 

@@ -2,8 +2,8 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-import { connectToDatabase } from "../../../lib/db.js";
-import { AdminDB } from "@/models/Admin.js";
+import { connectToDatabase } from "../../../backend/utils/db";
+import { AdminDB } from "../../../backend/models/Admin.schema.js";
 
 async function handleCredentialsProvider(user) {
   const existingAdmin = await AdminDB.exists({
@@ -43,6 +43,7 @@ const authOptions = {
       credentials: {},
       authorize(credentials) {
         const { email, password } = credentials;
+
         return {
           id: "",
           email: email,
@@ -72,6 +73,8 @@ const authOptions = {
 
     async session({ session }) {
       try {
+        await connectToDatabase();
+
         const existingAdmin = await AdminDB.findOne({
           email: session.user.email,
         });

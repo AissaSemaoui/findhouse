@@ -1,16 +1,16 @@
 import { useState } from "react";
 import ModalVideo from "react-modal-video";
 
-const PropertyVideo = () => {
-  const [isOpen, setOpen] = useState(false);
+const PropertyVideo = ({ detailedInfo }) => {
+  const [isOpen, setOpen] = useState({ status: false, videoId: "" });
   return (
     <>
       <ModalVideo
         channel="youtube"
         autoplay
-        isOpen={isOpen}
-        videoId="oqNZOOWF8qM"
-        onClose={() => setOpen(false)}
+        isOpen={isOpen.status}
+        videoId={isOpen?.videoId}
+        onClose={() => setOpen({ status: false, videoId: "" })}
       />
       <ul className="nav nav-tabs" id="myTab" role="tablist">
         <li className="nav-item">
@@ -51,7 +51,9 @@ const PropertyVideo = () => {
               />
               <div className="overlay_icon">
                 <div
-                  onClick={() => setOpen(true)}
+                  onClick={() =>
+                    setOpen({ status: true, videoId: detailedInfo?.videoURL })
+                  }
                   role="button"
                   className="video_popup_btn red popup-youtube"
                 >
@@ -75,7 +77,12 @@ const PropertyVideo = () => {
               />
               <div className="overlay_icon">
                 <div
-                  onClick={() => setOpen(true)}
+                  onClick={() =>
+                    setOpen({
+                      status: true,
+                      videoId: detailedInfo?.virtualTour360,
+                    })
+                  }
                   role="button"
                   className="video_popup_btn red popup-youtube"
                 >

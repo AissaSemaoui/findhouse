@@ -5,8 +5,8 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["src/components/*"],
-      "@/models/*": ["src/models/*"],
-      "@/lib/*": ["src/lib/*"],
+      "@/models/*": ["src/backend/models/*"],
+      "@/lib/*": ["src/backend/*"],
       "@/features/*": ["src/features/*"],
       "@/utils/*": ["src/utils/*"],
       "@/app/*": ["src/app/*"],
@@ -25,6 +25,12 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/backend/utils/apiHelpers.js",
+    "src/backend/utils/apiHelpers.js"
+  ],
   "exclude": ["node_modules"]
 }
