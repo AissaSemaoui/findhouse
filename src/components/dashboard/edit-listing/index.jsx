@@ -56,7 +56,7 @@ const Index = ({ mode }) => {
 
   if (data) console.log("here is the listing dod : ", data);
 
-  if (isLoading) return <h1>It's looading...</h1>;
+  if (isLoading) return <h1>Its looading...</h1>;
 
   return (
     <>
