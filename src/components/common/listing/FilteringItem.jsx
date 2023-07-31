@@ -192,7 +192,9 @@ const FilteringItem = () => {
             >
               <option value="">Status</option>
               {STATUS.map((status) => (
-                <option value={status}>{status}</option>
+                <option value={status} key={status}>
+                  {status}
+                </option>
               ))}
             </select>
           </div>
@@ -210,7 +212,9 @@ const FilteringItem = () => {
             >
               <option value="">Property Type</option>
               {PROPERTY_TYPES.map((type) => (
-                <option value={type}>{type}</option>
+                <option value={type} key={status}>
+                  {type}
+                </option>
               ))}
             </select>
           </div>
