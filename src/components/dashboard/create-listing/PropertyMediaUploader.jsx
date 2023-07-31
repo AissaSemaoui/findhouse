@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import selectedFiles from "../../../utils/selectedFiles";
+import { isObjectFile } from "../../../utils/file";
+import { deleteFileFromDB } from "../../../features/listings";
 
-const PropertyMediaUploader = ({ propertyMedia, setPropertyMedia }) => {
+const PropertyMediaUploader = ({ setValue, errors, watch, listingId }) => {
+  const [propertyMedia, setPropertyMedia] = useState(
+    watch("propertyMedia") || []
+  );
+
+  console.log("hi from the array of media v1 : ", propertyMedia);
   // multiple image select
   const multipleImage = (e) => {
     // checking is same file matched with old stored array
-    const isExist = propertyMedia?.some((file1) =>
-      selectedFiles(e)?.some((file2) => file1.name === file2.name)
-    );
+    const isExist = propertyMedia?.some((file1) => {
+      return selectedFiles(e)?.some((file2) => file1.name === file2.name);
+    });
 
     if (!isExist) {
       setPropertyMedia((old) => [...old, ...selectedFiles(e)]);
@@ -18,10 +25,27 @@ const PropertyMediaUploader = ({ propertyMedia, setPropertyMedia }) => {
   };
 
   // delete image
-  const deleteImage = (name) => {
-    const deleted = propertyMedia?.filter((file) => file.name !== name);
+  const deleteImage = async (image) => {
+    const isUploaded = typeof image?.filePath === "string";
+    const isFile = isObjectFile(image);
+    let deleted = propertyMedia;
+    if (isFile) {
+      deleted = propertyMedia?.filter((file) => file.name !== image.name);
+    } else if (isUploaded) {
+      console.log("its a File object");
+      await deleteFileFromDB(listingId, "propertyMedia", image);
+      deleted = propertyMedia?.filter(
+        (file) => file?.filePath !== image?.filePath
+      );
+    } else {
+      deleted = propertyMedia?.filter((file) => file !== image);
+    }
     setPropertyMedia(deleted);
   };
+
+  useEffect(() => {
+    setValue("propertyMedia", propertyMedia);
+  }, [propertyMedia]);
 
   return (
     <div className="row">
@@ -33,7 +57,11 @@ const PropertyMediaUploader = ({ propertyMedia, setPropertyMedia }) => {
                   <div className="portfolio_item">
                     <img
                       className="img-fluid cover"
-                      src={URL.createObjectURL(item)}
+                      src={
+                        isObjectFile(item)
+                          ? URL.createObjectURL(item)
+                          : item?.filePath
+                      }
                       alt="fp1.jpg"
                     />
                     <div
@@ -43,7 +71,7 @@ const PropertyMediaUploader = ({ propertyMedia, setPropertyMedia }) => {
                       title="Delete"
                       data-original-title="Delete"
                     >
-                      <a onClick={() => deleteImage(item.name)}>
+                      <a onClick={() => deleteImage(item)}>
                         <span className="flaticon-garbage"></span>
                       </a>
                     </div>
@@ -62,6 +90,7 @@ const PropertyMediaUploader = ({ propertyMedia, setPropertyMedia }) => {
           <input
             type="file"
             onChange={multipleImage}
+            className="is-invalid"
             multiple
             accept="image/png, image/gif, image/jpeg"
           />
@@ -69,6 +98,11 @@ const PropertyMediaUploader = ({ propertyMedia, setPropertyMedia }) => {
             <span className="flaticon-download"></span>
           </div>
           <p>Drag and drop images here</p>
+          {errors?.message && (
+            <div className="invalid-feedback">
+              At least one image is required
+            </div>
+          )}
         </div>
       </div>
       {/* End .col */}
@@ -98,4 +132,4 @@ const PropertyMediaUploader = ({ propertyMedia, setPropertyMedia }) => {
   );
 };
 
-export default React.memo(PropertyMediaUploader);
+export default PropertyMediaUploader;

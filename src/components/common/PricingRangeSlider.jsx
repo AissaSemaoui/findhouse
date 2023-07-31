@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-import InputRange from 'react-input-range';
-import { useDispatch } from 'react-redux';
-import { addPrice } from '../../features/properties/propertiesSlice';
+import { useEffect } from "react";
+import { useState } from "react";
+import InputRange from "react-input-range";
+import { useDispatch } from "react-redux";
+import { addPrice } from "../../features/properties/propertiesSlice";
 
 const RangeSlider = () => {
-  const [price, setPrice] = useState({ value: { min: 200, max: 1000000 } });
+  const [price, setPrice] = useState({ value: { min: 0, max: 20000 } });
   const dispath = useDispatch();
 
   const handleOnChange = (value) => {
@@ -41,8 +41,8 @@ const RangeSlider = () => {
 
       <InputRange
         formatLabel={(value) => ``}
-        maxValue={1000000}
-        minValue={200}
+        maxValue={20000}
+        minValue={0}
         value={price.value}
         onChange={(value) => handleOnChange(value)}
       />

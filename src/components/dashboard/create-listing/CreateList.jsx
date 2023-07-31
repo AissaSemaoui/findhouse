@@ -2,16 +2,7 @@ import React from "react";
 
 import FormInput from "../../common/FormInput";
 import FormSelect from "../../common/FormSelect";
-
-const PROPERTY_TYPES = [
-  "Tip de imobil",
-  "Apartament",
-  "Case",
-  "Comercial",
-  "Oficii",
-  "Terenuri",
-];
-const STATUS = ["FOR SALE", "FOR RENT", "SOLD", "RENTED"];
+import { PROPERTY_TYPES, STATUS } from "../../../config/constants";
 
 const CreateList = ({ register, errors }) => {
   return (
@@ -73,7 +64,6 @@ const CreateList = ({ register, errors }) => {
           type="number"
           label="Price"
           name="price"
-          defaultValue={1}
           className="my_profile_setting_input"
           register={register}
           error={errors.price}
@@ -86,7 +76,6 @@ const CreateList = ({ register, errors }) => {
           type="number"
           label="Area"
           name="area"
-          defaultValue={1}
           className="my_profile_setting_input"
           register={register}
           error={errors.area}

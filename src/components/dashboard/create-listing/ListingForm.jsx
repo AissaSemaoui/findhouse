@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -9,13 +9,16 @@ import DetailedInfo from "./DetailedInfo";
 import LocationField from "./LocationField";
 import PropertyMediaUploader from "./PropertyMediaUploader";
 import DynamicFloorPlans from "./DynamicFloorPlans";
-import useDataFetching from "../../../hooks/useDataFetching";
 
-function ListingForm() {
-  const { fetchData, data, error, loading } = useDataFetching();
-
-  const [propertyMedia, setPropertyMedia] = useState([]);
-
+function ListingForm({
+  mode = "create",
+  defaultValues,
+  onSubmit,
+  isError,
+  error,
+  isLoading,
+  listingId,
+}) {
   const {
     register,
     handleSubmit,
@@ -25,55 +28,17 @@ function ListingForm() {
     control,
   } = useForm({
     resolver: yupResolver(propertyListingSchema),
+    defaultValues,
   });
 
-  console.log("here is the floor plans : ", watch("floorPlans"));
-
-  // console.log(watch("floorPlans"));
-
-  const handleCreateNewListing = async (listingData) => {
-    const ListingForm = new FormData();
-    console.log(listingData);
-
-    const planImages = listingData.floorPlans.map((floorPlan) => {
-      const planImage = floorPlan.planImage[0];
-      floorPlan.planImage = null;
-      return planImage;
-    });
-    console.log(planImages, propertyMedia);
-
-    propertyMedia.forEach((media) => {
-      ListingForm.append("propertyMedia[]", media);
-    });
-
-    planImages.forEach((media) => {
-      ListingForm.append("planImages[]", media);
-    });
-
-    ListingForm.append("listingData", JSON.stringify(listingData));
-
-    await fetchData({
-      method: "post",
-      url: "/api/listings/create",
-      body: ListingForm,
-      // headers: { "Content-Type": "multipart/form-data" },
-    });
-
-    // fetchData({
-    //   method: "post",
-    //   url: "/api/listings/create",
-    //   body: { listingData },
-    // });
-  };
+  console.log("here is the property Media : ", watch("propertyMedia"));
 
   console.log(errors);
 
-  if (error) console.log("this is the response error : ", error);
-
-  if (data) console.log("this is the response data : ", data);
+  if (isError) console.log("this is the response error : ", error);
 
   return (
-    <form onSubmit={handleSubmit(handleCreateNewListing)} className="col-lg-12">
+    <form onSubmit={handleSubmit(onSubmit)} className="col-lg-12">
       <div className="my_dashboard_review">
         <div className="row">
           <div className="col-lg-12">
@@ -100,6 +65,7 @@ function ListingForm() {
           register={register}
           errors={errors?.detailedInfo}
           setValue={setValue}
+          watch={watch}
         />
       </div>
       <div className="my_dashboard_review mt30">
@@ -107,23 +73,23 @@ function ListingForm() {
           <h3 className="mb30">Property media</h3>
         </div>
         <PropertyMediaUploader
-          propertyMedia={propertyMedia}
-          setPropertyMedia={setPropertyMedia}
-          register={register}
+          watch={watch}
+          setValue={setValue}
           errors={errors?.propertyMedia}
+          listingId={listingId}
         />
       </div>
       <div className="my_dashboard_review mt30">
         <DynamicFloorPlans
           control={control}
           register={register}
-          setValue={setValue}
+          watch={watch}
           errors={errors?.floorPlans}
         />
       </div>
 
       <div className="flow-button  my_profile_setting_input">
-        <button className="btn btn2" disabled={loading}>
+        <button className="btn btn2" disabled={isLoading}>
           Submit
         </button>
       </div>

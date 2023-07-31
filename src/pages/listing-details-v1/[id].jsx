@@ -23,7 +23,7 @@ const ListingDynamicDetailsV1 = () => {
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>We got an error! {error.message}</h1>;
 
-  const listing = data?.data;
+  const listingData = data?.data;
   console.log(data);
   return (
     <>
@@ -43,15 +43,15 @@ const ListingDynamicDetailsV1 = () => {
             <div className="row mb30">
               <div className="col-lg-7 col-xl-8">
                 <div className="single_property_title mt30-767">
-                  <h2>{listing?.propertyTitle}</h2>
-                  <p>{getAddressString(listing?.location)}</p>
+                  <h2>{listingData?.propertyTitle}</h2>
+                  <p>{getAddressString(listingData?.location)}</p>
                 </div>
               </div>
               <div className="col-lg-5 col-xl-4">
                 <div className="single_property_social_share position-static transform-none">
                   <div className="price float-start fn-400">
                     <h2>
-                      ${listing?.price}
+                      ${listingData?.price}
                       <small>/mo</small>
                     </h2>
                   </div>
@@ -92,8 +92,8 @@ const ListingDynamicDetailsV1 = () => {
                   <div className="col-lg-12">
                     <div className="spls_style_two mb30-520">
                       <Item
-                        original={listing?.propertyMedia[0]?.filePath}
-                        thumbnail={listing?.propertyMedia[0]?.filePath}
+                        original={listingData?.propertyMedia[0]?.filePath}
+                        thumbnail={listingData?.propertyMedia[0]?.filePath}
                         width={752}
                         height={450}
                       >
@@ -101,7 +101,7 @@ const ListingDynamicDetailsV1 = () => {
                           <div role="button" ref={ref} onClick={open}>
                             <img
                               className="img-fluid w100 cover lds-1"
-                              src={listing?.propertyMedia[0]?.filePath}
+                              src={listingData?.propertyMedia[0]?.filePath}
                               alt="1.jpg"
                             />
                           </div>
@@ -115,7 +115,7 @@ const ListingDynamicDetailsV1 = () => {
 
               <div className="col-sm-5 col-lg-4">
                 <div className="row">
-                  {listing?.propertyMedia?.map((val, i) => (
+                  {listingData?.propertyMedia?.map((val, i) => (
                     <div className="col-6" key={i}>
                       <div className="spls_style_two img-gallery-box mb24">
                         <Item
@@ -151,7 +151,7 @@ const ListingDynamicDetailsV1 = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-12 col-lg-8">
-              <DetailsContent listing={listing} />
+              <DetailsContent listingData={listingData} />
             </div>
             {/* End details content .col-lg-8 */}
 

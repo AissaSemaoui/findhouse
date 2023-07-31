@@ -1,6 +1,31 @@
 import * as yup from "yup";
 
+const MAX_FILE_SIZE = 102400; //100KB
+
+const validFileExtensions = {
+  image: ["jpg", "gif", "png", "jpeg", "svg", "webp"],
+};
+
+function isValidFileType(fileName, fileType) {
+  return (
+    fileName &&
+    validFileExtensions[fileType].indexOf(fileName.split(".").pop()) > -1
+  );
+}
+
 const fileSchema = yup
+  .mixed()
+  .required("Required")
+  .test("is-valid-type", "Not a valid image type", (value) =>
+    isValidFileType(value && value?.name?.toLowerCase(), "image")
+  )
+  .test(
+    "is-valid-size",
+    "Max allowed size is 100KB",
+    (value) => value && value.size <= MAX_FILE_SIZE
+  );
+
+const backendFileSchema = yup
   .object()
   .shape({
     fileName: yup.string().required("File name is required"),
@@ -22,7 +47,7 @@ const floorPlansSchema = yup.array().of(
       .test(
         "required",
         "Please select an Image",
-        (value) => value && value.length
+        (value) => (value && value.length === 1) || value.filePath
       ),
   })
 );
@@ -40,27 +65,32 @@ const propertyListingSchema = yup.object().shape({
     .number()
     .required("Area is required")
     .positive("Area must be positive"),
-  rooms: yup.number().integer().min(1).default(1),
+  rooms: yup
+    .number()
+    .integer()
+    .min(1)
+    .default(1)
+    .required("Rooms field is required"),
   location: yup.object().shape({
-    country: yup.string().required("Country is required").default("Portugal"),
+    country: yup.string().required("Country is required").default("Moldova"),
     address: yup.string().required("Address is required"),
     countyState: yup.string().default(""),
-    city: yup.string().default(""),
+    city: yup.string().required("City is required"),
     neighborhood: yup.string().default(""),
     zip: yup.string().default(""),
   }),
   detailedInfo: yup.object().shape({
     propertyID: yup.string().default(""),
-    areaSize: yup.number().nullable().default(null),
+    areaSize: yup.number().nullable().required("Area size is required"),
     sizePrefix: yup.string().default(""),
     landArea: yup.number().nullable().default(null),
     landAreaSizePostfix: yup.string().default(""),
-    bedrooms: yup.number().nullable().default(null),
+    bedrooms: yup.number().nullable().required("Bedrooms is required"),
     bathrooms: yup
       .number()
       .integer()
       .min(1, "Bathrooms must be positive")
-      .default(1),
+      .required("Bathrooms is required"),
     garages: yup.number().nullable().default(null),
     garagesSize: yup.string().default(""),
     yearBuilt: yup.number().nullable().default(null),
@@ -68,7 +98,10 @@ const propertyListingSchema = yup.object().shape({
     virtualTour360: yup.string().default(""),
   }),
   amenities: yup.array().of(yup.string()).default([]),
-  propertyMedia: yup.array().of(fileSchema),
+  // propertyMedia: yup
+  //   .array()
+  //   .of(fileSchema)
+  //   .min(1, "At least one Image is required"),
   floorPlans: floorPlansSchema,
 });
 

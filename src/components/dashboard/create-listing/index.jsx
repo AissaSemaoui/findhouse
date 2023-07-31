@@ -4,8 +4,41 @@ import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import ListingForm from "./ListingForm";
+import { useCreateListingMutation } from "../../../features/listings/listingsApi";
 
-const index = () => {
+const Index = ({ mode }) => {
+  const [createListing, { data, isError, error, isLoading }] =
+    useCreateListingMutation();
+
+  const handleCreateNewListing = async (listingData) => {
+    const ListingForm = new FormData();
+    console.log(listingData);
+
+    const propertyMedia = listingData?.propertyMedia;
+    listingData.propertyMedia = [];
+
+    const planImages = listingData?.floorPlans?.map((floorPlan) => {
+      const planImage = floorPlan.planImage[0];
+      floorPlan.planImage = null;
+      return planImage;
+    });
+    console.log(planImages, propertyMedia);
+
+    propertyMedia.forEach((media) => {
+      ListingForm.append("propertyMedia[]", media);
+    });
+
+    planImages.forEach((media) => {
+      ListingForm.append("planImages[]", media);
+    });
+
+    ListingForm.append("listingData", JSON.stringify(listingData));
+
+    await createListing(ListingForm);
+  };
+
+  if (data) console.log(data);
+
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -56,7 +89,13 @@ const index = () => {
                 </div>
                 {/* End .col */}
 
-                <ListingForm />
+                <ListingForm
+                  mode={mode}
+                  onSubmit={handleCreateNewListing}
+                  isError={isError}
+                  error={error}
+                  isLoading={isLoading}
+                />
                 {/* End .col */}
               </div>
               {/* End .row */}
@@ -78,4 +117,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

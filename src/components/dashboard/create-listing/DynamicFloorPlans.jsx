@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useFieldArray } from "react-hook-form";
 import FloorPlan from "./FloorPlan";
 
-const DynamicFloorPlans = ({ register, errors, setValue, control }) => {
+const DynamicFloorPlans = ({ register, errors, watch, control }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "floorPlans",
   });
 
+  console.log(fields);
   // State to keep track of the currently viewed floor plan index
   const [currentPlanIndex, setCurrentPlanIndex] = useState(0);
 
@@ -25,6 +26,15 @@ const DynamicFloorPlans = ({ register, errors, setValue, control }) => {
     }
   };
 
+  const handleRemovePlan = (currentPlanIndex) => {
+    remove(currentPlanIndex);
+    goToPrevPlan();
+  };
+
+  const handleAppendPlan = () => {
+    append({ planDescription: "" });
+  };
+
   return (
     <>
       <div className="col-lg-12">
@@ -40,17 +50,17 @@ const DynamicFloorPlans = ({ register, errors, setValue, control }) => {
       <button
         className="btn admore_btn mb30"
         type="button"
-        onClick={() => append({ planDescription: "" })}
+        onClick={handleAppendPlan}
       >
         Add More
       </button>
       <div className="row">
         {fields.length > 0 && (
           <FloorPlan
-            setValue={setValue}
+            watch={watch}
             register={register}
             errors={errors}
-            item={fields[currentPlanIndex]?.item}
+            item={fields[currentPlanIndex]}
             index={currentPlanIndex}
           />
         )}
@@ -60,7 +70,7 @@ const DynamicFloorPlans = ({ register, errors, setValue, control }) => {
             <button
               className="btn admore_btn mb30"
               type="button"
-              onClick={() => remove(currentPlanIndex)}
+              onClick={() => handleRemovePlan(currentPlanIndex)}
             >
               Remove Plan
             </button>
@@ -90,4 +100,4 @@ const DynamicFloorPlans = ({ register, errors, setValue, control }) => {
   );
 };
 
-export default React.memo(DynamicFloorPlans);
+export default DynamicFloorPlans;

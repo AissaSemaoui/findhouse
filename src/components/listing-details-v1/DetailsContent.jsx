@@ -14,18 +14,20 @@ import PropertyVideo from "../common/listing-details/PropertyVideo";
 import WalkScore from "../common/listing-details/WalkScore";
 import WhatsNearby from "../common/listing-details/WhatsNearby";
 
-const DetailsContent = ({ listing }) => {
+const DetailsContent = ({ listingData }) => {
   return (
     <>
       <div className="listing_single_description">
         <div className="lsd_list">
-          <PropertyItem listing={listing} />
+          <PropertyItem listing={listingData} />
         </div>
         {/* End .lsd_list */}
 
         <h4 className="mb30">Description</h4>
-        {listing?.propertyDescription && (
-          <PropertyDescriptions description={listing?.propertyDescription} />
+        {listingData?.propertyDescription && (
+          <PropertyDescriptions
+            description={listingData?.propertyDescription}
+          />
         )}
       </div>
       {/* End .listing_single_description */}
@@ -35,7 +37,7 @@ const DetailsContent = ({ listing }) => {
           <div className="col-lg-12">
             <h4 className="mb15">Property Details</h4>
           </div>
-          <PropertyDetails listing={listing} />
+          <PropertyDetails listing={listingData} />
         </div>
       </div>
       {/* End .additional_details */}
@@ -65,7 +67,7 @@ const DetailsContent = ({ listing }) => {
           </div>
           {/* End .col */}
 
-          <PropertyFeatures features={listing?.amenities} />
+          <PropertyFeatures features={listingData?.amenities} />
         </div>
       </div>
       {/* End .feature_area */}
@@ -74,7 +76,7 @@ const DetailsContent = ({ listing }) => {
         <h4 className="mb30">
           Location
           <small className="float-end">
-            {getAddressString(listing?.location)}
+            {getAddressString(listingData?.location)}
           </small>
         </h4>
         {/* <div className="property_video p0">
@@ -83,18 +85,18 @@ const DetailsContent = ({ listing }) => {
       </div>
       {/* End .location_area */}
 
-      {listing?.floorPlans?.length > 0 && (
+      {listingData?.floorPlans?.length > 0 && (
         <div className="application_statics mt30">
           <h4 className="mb30">Floor plans</h4>
           <div className="faq_according style2">
-            <FloorPlans floorPlans={listing?.floorPlans} />
+            <FloorPlans floorPlans={listingData?.floorPlans} />
           </div>
         </div>
       )}
       {/* End .floor_plane */}
 
       <div className="shop_single_tab_content style2 mt30">
-        <PropertyVideo detailedInfo={listing?.detailedInfo} />
+        <PropertyVideo detailedInfo={listingData?.detailedInfo} />
       </div>
       {/* End property-video  */}
 

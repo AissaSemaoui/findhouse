@@ -3,15 +3,15 @@ const FloorPlans = ({ floorPlans }) => {
     <div className="accordion" id="accordionExample">
       {floorPlans.map((floorPlan, index) => (
         <div key={index} className="card floor_plan">
-          <div id="headingOne">
+          <div id={`heading${index}`}>
             <h2 className="mb-0">
               <button
                 className="btn btn-link accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapseOne"
+                data-bs-target={`#collapse${index}`}
                 aria-expanded="false"
-                aria-controls="collapseOne"
+                aria-controls={`collapse${index}`}
               >
                 <ul className="mb0 d-flex align-items-cener flex-wrap">
                   <li className="d-inline-flex list-inline-item">
@@ -37,9 +37,9 @@ const FloorPlans = ({ floorPlans }) => {
             </h2>
           </div>
           <div
-            id="collapseOne"
+            id={`collapse${index}`}
             className="collapse"
-            aria-labelledby="headingOne"
+            aria-labelledby={`heading${index}`}
             data-bs-parent="#accordionExample"
           >
             <div className="card-body text-center">

@@ -1,13 +1,25 @@
+import { isObjectFile } from "../../../utils/file";
 import FormInput from "../../common/FormInput";
 
-const FloorPlan = ({ register, errors, setValue, index }) => {
+const FloorPlan = ({ register, errors, watch, index }) => {
+  const item = watch(`floorPlans.${index}`);
+
+  console.log("floor plan : ", item);
+  console.log("floor plan error : ", errors?.[index]);
+
+  const planImageUrl =
+    typeof item?.planImage?.filePath === "string"
+      ? item?.planImage?.filePath
+      : isObjectFile(item?.planImage?.[0])
+      ? URL.createObjectURL(item.planImage?.[0])
+      : "";
+
   return (
     <div key={index}>
       <div className="row">
         <div className="col-lg-6 col-xl-4">
           <FormInput
             type="number"
-            defaultValue={1}
             label="Plan Bedrooms"
             name={`floorPlans.${index}.planBedrooms`}
             className="my_profile_setting_input form-group"
@@ -19,7 +31,6 @@ const FloorPlan = ({ register, errors, setValue, index }) => {
         <div className="col-lg-6 col-xl-4">
           <FormInput
             type="number"
-            defaultValue={1}
             label="Plan Bathrooms"
             name={`floorPlans.${index}.planBathrooms`}
             className="my_profile_setting_input form-group"
@@ -31,7 +42,6 @@ const FloorPlan = ({ register, errors, setValue, index }) => {
         <div className="col-lg-6 col-xl-4">
           <FormInput
             type="number"
-            defaultValue={1}
             label="Plan Price"
             name={`floorPlans.${index}.planPrice`}
             className="my_profile_setting_input form-group"
@@ -53,7 +63,6 @@ const FloorPlan = ({ register, errors, setValue, index }) => {
         <div className="col-lg-6 col-xl-4">
           <FormInput
             type="number"
-            defaultValue={1}
             label="Plan Size"
             name={`floorPlans.${index}.planSize`}
             className="my_profile_setting_input form-group"
@@ -72,9 +81,11 @@ const FloorPlan = ({ register, errors, setValue, index }) => {
                 } `}
               >
                 <input
-                  className={`btn btn-thm`}
+                  className={`btn btn-thm}`}
                   type="file"
+                  // disabled={!!planImageUrl}
                   id="imageUpload"
+                  multiple={false}
                   accept=".png, .jpg, .jpeg"
                   {...register(`floorPlans.${index}.planImage`)}
                 />
@@ -84,7 +95,7 @@ const FloorPlan = ({ register, errors, setValue, index }) => {
                 {errors?.[index]?.planImage?.message}
               </div>
               <div className="avatar-preview">
-                <div id="imagePreview"></div>
+                <img src={planImageUrl} id="imagePreview"></img>
               </div>
             </div>
           </div>

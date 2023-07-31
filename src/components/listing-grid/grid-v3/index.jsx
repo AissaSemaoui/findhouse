@@ -1,4 +1,5 @@
-import Pagination from "../../common/blog/Pagination";
+import { useState } from "react";
+import Pagination from "../../common/Pagination";
 import CopyrightFooter from "../../common/footer/CopyrightFooter";
 import Footer from "../../common/footer/Footer";
 import Header from "../../common/header/DefaultHeader";
@@ -10,8 +11,24 @@ import SidebarListing2 from "../../common/listing/SidebarListing2";
 import PopupSignInUp from "../../common/PopupSignInUp";
 import BreadCrumb2 from "./BreadCrumb2";
 import FeaturedItem from "./FeaturedItem";
+import { useGetAllListingsQuery } from "../../../features/listings/listingsApi";
+import { useSelector } from "react-redux";
+import { generateQueryParams } from "../../../utils/helpers";
 
-const index = () => {
+const Index = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const filters = useSelector((state) => state.properties);
+
+  const filterQueries = generateQueryParams(filters);
+  console.log("here is the query : ", filterQueries);
+
+  const {
+    data: allListings,
+    error,
+    isError,
+    isLoading,
+  } = useGetAllListingsQuery({ currentPage, filterQueries });
+
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -77,7 +94,6 @@ const index = () => {
               {/* End mobile sidebar listing  */}
             </div>
             {/* End sidebar conent */}
-
             <div className="col-md-12 col-lg-8">
               <div className="grid_list_search_result ">
                 <div className="row align-items-center">
@@ -88,21 +104,31 @@ const index = () => {
               {/* End .row */}
 
               <div className="row">
-                <FeaturedItem />
+                <FeaturedItem
+                  allListings={allListings?.data?.listings}
+                  isError={isError}
+                  isLoading={isLoading}
+                />
               </div>
               {/* End .row */}
 
               <div className="row">
                 <div className="col-lg-12 mt20">
                   <div className="mbp_pagination">
-                    <Pagination />
+                    <Pagination
+                      currentPage={
+                        allListings?.data?.currentPage || currentPage
+                      }
+                      totalPages={allListings?.data?.totalPages || currentPage}
+                      onPageChange={setCurrentPage}
+                    />
                   </div>
                 </div>
                 {/* End paginaion .col */}
               </div>
               {/* End .row */}
             </div>
-            {/* End  page conent */}
+            {/* End  currentPage conent */}
           </div>
           {/* End .row */}
         </div>
@@ -127,4 +153,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

@@ -3,7 +3,7 @@ import React from "react";
 import FormInput from "../../common/FormInput";
 import Amenities from "./Amenities";
 
-const DetailedInfo = ({ register, errors, setValue }) => {
+const DetailedInfo = ({ register, errors, setValue, watch }) => {
   return (
     <div className="row">
       <div className="col-lg-6 col-xl-4">
@@ -20,7 +20,6 @@ const DetailedInfo = ({ register, errors, setValue }) => {
       <div className="col-lg-6 col-xl-4">
         <FormInput
           type="number"
-          defaultValue={0}
           label="Area Size"
           name="detailedInfo.areaSize"
           className="my_profile_setting_input"
@@ -44,7 +43,6 @@ const DetailedInfo = ({ register, errors, setValue }) => {
       <div className="col-lg-6 col-xl-4">
         <FormInput
           type="number"
-          defaultValue={0}
           label="Land Area"
           name="detailedInfo.landArea"
           className="my_profile_setting_input"
@@ -68,7 +66,6 @@ const DetailedInfo = ({ register, errors, setValue }) => {
       <div className="col-lg-6 col-xl-4">
         <FormInput
           type="number"
-          defaultValue={0}
           label="Bedrooms"
           name="detailedInfo.bedrooms"
           className="my_profile_setting_input"
@@ -81,7 +78,6 @@ const DetailedInfo = ({ register, errors, setValue }) => {
       <div className="col-lg-6 col-xl-4">
         <FormInput
           type="number"
-          defaultValue={0}
           label="Bathrooms"
           name="detailedInfo.bathrooms"
           className="my_profile_setting_input"
@@ -94,7 +90,6 @@ const DetailedInfo = ({ register, errors, setValue }) => {
       <div className="col-lg-6 col-xl-4">
         <FormInput
           type="number"
-          defaultValue={0}
           label="Garages"
           name="detailedInfo.garages"
           className="my_profile_setting_input"
@@ -118,7 +113,6 @@ const DetailedInfo = ({ register, errors, setValue }) => {
       <div className="col-lg-6 col-xl-4">
         <FormInput
           type="number"
-          defaultValue={0}
           label="Year Built"
           name="detailedInfo.yearBuilt"
           className="my_profile_setting_input"
@@ -153,7 +147,7 @@ const DetailedInfo = ({ register, errors, setValue }) => {
         <h4 className="mb10">Amenities</h4>
       </div>
 
-      <Amenities setValue={setValue} />
+      <Amenities setValue={setValue} watch={watch} />
 
       {/* <div className="col-xl-12">
         <div className="my_profile_setting_input steps_btns_wrapper overflow-hidden mt20">

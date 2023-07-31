@@ -14,14 +14,18 @@ const s3 = new S3({
 // upload file to s3 function
 
 const uploadFile = (file) => {
-  const uploadParams = {
-    Bucket: bucketName,
-    Body: file.buffer,
-    Key: file.originalname,
-    ACL: "public-read",
-  };
+  try {
+    const uploadParams = {
+      Bucket: bucketName,
+      Body: file.buffer,
+      Key: file.originalname,
+      ACL: "public-read",
+    };
 
-  return s3.upload(uploadParams).promise();
+    return s3.upload(uploadParams).promise();
+  } catch (err) {
+    console.log("Error uploading image : ", err);
+  }
 };
 
 const uploadFiles = async (files) => {
@@ -44,9 +48,23 @@ const uploadFiles = async (files) => {
 
     return formattedResult;
   } catch (err) {
-    console.log(err);
+    console.log("Error uploading files : ", err);
     return [];
   }
 };
 
-export { uploadFile, uploadFiles };
+// Delete Image
+const deleteImage = async (filePath) => {
+  try {
+    const deleteParams = {
+      Bucket: bucketName,
+      Key: filePath,
+    };
+
+    return await s3.deleteObject(deleteParams).promise();
+  } catch (err) {
+    console.error("Error deleting image : ", err);
+  }
+};
+
+export { uploadFile, uploadFiles, deleteImage };

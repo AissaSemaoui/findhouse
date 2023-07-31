@@ -7,12 +7,13 @@ import {
 import PricingRangeSlider from "./PricingRangeSlider";
 import CheckBoxFilter from "./CheckBoxFilter";
 import GlobalSelectBox from "./GlobalSelectBox";
+import { PROPERTY_TYPES } from "../../config/constants";
 
 const GlobalFilter = ({ className = "" }) => {
   const dispatch = useDispatch();
   // submit handler
   const submitHandler = () => {
-    Router.push("/listing-grid-v1");
+    Router.push("/listing-grid-v3");
   };
 
   return (
@@ -35,11 +36,11 @@ const GlobalFilter = ({ className = "" }) => {
             <div className="candidate_revew_select">
               <select className="selectpicker w100 form-select show-tick">
                 <option value="">Tip de imobil</option>
-                <option>Apartament</option>
-                <option>Case</option>
-                <option>Comercial</option>
-                <option>Oficii</option>
-                <option>Terenuri</option>
+                {PROPERTY_TYPES.map((type) => (
+                  <option value={type} key={type}>
+                    {type}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

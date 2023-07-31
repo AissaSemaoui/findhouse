@@ -1,30 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { AMENITIES_LIST } from "../../../config/constants";
 
-const AMENITIES_LIST = [
-  "condiționat",
-  "casnic",
-  "Piscină",
-  "intrare",
-  "Grătar",
-  "microunde",
-  "Digitală",
-  "Șemineu",
-  "Ascensor",
-  "Interfon",
-  "video",
-  "pardosea",
-  "sport",
-  "Mobilier",
-  "WiFi",
-  "Sistem (casă inteligentă)",
-  "termopane",
-  "Saună",
-  "autonomă",
-  "joacă",
-];
-
-const Amenities = ({ setValue }) => {
-  const [checkedAmenities, setCheckedAmenities] = useState([]);
+const Amenities = ({ setValue, watch }) => {
+  const [checkedAmenities, setCheckedAmenities] = useState(
+    watch("amenities") || []
+  );
 
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
@@ -54,6 +34,7 @@ const Amenities = ({ setValue }) => {
             <input
               type="checkbox"
               className="form-check-input"
+              checked={checkedAmenities.includes(amenity)}
               id={`customCheck${index}`}
               value={amenity}
               onChange={handleCheckboxChange}

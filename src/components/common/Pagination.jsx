@@ -46,23 +46,23 @@ const Pagination = ({
         </a>
       </li>
 
+      {currentPage + 1 !== totalPages && currentPage !== totalPages && (
+        <li className="page-item disabled">
+          <a className="page-link" aria-disabled="true">
+            ...
+          </a>
+        </li>
+      )}
       {currentPage !== totalPages && (
-        <>
-          <li className="page-item disabled">
-            <a className="page-link" aria-disabled="true">
-              ...
-            </a>
-          </li>
-          <li className={"page-item"}>
-            <a
-              className="page-link"
-              href="#"
-              onClick={() => handlePageChange(totalPages)}
-            >
-              {totalPages}
-            </a>
-          </li>
-        </>
+        <li className={"page-item"}>
+          <a
+            className="page-link"
+            href="#"
+            onClick={() => handlePageChange(totalPages)}
+          >
+            {totalPages}
+          </a>
+        </li>
       )}
       <li
         className={`page-item ${currentPage >= totalPages ? "disabled" : ""}`}

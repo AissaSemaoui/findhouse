@@ -2,6 +2,7 @@ import React from "react";
 
 import FormInput from "../../common/FormInput";
 import FormSelect from "../../common/FormSelect";
+import { COUNTRIES_LIST, DEFAULT_COUNTRY } from "../../../config/constants";
 
 const LocationField = ({ register, errors }) => {
   return (
@@ -63,7 +64,8 @@ const LocationField = ({ register, errors }) => {
           className="my_profile_setting_input ui_kit_select_search"
           register={register}
           error={errors?.country}
-          options={["UK", "Spain", "Roman", "Italy"]}
+          defaultValue={DEFAULT_COUNTRY}
+          options={COUNTRIES_LIST}
           data-live-search="true"
           data-width="100%"
         />

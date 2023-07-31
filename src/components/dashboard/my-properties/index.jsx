@@ -3,10 +3,21 @@ import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import TableData from "./TableData";
 import Filtering from "./Filtering";
-import Pagination from "./Pagination";
 import SearchBox from "./SearchBox";
+import Pagination from "../../common/Pagination";
+import { useState } from "react";
+import { useGetAllListingsQuery } from "../../../features/listings/listingsApi";
 
-const index = () => {
+const Index = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const {
+    data: allListings,
+    error,
+    isError,
+    isLoading,
+  } = useGetAllListingsQuery(currentPage);
+
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -81,12 +92,24 @@ const index = () => {
                   <div className="my_dashboard_review mb40">
                     <div className="property_table">
                       <div className="table-responsive mt0">
-                        <TableData />
+                        <TableData
+                          error={isError ? error : null}
+                          isLoading={isLoading}
+                          allListings={allListings?.data?.listings}
+                        />
                       </div>
                       {/* End .table-responsive */}
 
                       <div className="mbp_pagination">
-                        <Pagination />
+                        <Pagination
+                          currentPage={
+                            allListings?.data?.currentPage || currentPage
+                          }
+                          totalPages={
+                            allListings?.data?.totalPages || currentPage
+                          }
+                          onPageChange={setCurrentPage}
+                        />
                       </div>
                       {/* End .mbp_pagination */}
                     </div>
@@ -100,7 +123,9 @@ const index = () => {
               <div className="row mt50">
                 <div className="col-lg-12">
                   <div className="copyright-widget text-center">
-                    <p>© 2020 Find House. Made with love.</p>
+                    <p>
+                      © {new Date().getFullYear()} Find House. Made with love.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -114,4 +139,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

@@ -19,10 +19,16 @@ import {
   addStatus,
   addYearBuilt,
   resetAmenities,
+  setAmenities,
 } from "../../../features/properties/propertiesSlice";
 import PricingRangeSlider from "../../common/PricingRangeSlider";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
+import {
+  AMENITIES_LIST,
+  PROPERTY_TYPES,
+  STATUS,
+} from "../../../config/constants";
 
 const FilteringItem = () => {
   const {
@@ -38,6 +44,8 @@ const FilteringItem = () => {
     amenities,
   } = useSelector((state) => state.properties);
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   // input state
   const [getKeyword, setKeyword] = useState(keyword);
   const [getLocation, setLocation] = useState(location);
@@ -51,91 +59,66 @@ const FilteringItem = () => {
   const [getAreaMax, setAreaMax] = useState(area.max);
 
   // advanced state
-  const [getAdvanced, setAdvanced] = useState([
-    { id: uuidv4(), name: "Air Conditioning" },
-    { id: uuidv4(), name: "Barbeque" },
-    { id: uuidv4(), name: "Gym" },
-    { id: uuidv4(), name: "Microwave" },
-    { id: uuidv4(), name: "TV Cable" },
-    { id: uuidv4(), name: "Lawn" },
-    { id: uuidv4(), name: "Refrigerator" },
-    { id: uuidv4(), name: "Swimming Pool" },
-    { id: uuidv4(), name: "WiFi" },
-    { id: uuidv4(), name: "Sauna" },
-    { id: uuidv4(), name: "Dryer" },
-    { id: uuidv4(), name: "Washer" },
-    { id: uuidv4(), name: "Laundry" },
-    { id: uuidv4(), name: "Outdoor Shower" },
-    { id: uuidv4(), name: "Window Coverings" },
-  ]);
+  const [getCheckedAmenities, setCheckedAmenities] = useState(amenities);
 
   const dispath = useDispatch();
 
-  const Router = useRouter();
+  console.log(getBathroom);
 
   // keyword
   useEffect(() => {
     dispath(addKeyword(getKeyword));
-  }, [dispath, addKeyword, getKeyword]);
 
-  // location
-  useEffect(() => {
+    // location
     dispath(addLocation(getLocation));
-  }, [dispath, addLocation, getLocation]);
 
-  // status
-  useEffect(() => {
+    // status
     dispath(addStatus(getStatus));
-  }, [dispath, addStatus, getStatus]);
 
-  // properties type
-  useEffect(() => {
+    // properties type
     dispath(addPropertyType(getPropertiesType));
-  }, [dispath, addPropertyType, getPropertiesType]);
 
-  // bathroom
-  useEffect(() => {
+    // bathroom
     dispath(addBathrooms(getBathroom));
-  }, [dispath, addBathrooms, getBathroom]);
 
-  // bedroom
-  useEffect(() => {
+    // bedroom
     dispath(addBedrooms(getBedroom));
-  }, [dispath, addBedrooms, getBedroom]);
 
-  // garages
-  useEffect(() => {
+    // garages
     dispath(addGarages(getGarages));
-  }, [dispath, addGarages, getGarages]);
 
-  // built years
-  useEffect(() => {
+    // built years
     dispath(addYearBuilt(getBuiltYear));
-  }, [dispath, addYearBuilt, getBuiltYear]);
 
-  // area min
-  useEffect(() => {
+    // area min
     dispath(dispath(addAreaMin(getAreaMin)));
-  }, [dispath, addAreaMin, getAreaMin]);
 
-  // area max
-  useEffect(() => {
+    // area max
     dispath(dispath(addAreaMax(getAreaMax)));
-  }, [dispath, addAreaMax, getAreaMax]);
+
+    // amenities
+    dispath(setAmenities(getCheckedAmenities));
+  }, [dispath, isSubmitted]);
 
   // clear filter
   const clearHandler = () => {
     clearAllFilters();
+    setIsSubmitted((prev) => !prev);
   };
+
+  const submitHandler = () => {
+    setIsSubmitted((prev) => !prev);
+  };
+
+  console.log(getCheckedAmenities);
 
   const clearAllFilters = () => {
     setKeyword("");
     setLocation("");
     setStatus("");
     setPropertiesType("");
-    dispath(addPrice({ min: 10000, max: 20000 }));
+    dispath(addPrice({ min: 0, max: 20000 }));
     setBathroom("");
-    setBedroom("");
     setBedroom("");
     setGarages("");
     setBuiltYear("");
@@ -147,29 +130,21 @@ const FilteringItem = () => {
     clearAdvanced();
   };
 
-  // clear advanced
-  const clearAdvanced = () => {
-    const changed = getAdvanced.map((item) => {
-      item.isChecked = false;
-      return item;
-    });
-    setAdvanced(changed);
+  const toggleAmenity = (e) => {
+    const newAmenity = e.target.value;
+
+    const isExist = getCheckedAmenities.includes(newAmenity);
+
+    setCheckedAmenities((prev) =>
+      isExist
+        ? prev.filter((amenity) => amenity !== newAmenity)
+        : [...prev, newAmenity]
+    );
   };
 
-  // add advanced
-  const advancedHandler = (id) => {
-    const data = getAdvanced.map((feature) => {
-      if (feature.id === id) {
-        if (feature.isChecked) {
-          feature.isChecked = false;
-        } else {
-          feature.isChecked = true;
-        }
-      }
-      return feature;
-    });
-
-    setAdvanced(data);
+  // clear advanced
+  const clearAdvanced = () => {
+    setCheckedAmenities([]);
   };
 
   return (
@@ -216,12 +191,9 @@ const FilteringItem = () => {
               value={getStatus}
             >
               <option value="">Status</option>
-              <option value="apartment">Apartment</option>
-              <option value="bungalow">Bungalow</option>
-              <option value="condo">Condo</option>
-              <option value="house">House</option>
-              <option value="land">Land</option>
-              <option value="single family">Single Family</option>
+              {STATUS.map((status) => (
+                <option value={status}>{status}</option>
+              ))}
             </select>
           </div>
         </div>
@@ -237,12 +209,9 @@ const FilteringItem = () => {
               value={getPropertiesType}
             >
               <option value="">Property Type</option>
-              <option value="apartment">Apartment</option>
-              <option value="bungalow">Bungalow</option>
-              <option value="condo">Condo</option>
-              <option value="house">House</option>
-              <option value="land">Land</option>
-              <option value="single family">Single Family</option>
+              {PROPERTY_TYPES.map((type) => (
+                <option value={type}>{type}</option>
+              ))}
             </select>
           </div>
         </div>
@@ -324,8 +293,7 @@ const FilteringItem = () => {
             >
               <option value="">Garages</option>
               <option value="yes">Yes</option>
-              <option value="no">No</option>
-              <option value="other">Others</option>
+              <option value="no">No</option>{" "}
             </select>
           </div>
         </div>
@@ -404,25 +372,19 @@ const FilteringItem = () => {
               <div className="panel-body row">
                 <div className="col-lg-12">
                   <ul className="ui_kit_checkbox selectable-list fn-400">
-                    {getAdvanced?.map((feature) => (
-                      <li key={feature.id}>
+                    {AMENITIES_LIST?.map((feature) => (
+                      <li key={feature}>
                         <div className="form-check custom-checkbox">
                           <input
                             type="checkbox"
                             className="form-check-input"
-                            id={feature.id}
-                            value={feature.name}
-                            checked={feature.isChecked || false}
-                            onChange={(e) =>
-                              dispath(addAmenities(e.target.value))
-                            }
-                            onClick={() => advancedHandler(feature.id)}
+                            id={feature}
+                            value={feature}
+                            checked={getCheckedAmenities.includes(feature)}
+                            onChange={toggleAmenity}
                           />
-                          <label
-                            className="form-check-label"
-                            htmlFor={feature.id}
-                          >
-                            {feature.name}
+                          <label className="form-check-label" htmlFor={feature}>
+                            {feature}
                           </label>
                         </div>
                       </li>
@@ -437,13 +399,22 @@ const FilteringItem = () => {
       {/* End li */}
 
       <li>
-        <div className="search_option_button">
+        <div className="search_option_button mb-2">
           <button
             onClick={clearHandler}
             type="button"
-            className="btn btn-block btn-thm w-100"
+            className="btn btn-block btn-outline-primary w-100"
           >
             Clear Filters
+          </button>
+        </div>
+        <div className="search_option_button">
+          <button
+            onClick={submitHandler}
+            type="button"
+            className="btn btn-block btn-thm w-100"
+          >
+            Submit Filters
           </button>
         </div>
       </li>
