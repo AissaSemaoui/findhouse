@@ -31,7 +31,6 @@ const LoginSignup = () => {
               </div>
             </div>
             {/* End col */}
-
             <div className="col-lg-6 col-xl-6">
               <Form />
               {/* End .col .login_form */}

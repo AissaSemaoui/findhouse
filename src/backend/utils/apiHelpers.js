@@ -19,13 +19,9 @@ const onNoMatch = (req, res) => {
   res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
 };
 
-const withErrorHandler = (handler) => async (req, res) => {
-  handler(req, res)
-    .then((response) => console.log("respond successfully"))
-    .catch((error) => {
-      console.log("we got an error here : ", error.message);
-      return ApiResponse(false, 500, "Invalid Server Response");
-    });
+const generateUniqueId = () => {
+  const timestamp = Date.now();
+  return `PRO-${timestamp}`;
 };
 
-export { withErrorHandler, formatResponse, onError, onNoMatch };
+export { formatResponse, onError, onNoMatch, generateUniqueId };

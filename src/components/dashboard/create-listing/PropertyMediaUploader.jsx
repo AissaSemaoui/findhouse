@@ -5,9 +5,16 @@ import { isObjectFile } from "../../../utils/file";
 import { deleteFileFromDB } from "../../../features/listings";
 
 const PropertyMediaUploader = ({ setValue, errors, watch, listingId }) => {
-  const [propertyMedia, setPropertyMedia] = useState(
-    watch("propertyMedia") || []
-  );
+  // const [propertyMedia, setPropertyMedia] = useState(
+  //   watch("propertyMedia") || []
+  // );
+
+  const propertyMedia = watch("propertyMedia") || [];
+  console.log("this is the propertyMedia : ", propertyMedia);
+
+  const setPropertyMedia = (value) => {
+    setValue("propertyMedia", value);
+  };
 
   console.log("hi from the array of media v1 : ", propertyMedia);
   // multiple image select
@@ -18,7 +25,8 @@ const PropertyMediaUploader = ({ setValue, errors, watch, listingId }) => {
     });
 
     if (!isExist) {
-      setPropertyMedia((old) => [...old, ...selectedFiles(e)]);
+      const newPropertyMedia = [...propertyMedia, ...selectedFiles(e)];
+      setPropertyMedia(newPropertyMedia);
     } else {
       alert("You have selected one image already!");
     }
@@ -43,9 +51,9 @@ const PropertyMediaUploader = ({ setValue, errors, watch, listingId }) => {
     setPropertyMedia(deleted);
   };
 
-  useEffect(() => {
-    setValue("propertyMedia", propertyMedia);
-  }, [propertyMedia]);
+  // useEffect(() => {
+  //   setValue("propertyMedia", propertyMedia);
+  // }, [propertyMedia]);
 
   return (
     <div className="row">
@@ -54,7 +62,7 @@ const PropertyMediaUploader = ({ setValue, errors, watch, listingId }) => {
           {propertyMedia.length > 0
             ? propertyMedia?.map((item, index) => (
                 <li key={index} className="list-inline-item">
-                  <div className="portfolio_item">
+                  <div className="portfolio_item is-invalid mb-2">
                     <img
                       className="img-fluid cover"
                       src={
@@ -65,7 +73,7 @@ const PropertyMediaUploader = ({ setValue, errors, watch, listingId }) => {
                       alt="fp1.jpg"
                     />
                     <div
-                      className="edu_stats_list"
+                      className="edu_stats_list "
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
                       title="Delete"
@@ -76,6 +84,11 @@ const PropertyMediaUploader = ({ setValue, errors, watch, listingId }) => {
                       </a>
                     </div>
                   </div>
+                  {errors && (
+                    <div className="invalid-feedback mb-2">
+                      {errors?.[index]?.message}
+                    </div>
+                  )}
                 </li>
               ))
             : undefined}

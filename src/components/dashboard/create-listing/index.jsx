@@ -5,12 +5,15 @@ import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import ListingForm from "./ListingForm";
 import { useCreateListingMutation } from "../../../features/listings/listingsApi";
+import { useRouter } from "next/router";
 
 const Index = ({ mode }) => {
   const [createListing, { data, isError, error, isLoading }] =
     useCreateListingMutation();
 
-  const handleCreateNewListing = async (listingData) => {
+  const router = useRouter();
+
+  const handleCreateNewListing = async (listingData, handleReset) => {
     const ListingForm = new FormData();
     console.log(listingData);
 
@@ -34,7 +37,12 @@ const Index = ({ mode }) => {
 
     ListingForm.append("listingData", JSON.stringify(listingData));
 
-    await createListing(ListingForm);
+    const response = await createListing(ListingForm);
+
+    if (response.data.success) {
+      handleReset();
+      router.push("/my-dashboard");
+    }
   };
 
   if (data) console.log(data);

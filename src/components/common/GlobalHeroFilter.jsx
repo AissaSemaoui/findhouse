@@ -1,6 +1,6 @@
-import GlobalFilter from './GlobalFilter';
+import GlobalFilter from "./GlobalFilter";
 
-const GlobalHeroFilter = ({ className = '' }) => {
+const GlobalHeroFilter = ({ className = "" }) => {
   return (
     <div className={`home_adv_srch_opt ${className}`}>
       <ul className="nav nav-pills" id="pills-tab" role="tablist">

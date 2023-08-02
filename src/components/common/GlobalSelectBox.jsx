@@ -1,9 +1,21 @@
+import { useDispatch } from "react-redux";
+import {
+  addBathrooms,
+  addBedrooms,
+  addLocation,
+} from "../../features/properties/propertiesSlice";
+
 const GlobalSelectBox = () => {
+  const dispatch = useDispatch();
+
   return (
     <>
       <li className="list-inline-item">
         <div className="candidate_revew_select">
-          <select className="selectpicker w100 show-tick form-select">
+          <select
+            onChange={(e) => dispatch(addBathrooms(e.target.value))}
+            className="selectpicker w100 show-tick form-select"
+          >
             <option>Baie</option>
             <option>1</option>
             <option>2</option>
@@ -16,7 +28,10 @@ const GlobalSelectBox = () => {
 
       <li className="list-inline-item">
         <div className="candidate_revew_select">
-          <select className="selectpicker w100 show-tick form-select">
+          <select
+            onChange={(e) => dispatch(addBedrooms(e.target.value))}
+            className="selectpicker w100 show-tick form-select"
+          >
             <option>Dormitoare</option>
             <option>1</option>
             <option>2</option>
@@ -46,7 +61,10 @@ const GlobalSelectBox = () => {
 
       <li className="list-inline-item">
         <div className="candidate_revew_select">
-          <select className="selectpicker w100 show-tick form-select">
+          <select
+            onChange={(e) => dispatch(addLocation(e.target.value))}
+            className="selectpicker w100 show-tick form-select"
+          >
             <option>Sector</option>
             <option>Centru</option>
             <option>Buiucani</option>

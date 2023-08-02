@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { generateUniqueId } from "../utils/apiHelpers";
 
 const propertyListingSchema = new mongoose.Schema({
   createdAt: {
@@ -21,7 +22,7 @@ const propertyListingSchema = new mongoose.Schema({
     zip: { type: String, default: "" },
   },
   detailedInfo: {
-    propertyID: { type: String, default: "" },
+    propertyID: { type: String, unique: true, default: generateUniqueId },
     areaSize: { type: Number, required: true },
     sizePrefix: { type: String, default: "" },
     landArea: { type: Number, default: null },

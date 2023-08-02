@@ -1,6 +1,10 @@
 import { createRouter } from "next-connect";
 
-import { onError, onNoMatch } from "../../../backend/utils/apiHelpers";
+import {
+  generateUniqueId,
+  onError,
+  onNoMatch,
+} from "../../../backend/utils/apiHelpers";
 import { formatResponse } from "../../../backend/utils/apiHelpers";
 import multer from "multer";
 import { uploadFiles } from "../../../backend/utils/s3";
@@ -35,6 +39,7 @@ router.post(async (req, res) => {
       }
 
       const listingData = JSON.parse(req.body?.listingData);
+      listingData.detailedInfo.propertyID = generateUniqueId();
       listingData.poster = {
         id: admin._id,
         name: admin.name,

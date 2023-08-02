@@ -25,7 +25,10 @@ const Index = ({ mode }) => {
   const [updateListing, { data, isUpdateError, updateError, isUpdateLoading }] =
     useUpdateListingMutation();
 
-  const handleUpdateListing = async (listingData) => {
+  const handleUpdateListing = async (formListingData) => {
+    console.log("trying to update things");
+    const listingData = { ...formListingData };
+
     const ListingForm = new FormData();
 
     const unUploadedPropertyMedia = [];
@@ -41,7 +44,7 @@ const Index = ({ mode }) => {
       ListingForm.append("propertyMedia[]", media);
     });
 
-    const planImages = listingData?.floorPlans?.forEach((floorPlan) => {
+    listingData?.floorPlans?.forEach((floorPlan) => {
       if (isObjectFile(floorPlan?.planImage?.[0])) {
         const planImage = floorPlan.planImage[0];
         ListingForm.append("planImages[]", planImage);
@@ -51,7 +54,9 @@ const Index = ({ mode }) => {
 
     ListingForm.append("listingData", JSON.stringify(listingData));
 
-    await updateListing({ listingId, ListingForm });
+    const response = await updateListing({ listingId, ListingForm });
+
+    if (response.data.success) router.push("/my-dashboard");
   };
 
   if (data) console.log("here is the listing dod : ", data);

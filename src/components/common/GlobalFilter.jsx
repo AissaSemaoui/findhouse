@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import {
   addKeyword,
   addLocation,
+  addPropertyType,
 } from "../../features/properties/propertiesSlice";
 import PricingRangeSlider from "./PricingRangeSlider";
 import CheckBoxFilter from "./CheckBoxFilter";
@@ -34,7 +35,10 @@ const GlobalFilter = ({ className = "" }) => {
         <li className="list-inline-item">
           <div className="search_option_two">
             <div className="candidate_revew_select">
-              <select className="selectpicker w100 form-select show-tick">
+              <select
+                onChange={(e) => dispatch(addPropertyType(e.target.value))}
+                className="selectpicker w100 form-select show-tick"
+              >
                 <option value="">Tip de imobil</option>
                 {PROPERTY_TYPES.map((type) => (
                   <option value={type} key={type}>

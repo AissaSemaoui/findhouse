@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFieldArray } from "react-hook-form";
 import FloorPlan from "./FloorPlan";
+import { DEFAULT_FLOOR_PLAN } from "../../../config/constants";
 
 const DynamicFloorPlans = ({ register, errors, watch, control }) => {
   const { fields, append, remove } = useFieldArray({
@@ -32,7 +33,7 @@ const DynamicFloorPlans = ({ register, errors, watch, control }) => {
   };
 
   const handleAppendPlan = () => {
-    append({ planDescription: "" });
+    append(DEFAULT_FLOOR_PLAN);
   };
 
   return (

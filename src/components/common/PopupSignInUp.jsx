@@ -1,6 +1,11 @@
+import { useSelector } from "react-redux";
 import LoginSignup from "./user-credentials/LoginSignup";
 
 const PopupSignInUp = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  if (isAuthenticated) return;
+
   return (
     <div
       className="sign_up_modal modal fade bd-example-modal-lg"

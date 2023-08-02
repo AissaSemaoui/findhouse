@@ -27,7 +27,9 @@ router.post(async (req, res) => {
         (media) => media?.filePath === fileInfo?.filePath
       );
       console.log(fileIndex);
-      if (!fileIndex)
+
+      console.log(ListingData.propertyMedia, fileInfo);
+      if (fileIndex === undefined || fileIndex === -1)
         return res.status(404).json(formatResponse(false, "Image not found!"));
       await deleteImage(fileInfo?.filePath);
       removeFromArray(ListingData?.propertyMedia, fileIndex);

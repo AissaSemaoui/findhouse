@@ -6,7 +6,6 @@ import {
   onNoMatch,
 } from "../../../backend/utils/apiHelpers";
 import { connectToDatabase } from "../../../backend/utils/db";
-import PropertyListing from "../../../backend/models/PropertyListing.schema";
 import {
   generateMongooseListingFilters,
   getPaginatedListings,

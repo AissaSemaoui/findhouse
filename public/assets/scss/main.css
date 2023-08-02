@@ -198,6 +198,57 @@ a img {
   border: none;
 }
 
+/* Common styles for all screen sizes */
+.checkbox-grid .ui_kit_checkbox {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.selectable-list__item {
+  display: flex;
+  align-items: center;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+}
+
+.form-check-input {
+  margin-right: 0.5rem;
+}
+
+/* Media queries for responsive layout */
+
+/* For small devices, one column layout */
+@media (max-width: 576px) {
+  .checkbox-grid .ui_kit_checkbox {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* For medium devices, two column layout */
+@media (min-width: 577px) and (max-width: 991px) {
+  .checkbox-grid .ui_kit_checkbox {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* For large devices, three column layout */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .checkbox-grid .ui_kit_checkbox {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* For extra large devices, four column layout */
+@media (min-width: 1200px) {
+  .checkbox-grid .ui_kit_checkbox {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 .form-control {
   height: 50px;
 }
@@ -4442,6 +4493,7 @@ form.home5_advanced_search_form
   width: 100%;
   z-index: 9;
   padding: 15px;
+  overflow: auto;
 }
 
 .dropdown-content:before {

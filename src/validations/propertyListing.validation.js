@@ -16,13 +16,21 @@ function isValidFileType(fileName, fileType) {
 const fileSchema = yup
   .mixed()
   .required("Required")
-  .test("is-valid-type", "Not a valid image type", (value) =>
-    isValidFileType(value && value?.name?.toLowerCase(), "image")
+  .test(
+    "is-valid-type",
+    "Not a valid image type",
+    (value) =>
+      isValidFileType(value && value?.name?.toLowerCase(), "image") ||
+      (typeof value?.filePath === "string" &&
+        typeof value?.fileName === "string")
   )
   .test(
     "is-valid-size",
     "Max allowed size is 100KB",
-    (value) => value && value.size <= MAX_FILE_SIZE
+    (value) =>
+      (value && value.size <= MAX_FILE_SIZE) ||
+      (typeof value?.filePath === "string" &&
+        typeof value?.fileName === "string")
   );
 
 const backendFileSchema = yup
@@ -58,11 +66,11 @@ const propertyListingSchema = yup.object().shape({
   propertyType: yup.string().required("Property type is required"),
   status: yup.string().required("Status is required"),
   price: yup
-    .number()
+    .number("Price is required")
     .required("Price is required")
     .positive("Price must be positive"),
   area: yup
-    .number()
+    .number("Area is required")
     .required("Area is required")
     .positive("Area must be positive"),
   rooms: yup
@@ -80,7 +88,7 @@ const propertyListingSchema = yup.object().shape({
     zip: yup.string().default(""),
   }),
   detailedInfo: yup.object().shape({
-    propertyID: yup.string().default(""),
+    propertyID: yup.string().nullable().default(null),
     areaSize: yup.number().nullable().required("Area size is required"),
     sizePrefix: yup.string().default(""),
     landArea: yup.number().nullable().default(null),
@@ -98,10 +106,10 @@ const propertyListingSchema = yup.object().shape({
     virtualTour360: yup.string().default(""),
   }),
   amenities: yup.array().of(yup.string()).default([]),
-  // propertyMedia: yup
-  //   .array()
-  //   .of(fileSchema)
-  //   .min(1, "At least one Image is required"),
+  propertyMedia: yup
+    .array()
+    .of(fileSchema)
+    .min(1, "At least one Image is required"),
   floorPlans: floorPlansSchema,
 });
 

@@ -9,10 +9,11 @@ import DetailedInfo from "./DetailedInfo";
 import LocationField from "./LocationField";
 import PropertyMediaUploader from "./PropertyMediaUploader";
 import DynamicFloorPlans from "./DynamicFloorPlans";
+import { DEFAULT_LISTING } from "../../../config/constants";
 
 function ListingForm({
   mode = "create",
-  defaultValues,
+  defaultValues = DEFAULT_LISTING,
   onSubmit,
   isError,
   error,
@@ -26,6 +27,7 @@ function ListingForm({
     setValue,
     watch,
     control,
+    reset,
   } = useForm({
     resolver: yupResolver(propertyListingSchema),
     defaultValues,
@@ -35,16 +37,22 @@ function ListingForm({
 
   console.log(errors);
 
+  const handleReset = () => {
+    reset(DEFAULT_LISTING);
+  };
+
   if (isError) console.log("this is the response error : ", error);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="col-lg-12">
+    <form
+      onSubmit={handleSubmit((values) => onSubmit(values, handleReset))}
+      className="col-lg-12"
+    >
       <div className="my_dashboard_review">
         <div className="row">
           <div className="col-lg-12">
             <h3 className="mb30">Create Listing</h3>
           </div>
-
           <CreateList register={register} errors={errors} />
         </div>
       </div>

@@ -4,9 +4,6 @@ import FormInput from "../../common/FormInput";
 const FloorPlan = ({ register, errors, watch, index }) => {
   const item = watch(`floorPlans.${index}`);
 
-  console.log("floor plan : ", item);
-  console.log("floor plan error : ", errors?.[index]);
-
   const planImageUrl =
     typeof item?.planImage?.filePath === "string"
       ? item?.planImage?.filePath
