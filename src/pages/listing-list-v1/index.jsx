@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Seo from "../../components/common/seo";
 import ListV1 from "../../components/listing-list/list-v1";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       <Seo pageTitle="Simple Listing – List V1" />
@@ -11,4 +11,4 @@ const index = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(index), { ssr: false });
+export default dynamic(() => Promise.resolve(Index), { ssr: false });

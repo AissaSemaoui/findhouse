@@ -13,7 +13,7 @@ import GlobalFilter from "../../common/GlobalFilter";
 import MobileMenu from "../../common/header/MobileMenu";
 import PopupSignInUp from "../../common/PopupSignInUp";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -150,4 +150,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

@@ -5,7 +5,7 @@ import ChangePassword from "./ChangePassword";
 import ProfileInfo from "./ProfileInfo";
 import SocialMedia from "./SocialMedia";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -113,4 +113,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

@@ -3,7 +3,7 @@ import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
 import ChatBox from "./ChatBox";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -76,4 +76,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

@@ -8,7 +8,7 @@ import Sidebar from "./Sidebar";
 import SliderGalleryContent from "./SliderGalleryContent";
 import StickyHeading from "./StickyHeading";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -104,4 +104,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

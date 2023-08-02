@@ -1,14 +1,14 @@
-import CallToAction from '../common/CallToAction';
-import CopyrightFooter from '../common/footer/CopyrightFooter';
-import Footer from '../common/footer/Footer';
-import Header from '../common/header/DefaultHeader';
-import MobileMenu from '../common/header/MobileMenu';
-import PopupSignInUp from '../common/PopupSignInUp';
-import AddressSidebar from './AddressSidebar';
-import BreadCrumbBanner from './BreadCrumbBanner';
-import Form from './Form';
+import CallToAction from "../common/CallToAction";
+import CopyrightFooter from "../common/footer/CopyrightFooter";
+import Footer from "../common/footer/Footer";
+import Header from "../common/header/DefaultHeader";
+import MobileMenu from "../common/header/MobileMenu";
+import PopupSignInUp from "../common/PopupSignInUp";
+import AddressSidebar from "./AddressSidebar";
+import BreadCrumbBanner from "./BreadCrumbBanner";
+import Form from "./Form";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -101,4 +101,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

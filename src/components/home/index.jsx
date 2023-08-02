@@ -12,7 +12,7 @@ import PopupSignInUp from "../common/PopupSignInUp";
 import Hero from "./Hero";
 import { useSession } from "next-auth/react";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -198,4 +198,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

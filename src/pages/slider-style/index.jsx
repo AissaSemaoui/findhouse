@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Seo from "../../components/common/seo";
 import SliderStyle from "../../components/listing-style/slider-style";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       <Seo pageTitle="Listing - Slider Style" />
@@ -11,4 +11,4 @@ const index = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(index), { ssr: false });
+export default dynamic(() => Promise.resolve(Index), { ssr: false });

@@ -10,7 +10,7 @@ import Header from "./Header";
 import Hero from "./Hero";
 import Testimonial from "./Testimonial";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -142,4 +142,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

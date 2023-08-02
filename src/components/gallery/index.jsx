@@ -6,7 +6,7 @@ import PopupSignInUp from "../common/PopupSignInUp";
 import BreadCrumbBanner from "./BreadCrumbBanner";
 import GalleryBox from "./GalleryBox";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -49,4 +49,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

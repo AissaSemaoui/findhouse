@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Seo from "../components/common/seo";
 import Home4 from "../components/home-4";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       <Seo pageTitle="Home-4" />
@@ -11,4 +11,4 @@ const index = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(index), { ssr: false });
+export default dynamic(() => Promise.resolve(Index), { ssr: false });

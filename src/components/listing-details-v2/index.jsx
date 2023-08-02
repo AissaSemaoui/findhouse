@@ -7,7 +7,7 @@ import PopupSignInUp from "../common/PopupSignInUp";
 import DetailsContent from "./DetailsContent";
 import Sidebar from "./Sidebar";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -78,4 +78,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

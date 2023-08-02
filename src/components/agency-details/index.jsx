@@ -7,7 +7,7 @@ import BreadCrumb2 from "./BreadCrumb2";
 import SidebarListings from "./SidebarListings";
 import TabDetailsContent from "./TabDetailsContent";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -142,4 +142,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

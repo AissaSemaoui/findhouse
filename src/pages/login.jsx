@@ -4,7 +4,7 @@ import Login from "../components/login";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
-const index = () => {
+const Index = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const router = useRouter();
 
@@ -18,4 +18,4 @@ const index = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(index), { ssr: false });
+export default dynamic(() => Promise.resolve(Index), { ssr: false });

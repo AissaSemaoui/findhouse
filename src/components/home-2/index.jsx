@@ -12,7 +12,7 @@ import CopyrightFooter from "../common/footer/CopyrightFooter";
 import PopupSignInUp from "../common/PopupSignInUp";
 import Hero from "./Hero";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -185,4 +185,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

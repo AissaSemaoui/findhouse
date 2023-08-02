@@ -5,7 +5,7 @@ import AuthorReview from "./AuthorReview";
 import ClientReview from "./ClientReview";
 import SearchBox from "./SearchBox";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -113,4 +113,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

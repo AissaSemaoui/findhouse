@@ -7,7 +7,7 @@ import DetailsContent from "./DetailsContent";
 import Sidebar from "./Sidebar";
 import SliderGallery from "./SliderGallery";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -114,4 +114,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

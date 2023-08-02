@@ -3,7 +3,7 @@ import Seo from "../../components/common/seo";
 import MyFavourites from "../../components/dashboard/my-favourites";
 import { withAdminAccess } from "../../utils/withAdminAccess";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       <Seo pageTitle="My Favourites" />
@@ -12,7 +12,7 @@ const index = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(withAdminAccess(index)), {
+export default dynamic(() => Promise.resolve(withAdminAccess(Index)), {
   loading: () => <h1>Loading component...</h1>,
   ssr: false,
 });

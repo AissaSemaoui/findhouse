@@ -4,7 +4,7 @@ import MobileMenu from "../../common/header/MobileMenu";
 import SearchData from "../my-saved-search/SearchData";
 import SearchBox from "./SearchBox";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -102,4 +102,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

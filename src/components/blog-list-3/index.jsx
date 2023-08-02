@@ -7,7 +7,7 @@ import PopupSignInUp from "../common/PopupSignInUp";
 import BreadCrumbBlog from "./BreadCrumbBlog";
 import Blog from "./Blog";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -73,4 +73,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

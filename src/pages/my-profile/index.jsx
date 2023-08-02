@@ -3,7 +3,7 @@ import Seo from "../../components/common/seo";
 import MyProfile from "../../components/dashboard/my-profile";
 import { withAdminAccess } from "../../utils/withAdminAccess";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       <Seo pageTitle="My Profile" />
@@ -12,7 +12,7 @@ const index = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(withAdminAccess(index)), {
+export default dynamic(() => Promise.resolve(withAdminAccess(Index)), {
   loading: () => <h1>Loading component...</h1>,
   ssr: false,
 });
