@@ -1,15 +1,10 @@
 import * as yup from "yup";
-
-const MAX_FILE_SIZE = 102400; //100KB
-
-const validFileExtensions = {
-  image: ["jpg", "gif", "png", "jpeg", "svg", "webp"],
-};
+import { MAX_FILE_SIZE, VALID_FILE_EXTENSIONS } from "../config/constants";
 
 function isValidFileType(fileName, fileType) {
   return (
     fileName &&
-    validFileExtensions[fileType].indexOf(fileName.split(".").pop()) > -1
+    VALID_FILE_EXTENSIONS[fileType].indexOf(fileName.split(".").pop()) > -1
   );
 }
 
