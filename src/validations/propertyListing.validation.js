@@ -21,7 +21,7 @@ const fileSchema = yup
   )
   .test(
     "is-valid-size",
-    "Max allowed size is 100KB",
+    "Max allowed size is 100MB",
     (value) =>
       (value && value.size <= MAX_FILE_SIZE) ||
       (typeof value?.filePath === "string" &&

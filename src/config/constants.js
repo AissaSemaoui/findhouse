@@ -83,7 +83,7 @@ export const DEFAULT_FLOOR_PLAN = {
   planImage: [],
 };
 
-export const MAX_FILE_SIZE = 10240000; //100MB
+export const MAX_FILE_SIZE = 102400; //100MB
 
 export const VALID_FILE_EXTENSIONS = {
   image: ["jpg", "gif", "png", "jpeg", "svg", "webp"],
