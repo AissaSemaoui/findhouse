@@ -23,7 +23,7 @@ const generateQueryParams = (filterState) => {
     area,
     amenities,
     statusType,
-    featured,
+    isFeatured,
   } = filterState;
 
   const queryParams = [];
@@ -50,7 +50,8 @@ const generateQueryParams = (filterState) => {
 
   if (statusType)
     queryParams.push(`statusType=${encodeURIComponent(statusType)}`);
-  if (featured) queryParams.push(`featured=${encodeURIComponent(featured)}`);
+  if (isFeatured)
+    queryParams.push(`featured=${encodeURIComponent(isFeatured)}`);
 
   return queryParams.join("&");
 };

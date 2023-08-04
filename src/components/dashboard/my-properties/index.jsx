@@ -16,7 +16,7 @@ const Index = () => {
     error,
     isError,
     isLoading,
-  } = useGetAllListingsQuery(currentPage);
+  } = useGetAllListingsQuery({ currentPage });
 
   return (
     <>

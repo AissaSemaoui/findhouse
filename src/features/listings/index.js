@@ -1,6 +1,16 @@
 import { API_URLS } from "../../config/api";
 import fetchData from "../../helpers/fetchData";
 
+const getAllListings = async (filterQueries = "") => {
+  let api_url = `http://localhost:3000${API_URLS.LISTINGS}`;
+  if (!!filterQueries) api_url += `?${filterQueries}`;
+
+  return await fetchData({
+    url: api_url,
+    method: "get",
+  });
+};
+
 const deleteListing = async (listingId) => {
   return await fetchData({
     url: API_URLS.getDeleteListing(listingId),
@@ -20,4 +30,4 @@ const deleteFileFromDB = async (listingId, propertyName, fileInfo) => {
   });
 };
 
-export { deleteListing, deleteFileFromDB };
+export { getAllListings, deleteListing, deleteFileFromDB };

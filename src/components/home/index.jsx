@@ -10,9 +10,9 @@ import Footer from "../common/footer/Footer";
 import CopyrightFooter from "../common/footer/CopyrightFooter";
 import PopupSignInUp from "../common/PopupSignInUp";
 import Hero from "./Hero";
-import { useSession } from "next-auth/react";
+import Link from "next/link";
 
-const Index = () => {
+const Index = ({ featuredListings }) => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -36,9 +36,11 @@ const Index = () => {
                 <h2>Featured Properties</h2>
                 <p>
                   Handpicked properties by our team.{" "}
-                  <a className="float-end" href="#">
-                    View All <span className="flaticon-next"></span>
-                  </a>
+                  <Link href="/listing-grid-v3">
+                    <a className="float-end">
+                      View All <span className="flaticon-next"></span>
+                    </a>
+                  </Link>
                 </p>
               </div>
             </div>
@@ -51,7 +53,7 @@ const Index = () => {
         <div className="feature_property_home6_slider ">
           <div className="container ml--xxl-0">
             <div className="gutter-x15">
-              <FeaturedProperties />
+              <FeaturedProperties featuredListings={featuredListings} />
             </div>
           </div>
         </div>

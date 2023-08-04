@@ -27,7 +27,11 @@ const Index = () => {
     error,
     isError,
     isLoading,
+    status,
+    isFetching,
   } = useGetAllListingsQuery({ currentPage, filterQueries });
+
+  console.log("here is the is loading : ", isLoading, isFetching, status);
 
   return (
     <>
@@ -107,7 +111,7 @@ const Index = () => {
                 <FeaturedItem
                   allListings={allListings?.data?.listings}
                   isError={isError}
-                  isLoading={isLoading}
+                  isLoading={isFetching || isLoading}
                 />
               </div>
               {/* End .row */}

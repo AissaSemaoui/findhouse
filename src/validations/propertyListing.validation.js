@@ -60,6 +60,7 @@ const propertyListingSchema = yup.object().shape({
   propertyDescription: yup.string().required("Description is required"),
   propertyType: yup.string().required("Property type is required"),
   status: yup.string().required("Status is required"),
+  isFeatured: yup.boolean().default(false),
   price: yup
     .number("Price is required")
     .required("Price is required")

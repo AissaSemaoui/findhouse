@@ -24,11 +24,6 @@ router.get(async (req, res) => {
       generateMongooseListingFilters(req.query)
     );
 
-    listings.forEach(async (listing) => {
-      const isValid = await isValidListing(listing);
-      return isValid;
-    });
-
     res.status(200).json(
       formatResponse(true, "Yeeey here are all the ", {
         listings,

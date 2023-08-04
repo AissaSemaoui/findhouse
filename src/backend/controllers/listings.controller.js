@@ -10,9 +10,17 @@ const isValidListing = async (listingData) => {
 };
 
 const getPaginatedListings = async (req, filters = {}) => {
+  const isAllPages = req.query?.page === "all";
+
+  if (isAllPages) {
+    const listings = await PropertyListing.find(filters);
+    return { totalPages: 1, currentPage: 1, listings };
+  }
+
   const currentPage = Number(req?.query?.page) || 1;
 
-  let totalPages = (await PropertyListing.countDocuments({})) / ITEMS_PER_PAGE;
+  let totalPages =
+    (await PropertyListing.countDocuments(filters)) / ITEMS_PER_PAGE;
   totalPages = Math.ceil(totalPages);
 
   const listings = await PropertyListing.find(filters)
@@ -125,6 +133,11 @@ const generateMongooseListingFilters = (filterQueries) => {
       filters["detailedInfo.areaSize"].$lte = parseInt(
         filterQueries["area.max"]
       );
+  }
+
+  if (filterQueries.isFeatured) {
+    console.log(filterQueries.isFeatured);
+    filters.isFeatured = true;
   }
 
   if (filterQueries.amenities?.length > 0) {

@@ -96,6 +96,22 @@ const CreateList = ({ register, errors }) => {
           data-width="100%"
         />
       </div>
+
+      <div className="col-lg-4 col-xl-4">
+        <div className="">
+          <div className="custom-checkbox">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="featured-input"
+              {...register("isFeatured")}
+            />
+            <label className="form-check-label" htmlFor="featured-input">
+              <strong>Featured</strong>
+            </label>
+          </div>
+        </div>
+      </div>
       {/* End .col */}
 
       {/* <div className="col-xl-12">

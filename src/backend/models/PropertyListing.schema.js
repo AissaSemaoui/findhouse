@@ -10,6 +10,7 @@ const propertyListingSchema = new mongoose.Schema({
   propertyDescription: { type: String, required: true },
   propertyType: { type: String, required: true },
   status: { type: String, required: true },
+  isFeatured: { type: Boolean, default: false },
   price: { type: Number, required: true },
   area: { type: Number },
   rooms: { type: Number, required: true },

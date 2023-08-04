@@ -1,12 +1,22 @@
 import dynamic from "next/dynamic";
 import Seo from "../components/common/seo";
 import HomeMain from "../components/home";
+import { getAllListings } from "../features/listings";
 
-const Index = () => {
+export const getServerSideProps = async () => {
+  const { listings } = await getAllListings("page=all&isFeatured=true");
+  return {
+    props: {
+      featuredListings: listings,
+    },
+  };
+};
+
+const Index = ({ featuredListings }) => {
   return (
     <>
       <Seo pageTitle="Acasa" />
-      <HomeMain />
+      <HomeMain featuredListings={featuredListings} />
     </>
   );
 };
