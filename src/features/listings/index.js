@@ -2,8 +2,7 @@ import { API_URLS } from "../../config/api";
 import fetchData from "../../helpers/fetchData";
 
 const getAllListings = async (filterQueries = "") => {
-  let api_url = `${process.env.VERCEL_URL}${API_URLS.LISTINGS}`;
-  console.log(api_url);
+  let api_url = `https://findhouse-v1.vercel.app${API_URLS.LISTINGS}`;
   if (!!filterQueries) api_url += `?${filterQueries}`;
 
   return await fetchData({
