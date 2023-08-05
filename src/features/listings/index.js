@@ -2,7 +2,8 @@ import { API_URLS } from "../../config/api";
 import fetchData from "../../helpers/fetchData";
 
 const getAllListings = async (filterQueries = "") => {
-  let api_url = `http://localhost:3000${API_URLS.LISTINGS}`;
+  let api_url = `${process.env.VERCEL_URL}${API_URLS.LISTINGS}`;
+  console.log(api_url);
   if (!!filterQueries) api_url += `?${filterQueries}`;
 
   return await fetchData({
