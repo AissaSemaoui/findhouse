@@ -9,7 +9,6 @@ import { connectToDatabase } from "../../../backend/utils/db";
 import {
   generateMongooseListingFilters,
   getPaginatedListings,
-  isValidListing,
 } from "../../../backend/controllers/listings.controller";
 
 const router = createRouter();

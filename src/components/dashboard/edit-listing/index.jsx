@@ -22,8 +22,15 @@ const Index = ({ mode }) => {
     isLoading,
   } = useGetSingleListingQuery(listingId);
 
-  const [updateListing, { data, isUpdateError, updateError, isUpdateLoading }] =
-    useUpdateListingMutation();
+  const [
+    updateListing,
+    {
+      data,
+      isError: isUpdateError,
+      error: updateError,
+      isLoading: isUpdateLoading,
+    },
+  ] = useUpdateListingMutation();
 
   const handleUpdateListing = async (formListingData) => {
     console.log("trying to update things");
@@ -117,9 +124,9 @@ const Index = ({ mode }) => {
                   defaultValues={listing?.data}
                   onSubmit={handleUpdateListing}
                   mode={mode}
-                  isError={isError}
-                  error={error}
-                  isLoading={isUpdateLoading}
+                  isError={isError || isUpdateError}
+                  error={error || updateError}
+                  isLoading={isLoading || isUpdateLoading}
                   listingId={listingId}
                 />
                 {/* End .col */}

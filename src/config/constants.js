@@ -1,4 +1,4 @@
-export const ITEMS_PER_PAGE = 2;
+export const ITEMS_PER_PAGE = 15;
 
 export const AMENITIES_LIST = [
   "Aer condiționat",

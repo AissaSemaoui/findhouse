@@ -7,7 +7,7 @@ import ListingForm from "./ListingForm";
 import { useCreateListingMutation } from "../../../features/listings/listingsApi";
 import { useRouter } from "next/router";
 
-const Index = ({ mode }) => {
+const Index = () => {
   const [createListing, { data, isError, error, isLoading }] =
     useCreateListingMutation();
 
@@ -98,7 +98,6 @@ const Index = ({ mode }) => {
                 {/* End .col */}
 
                 <ListingForm
-                  mode={mode}
                   onSubmit={handleCreateNewListing}
                   isError={isError}
                   error={error}

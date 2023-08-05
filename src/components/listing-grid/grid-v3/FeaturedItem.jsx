@@ -56,7 +56,7 @@ const FeaturedItem = ({ allListings, isError, isLoading }) => {
           />
           <div className="thmb_cntnt">
             <ul className="tag mb0">
-              {!listing?.isFeatured && (
+              {listing?.isFeatured && (
                 <li className="list-inline-item">
                   <a href="#">Featured</a>
                 </li>

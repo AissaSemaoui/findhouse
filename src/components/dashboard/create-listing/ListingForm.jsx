@@ -12,7 +12,6 @@ import DynamicFloorPlans from "./DynamicFloorPlans";
 import { DEFAULT_LISTING } from "../../../config/constants";
 
 function ListingForm({
-  mode = "create",
   defaultValues = DEFAULT_LISTING,
   onSubmit,
   isError,

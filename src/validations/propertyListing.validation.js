@@ -28,14 +28,10 @@ const fileSchema = yup
         typeof value?.fileName === "string")
   );
 
-const backendFileSchema = yup
-  .object()
-  .shape({
-    fileName: yup.string().required("File name is required"),
-    filePath: yup.string(),
-    file: yup.mixed().nullable(),
-  })
-  .notRequired();
+const backendFileSchema = yup.object().shape({
+  fileName: yup.string().required("File name is required"),
+  filePath: yup.string(),
+});
 
 const floorPlansSchema = yup.array().of(
   yup.object().shape({
@@ -111,7 +107,7 @@ const propertyListingSchema = yup.object().shape({
 
 const backendFloorPlansSchema = yup.object().shape({
   ...floorPlansSchema.fields,
-  planImage: fileSchema,
+  planImage: backendFileSchema,
 });
 
 const backendPropertyListingSchema = yup.object().shape({
