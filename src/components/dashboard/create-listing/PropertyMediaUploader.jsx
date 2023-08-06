@@ -24,6 +24,10 @@ const PropertyMediaUploader = ({
       ? URL.createObjectURL(attachments[0])
       : "";
 
+  const setAttachments = (value) => {
+    setValue("attachments", value);
+  };
+
   const setPropertyMedia = (value) => {
     setValue("propertyMedia", value);
   };
@@ -45,22 +49,39 @@ const PropertyMediaUploader = ({
   };
 
   // delete image
-  const deleteImage = async (image) => {
+  const deleteImage = async (image, index) => {
     const isUploaded = typeof image?.filePath === "string";
     const isFile = isObjectFile(image);
     let deleted = propertyMedia;
     if (isFile) {
-      deleted = propertyMedia?.filter((file) => file.name !== image.name);
+      deleted = propertyMedia?.filter((_, i) => i !== index);
     } else if (isUploaded) {
       console.log("its a File object");
       await deleteFileFromDB(listingId, "propertyMedia", image);
-      deleted = propertyMedia?.filter(
-        (file) => file?.filePath !== image?.filePath
-      );
+      deleted = propertyMedia?.filter((_, i) => i !== index);
     } else {
       deleted = propertyMedia?.filter((file) => file !== image);
     }
     setPropertyMedia(deleted);
+  };
+
+  // delete attachment
+  const deleteAttachment = async (attachment) => {
+    console.log("we are deleting file : ", attachment);
+
+    const isUploaded = typeof attachment?.filePath === "string";
+    const isFile = isObjectFile(attachment);
+    let deleted = propertyMedia;
+    if (isFile) {
+      deleted = [];
+    } else if (isUploaded) {
+      console.log("its a File object");
+      await deleteFileFromDB(listingId, "attachments", attachment);
+      deleted = [];
+    } else {
+      deleted = [];
+    }
+    setAttachments(deleted);
   };
 
   return (
@@ -80,17 +101,17 @@ const PropertyMediaUploader = ({
                       }
                       alt="fp1.jpg"
                     />
-                    <div
-                      className="edu_stats_list "
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Delete"
-                      data-original-title="Delete"
-                    >
-                      <a onClick={() => deleteImage(item)}>
+                    <a onClick={() => deleteImage(item, index)}>
+                      <div
+                        className="edu_stats_list "
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Delete"
+                        data-original-title="Delete"
+                      >
                         <span className="flaticon-garbage"></span>
-                      </a>
-                    </div>
+                      </div>
+                    </a>
                   </div>
                   {errors && (
                     <div className="invalid-feedback mb-2">
@@ -131,8 +152,19 @@ const PropertyMediaUploader = ({
       <div className="col-xl-6">
         <div className="resume_uploader mb30">
           <h3>Attachments</h3>
-          {attachments.length > 0 && (
-            <div className="d-flex mb-3">
+          {attachments.length > 0 ? (
+            <div className="d-flex mb-3 position-relative">
+              <a onClick={() => deleteAttachment(attachments?.[0])}>
+                <div
+                  className="edu_stats_list "
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete"
+                  data-original-title="Delete"
+                >
+                  <span className="flaticon-garbage"></span>
+                </div>
+              </a>
               <div className="icon_box_area style2">
                 <div className="score">
                   <span className="flaticon-document text-thm fz30"></span>
@@ -149,13 +181,14 @@ const PropertyMediaUploader = ({
                 </div>
               </div>
             </div>
+          ) : (
+            <form className="form-inline d-flex flex-wrap wrap">
+              <label className="upload">
+                <input type="file" {...register("attachments")} />
+                Select Attachment
+              </label>
+            </form>
           )}
-          <form className="form-inline d-flex flex-wrap wrap">
-            <label className="upload">
-              <input type="file" {...register("attachments")} />
-              Select Attachment
-            </label>
-          </form>
         </div>
       </div>
       {/* End .col */}

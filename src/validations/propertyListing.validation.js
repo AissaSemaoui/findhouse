@@ -93,13 +93,7 @@ const propertyListingSchema = yup.object().shape({
     virtualTour360: yup.string().default(""),
   }),
   amenities: yup.array().of(yup.string()).default([]),
-  attachments: yup
-    .mixed()
-    .test(
-      "required",
-      "Please select an Image",
-      (value) => (value && value.length === 1) || value.filePath
-    ),
+  attachments: yup.mixed(),
   propertyMedia: yup
     .array()
     .of(fileSchema)

@@ -1,6 +1,6 @@
 const Attachments = ({ attachments }) => {
   return attachments.map((attachment) => (
-    <div className="icon_box_area style2">
+    <div className="icon_box_area style2" key={attachment.filePath}>
       <div className="score">
         <span className="flaticon-document text-thm fz30"></span>
       </div>

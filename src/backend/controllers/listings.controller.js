@@ -154,7 +154,7 @@ const removeListingImages = async (listingId, propertyName, fileInfo) => {
       if (index < 0) throw IMAGE_NOT_FOUND;
 
       await deleteImage(fileInfo.filePath);
-      removeFromArray(Listing.propertyMedia, index);
+      Listing.propertyMedia = removeFromArray(Listing.propertyMedia, index);
     } else if (propertyName === "floorPlans") {
       const plan = Listing.floorPlans.find(
         (p) => p.planImage.filePath === fileInfo.filePath
@@ -170,7 +170,7 @@ const removeListingImages = async (listingId, propertyName, fileInfo) => {
       if (index < 0) throw IMAGE_NOT_FOUND;
 
       await deleteImage(fileInfo.filePath);
-      removeFromArray(Listing.attachments, index);
+      Listing.attachments = removeFromArray(Listing.attachments, index);
     }
 
     await Listing.save();

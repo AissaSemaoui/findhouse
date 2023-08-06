@@ -1,13 +1,8 @@
 const removeFromArray = (arr, index) => {
+  console.log(arr.length);
   if (index < 0 || index >= arr.length) return;
 
-  // Move last element to index
-  arr[index] = arr[arr.length - 1];
-
-  // Truncate array
-  arr.length--;
-
-  return arr;
+  return arr.filter((_, i) => i !== index);
 };
 
 const generateQueryParams = (filterState) => {

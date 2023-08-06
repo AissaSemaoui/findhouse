@@ -93,6 +93,8 @@ function ListingForm({
           register={register}
           watch={watch}
           errors={errors?.floorPlans}
+          setValue={setValue}
+          listingId={listingId}
         />
       </div>
 
