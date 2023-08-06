@@ -24,8 +24,6 @@ const Amenities = ({ setValue, watch }) => {
     setValue("amenities", checkedAmenities);
   }, [checkedAmenities]);
 
-  console.log(checkedAmenities);
-
   return (
     <div className="amenities-container">
       {AMENITIES_LIST.map((amenity, index) => (

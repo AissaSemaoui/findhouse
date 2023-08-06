@@ -68,6 +68,7 @@ export const DEFAULT_LISTING = {
     videoURL: "",
     virtualTour360: "",
   },
+  attachments: [],
   propertyMedia: [],
   amenities: [],
   floorPlans: [],

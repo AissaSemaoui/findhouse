@@ -24,7 +24,6 @@ const router = createRouter();
 
 // Route for getting a single listing data
 router.get(async (req, res) => {
-  console.log("Retrieving single data...");
   try {
     await connectToDatabase();
 
@@ -48,7 +47,6 @@ const upload = multer({
 
 // Route for updating listing data
 router.put(async (req, res) => {
-  console.log("Updating data...", req.query);
   try {
     await connectToDatabase();
 
@@ -74,10 +72,8 @@ router.put(async (req, res) => {
       const { listingId } = req.query;
       const listingData = JSON.parse(req.body?.listingData);
       const files = req?.files;
-      console.log(files?.["attachments[]"]);
 
       const Listing = await updateListing(listingId, listingData, files);
-      console.log(Listing);
 
       return res
         .status(200)

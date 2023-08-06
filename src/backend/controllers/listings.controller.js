@@ -51,7 +51,7 @@ const createListing = async (listingData, files, admin) => {
 
       const planImages = files?.["planImages[]"] || [];
       const planImagesUrls = await uploadFiles(planImages);
-      console.log(planImagesUrls);
+
       listingData.floorPlans.forEach((floorPlan) => {
         const newImage = planImagesUrls.find((image) =>
           image.fileName?.includes(floorPlan.planImage.name)
@@ -72,7 +72,7 @@ const createListing = async (listingData, files, admin) => {
     };
 
     const isValid = await isValidListing(listingData);
-    console.log(isValid);
+
     if (!isValid) throw INVALID_REQUEST;
 
     const Listing = await PropertyListing.create(listingData);
@@ -98,12 +98,11 @@ const updateListing = async (listingId, listingData, files) => {
 
     const attachments = files?.["attachments[]"] || [];
     listingData.attachments = await uploadFiles(attachments);
-    console.log(attachments);
 
     const planImages = files?.["planImages[]"] || [];
     if (planImages.length > 0) {
       const planImagesUrls = await uploadFiles(planImages);
-      console.log(planImagesUrls);
+
       listingData.floorPlans.forEach((floorPlan) => {
         const newImage = planImagesUrls.find((image) =>
           image.fileName?.includes(floorPlan.planImage.name)
@@ -268,7 +267,6 @@ const generateMongooseListingFilters = (filterQueries) => {
   }
 
   if (filterQueries.isFeatured) {
-    console.log(filterQueries.isFeatured);
     filters.isFeatured = true;
   }
 
@@ -282,7 +280,6 @@ const generateMongooseListingFilters = (filterQueries) => {
     filters.$and = andFilters;
   }
 
-  console.log(filters);
   return filters;
 };
 

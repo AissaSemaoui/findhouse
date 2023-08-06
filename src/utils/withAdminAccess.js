@@ -7,8 +7,6 @@ export const withAdminAccess = async (WrappedComponent) => {
   const WithAdminAccess = (props) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-    console.log("isAuthenticated : ", isAuthenticated);
-
     // useEffect(() => {
     //   if (isAuthenticated === false) {
     //     router.replace("/");

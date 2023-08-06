@@ -1,8 +1,14 @@
 const removeFromArray = (arr, index) => {
-  console.log(arr.length);
   if (index < 0 || index >= arr.length) return;
 
   return arr.filter((_, i) => i !== index);
+};
+
+const extractYouTubeVideoId = (url) => {
+  const match = url.match(
+    /(?:\?v=|\/embed\/|\/\d\/|\/vi\/|\/v\/|https:\/\/www\.youtube\.com\/watch\?v=|https:\/\/youtu\.be\/)([^#\&\?\n]*)/
+  );
+  return match && match[1];
 };
 
 const generateQueryParams = (filterState) => {
@@ -53,4 +59,4 @@ const generateQueryParams = (filterState) => {
   return queryParams.join("&");
 };
 
-export { removeFromArray, generateQueryParams };
+export { removeFromArray, generateQueryParams, extractYouTubeVideoId };

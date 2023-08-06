@@ -4,36 +4,20 @@ import properties from "../../../data/properties";
 import { getAddressString } from "../../../utils/address";
 import Loader from "../../common/Loader";
 
-const FeaturedItem = ({ allListings, isError, isLoading }) => {
+const FeaturedItem = ({ allListings, isError, isLoading, refetch }) => {
   const { statusType, featured, isGridOrList } = useSelector(
     (state) => state.filter
   );
 
   if (isLoading) return <Loader />;
 
-  if (isError) return <h1>Ops we got an error!</h1>;
-
-  // properties
-  // ?.slice(10, 16)
-  // ?.filter(keywordHandler)
-  // ?.filter(locationHandler)
-  // ?.filter(statusHandler)
-  // ?.filter(propertiesHandler)
-  // ?.filter(priceHandler)
-  // ?.filter(bathroomHandler)
-  // ?.filter(bedroomHandler)
-  // ?.filter(garagesHandler)
-  // ?.filter(builtYearsHandler)
-  // ?.filter(areaHandler)
-  // ?.filter(advanceHandler)
-  // ?.sort(statusTypeHandler)
-  // ?.filter(featuredHandler)
-
-  // add length of filter items
-  // useEffect(() => {
-  //   console.log(content);
-  //   dispatch(addLength(content.length));
-  // }, [dispatch, addLength, content]);
+  if (isError)
+    return (
+      <div>
+        <h1>Ops we got an error!</h1>
+        <button onClick={refetch}>Retry</button>
+      </div>
+    );
 
   if (allListings.length === 0) return <h1>Unfortently, nothing found!</h1>;
 
@@ -128,7 +112,7 @@ const FeaturedItem = ({ allListings, isError, isLoading }) => {
               </li>
             </ul>
             <div className="fp_pdate float-end">
-              {listing.detailedInfo.yearBuilt}
+              {listing?.detailedInfo?.yearBuilt}
             </div>
           </div>
           {/* End .fp_footer */}

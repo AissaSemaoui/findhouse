@@ -14,7 +14,6 @@ import {
 const router = createRouter();
 
 router.get(async (req, res) => {
-  console.log("we are getting the data!", req.query);
   try {
     await connectToDatabase();
 

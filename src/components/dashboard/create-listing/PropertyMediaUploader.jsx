@@ -12,10 +12,8 @@ const PropertyMediaUploader = ({
   listingId,
 }) => {
   const propertyMedia = watch("propertyMedia") || [];
-  console.log("this is the propertyMedia : ", propertyMedia);
 
   const attachments = watch("attachments");
-  console.log("here are the attachments : ", attachments);
 
   const attachmentUrl =
     typeof attachments?.[0]?.filePath === "string"
@@ -32,7 +30,6 @@ const PropertyMediaUploader = ({
     setValue("propertyMedia", value);
   };
 
-  console.log("hi from the array of media v1 : ", propertyMedia);
   // multiple image select
   const multipleImage = (e) => {
     // checking is same file matched with old stored array
@@ -56,7 +53,6 @@ const PropertyMediaUploader = ({
     if (isFile) {
       deleted = propertyMedia?.filter((_, i) => i !== index);
     } else if (isUploaded) {
-      console.log("its a File object");
       await deleteFileFromDB(listingId, "propertyMedia", image);
       deleted = propertyMedia?.filter((_, i) => i !== index);
     } else {
@@ -67,15 +63,12 @@ const PropertyMediaUploader = ({
 
   // delete attachment
   const deleteAttachment = async (attachment) => {
-    console.log("we are deleting file : ", attachment);
-
     const isUploaded = typeof attachment?.filePath === "string";
     const isFile = isObjectFile(attachment);
     let deleted = propertyMedia;
     if (isFile) {
       deleted = [];
     } else if (isUploaded) {
-      console.log("its a File object");
       await deleteFileFromDB(listingId, "attachments", attachment);
       deleted = [];
     } else {
@@ -152,7 +145,7 @@ const PropertyMediaUploader = ({
       <div className="col-xl-6">
         <div className="resume_uploader mb30">
           <h3>Attachments</h3>
-          {attachments.length > 0 ? (
+          {attachments?.length > 0 ? (
             <div className="d-flex mb-3 position-relative">
               <a onClick={() => deleteAttachment(attachments?.[0])}>
                 <div

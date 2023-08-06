@@ -11,7 +11,6 @@ const Attachments = ({ attachments }) => {
             download
             className="flaticon-download text-thm pr10"
           ></a>
-          Demo Word
           {attachment.fileName}
         </h5>
       </div>

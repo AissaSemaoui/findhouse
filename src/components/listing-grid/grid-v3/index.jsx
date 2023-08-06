@@ -20,7 +20,6 @@ const Index = () => {
   const filters = useSelector((state) => state.properties);
 
   const filterQueries = generateQueryParams(filters);
-  console.log("here is the query : ", filterQueries);
 
   const {
     data: allListings,
@@ -29,9 +28,8 @@ const Index = () => {
     isLoading,
     status,
     isFetching,
+    refetch,
   } = useGetAllListingsQuery({ currentPage, filterQueries });
-
-  console.log("here is the is loading : ", isLoading, isFetching, status);
 
   return (
     <>
@@ -113,6 +111,7 @@ const Index = () => {
                   allListings={allListings?.data?.listings}
                   isError={isError}
                   isLoading={isFetching || isLoading}
+                  refetch={refetch}
                 />
               </div>
               {/* End .row */}

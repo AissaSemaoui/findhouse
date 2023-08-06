@@ -34,7 +34,6 @@ const Index = () => {
   ] = useUpdateListingMutation();
 
   const handleUpdateListing = async (formListingData) => {
-    console.log("trying to update things");
     const listingData = { ...formListingData };
 
     const ListingForm = new FormData();
@@ -72,7 +71,7 @@ const Index = () => {
     if (response.data.success) router.push("/my-dashboard");
   };
 
-  if (data) console.log("here is the listing dod : ", data);
+  if (data) console.log(data);
 
   if (isLoading) return <Loader />;
 

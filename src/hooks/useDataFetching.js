@@ -25,7 +25,6 @@ const useDataFetching = () => {
         response = await axios[method](url, body, { headers });
       }
 
-      console.log(response);
       // Assuming your API response has a "success" property
       if (response.data && response.data.success) {
         setData(response.data.data);

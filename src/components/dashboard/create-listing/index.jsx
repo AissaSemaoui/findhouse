@@ -15,7 +15,6 @@ const Index = () => {
 
   const handleCreateNewListing = async (listingData, handleReset) => {
     const ListingForm = new FormData();
-    console.log(listingData);
 
     // Preparing images for upload
     const propertyMedia = listingData?.propertyMedia;
@@ -29,7 +28,6 @@ const Index = () => {
       floorPlan.planImage = { name: planImage.name };
       return planImage;
     });
-    console.log(planImages, propertyMedia);
 
     // Appending data into the FormData
     propertyMedia.forEach((media) => {
@@ -52,8 +50,6 @@ const Index = () => {
       router.push("/my-dashboard");
     }
   };
-
-  if (data) console.log(data);
 
   return (
     <>

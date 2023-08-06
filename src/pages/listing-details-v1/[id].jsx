@@ -25,7 +25,6 @@ const ListingDynamicDetailsV1 = () => {
   if (isError) return <h1>We got an error! {error.message}</h1>;
 
   const listingData = data?.data;
-  console.log(data);
   return (
     <>
       {/* <!-- Main Header Nav --> */}

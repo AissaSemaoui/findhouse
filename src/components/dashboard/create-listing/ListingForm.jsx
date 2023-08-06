@@ -32,15 +32,11 @@ function ListingForm({
     defaultValues,
   });
 
-  console.log("here is the property Media : ", watch("propertyMedia"));
-
-  console.log(errors);
-
   const handleReset = () => {
     reset(DEFAULT_LISTING);
   };
 
-  if (isError) console.log("this is the response error : ", error);
+  if (isError) console.log(error);
 
   return (
     <form

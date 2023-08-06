@@ -27,7 +27,6 @@ router.post(async (req, res) => {
       .status(200)
       .json(formatResponse(true, "Image delete successfully", Listing));
   } catch (err) {
-    console.log("Error deleting image from listing : ", err);
     let error = {
       statusCode: 500,
       message: SERVER_ERROR,

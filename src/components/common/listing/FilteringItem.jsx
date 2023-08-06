@@ -59,8 +59,6 @@ const FilteringItem = () => {
 
   const dispath = useDispatch();
 
-  console.log(getBathroom);
-
   // keyword
   useEffect(() => {
     dispath(addKeyword(getKeyword));
@@ -105,8 +103,6 @@ const FilteringItem = () => {
   const submitHandler = () => {
     setIsSubmitted((prev) => !prev);
   };
-
-  console.log(getCheckedAmenities);
 
   const clearAllFilters = () => {
     setKeyword("");

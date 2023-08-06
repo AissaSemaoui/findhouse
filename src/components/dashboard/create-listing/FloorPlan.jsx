@@ -18,14 +18,12 @@ const FloorPlan = ({ register, errors, watch, index, setValue, listingId }) => {
 
   // delete planImage
   const deletePlanImage = async (planImage) => {
-    console.log("we are deleting file : ", planImage);
     const isUploaded = typeof planImage?.filePath === "string";
     const isFile = isObjectFile(planImage);
     let deleted = planImage;
     if (isFile) {
       deleted = null;
     } else if (isUploaded) {
-      console.log("its a File object");
       await deleteFileFromDB(listingId, "floorPlans", planImage);
       deleted = null;
     } else {

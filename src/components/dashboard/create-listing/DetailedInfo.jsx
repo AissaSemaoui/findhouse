@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import FormInput from "../../common/FormInput";
 import Amenities from "./Amenities";
@@ -124,7 +124,7 @@ const DetailedInfo = ({ register, errors, setValue, watch }) => {
 
       <div className="col-lg-6 col-xl-4">
         <FormInput
-          label="Video URL"
+          label="Youtube Video URL"
           name="detailedInfo.videoURL"
           className="my_profile_setting_input"
           register={register}
@@ -135,7 +135,7 @@ const DetailedInfo = ({ register, errors, setValue, watch }) => {
 
       <div className="col-lg-6 col-xl-4">
         <FormInput
-          label="360° Virtual Tour"
+          label="Youtube 360° Virtual Tour"
           name="detailedInfo.virtualTour360"
           className="my_profile_setting_input"
           register={register}
