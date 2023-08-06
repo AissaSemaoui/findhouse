@@ -55,7 +55,7 @@ const DetailsContent = ({ listingData }) => {
       <div className="property_attachment_area">
         <h4 className="mb30">Property Attachments</h4>
         <div className="iba_container style2">
-          <Attachments />
+          <Attachments attachments={listingData?.attachments} />
         </div>
       </div>
       {/* End .property_attachment_area */}

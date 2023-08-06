@@ -16,6 +16,7 @@ import MobileMenu from "../../components/common/header/MobileMenu";
 import PopupSignInUp from "../../components/common/PopupSignInUp";
 import Seo from "../../components/common/seo";
 import blogs from "../../data/blogs";
+import Loader from "../../components/common/Loader";
 
 const BlogDetailsDynamic = () => {
   const router = useRouter();
@@ -23,11 +24,10 @@ const BlogDetailsDynamic = () => {
   const id = router.query.id;
 
   useEffect(() => {
-    if (!id) <h1>Loading...</h1>;
-    else setBlogItem(blogs.find((item) => item.id == id));
-
-    return () => {};
+    if (id) setBlogItem(blogs.find((item) => item.id == id));
   }, [id]);
+
+  if (!id) return <Loader />;
 
   return (
     <>
@@ -259,6 +259,6 @@ const BlogDetailsDynamic = () => {
 };
 
 export default dynamic(() => Promise.resolve(BlogDetailsDynamic), {
-  loading: () => <h1>Loading component...</h1>,
+  loading: () => <Loader />,
   ssr: false,
 });

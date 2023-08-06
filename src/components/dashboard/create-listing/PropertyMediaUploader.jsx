@@ -4,13 +4,25 @@ import selectedFiles from "../../../utils/selectedFiles";
 import { isObjectFile } from "../../../utils/file";
 import { deleteFileFromDB } from "../../../features/listings";
 
-const PropertyMediaUploader = ({ setValue, errors, watch, listingId }) => {
-  // const [propertyMedia, setPropertyMedia] = useState(
-  //   watch("propertyMedia") || []
-  // );
-
+const PropertyMediaUploader = ({
+  register,
+  setValue,
+  errors,
+  watch,
+  listingId,
+}) => {
   const propertyMedia = watch("propertyMedia") || [];
   console.log("this is the propertyMedia : ", propertyMedia);
+
+  const attachments = watch("attachments");
+  console.log("here are the attachments : ", attachments);
+
+  const attachmentUrl =
+    typeof attachments?.[0]?.filePath === "string"
+      ? attachments?.[0]?.filePath
+      : isObjectFile(attachments?.[0])
+      ? URL.createObjectURL(attachments[0])
+      : "";
 
   const setPropertyMedia = (value) => {
     setValue("propertyMedia", value);
@@ -50,10 +62,6 @@ const PropertyMediaUploader = ({ setValue, errors, watch, listingId }) => {
     }
     setPropertyMedia(deleted);
   };
-
-  // useEffect(() => {
-  //   setValue("propertyMedia", propertyMedia);
-  // }, [propertyMedia]);
 
   return (
     <div className="row">
@@ -123,10 +131,28 @@ const PropertyMediaUploader = ({ setValue, errors, watch, listingId }) => {
       <div className="col-xl-6">
         <div className="resume_uploader mb30">
           <h3>Attachments</h3>
+          {attachments.length > 0 && (
+            <div className="d-flex mb-3">
+              <div className="icon_box_area style2">
+                <div className="score">
+                  <span className="flaticon-document text-thm fz30"></span>
+                </div>
+                <div className="details">
+                  <h5>
+                    <a
+                      href={attachmentUrl}
+                      download
+                      className="flaticon-download text-thm pr10"
+                    ></a>
+                    {attachments?.[0]?.name || attachments?.[0]?.fileName}
+                  </h5>
+                </div>
+              </div>
+            </div>
+          )}
           <form className="form-inline d-flex flex-wrap wrap">
-            <input className="upload-path" />
             <label className="upload">
-              <input type="file" />
+              <input type="file" {...register("attachments")} />
               Select Attachment
             </label>
           </form>

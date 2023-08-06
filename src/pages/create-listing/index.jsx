@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import Seo from "../../components/common/seo";
 import CreateListing from "../../components/dashboard/create-listing";
 import { withAdminAccess } from "../../utils/withAdminAccess";
+import Loader from "../../components/common/Loader";
 
 const Index = () => {
   return (
@@ -13,6 +14,6 @@ const Index = () => {
 };
 
 export default dynamic(() => Promise.resolve(withAdminAccess(Index)), {
-  loading: () => <h1>Loading component...</h1>,
+  loading: () => <Loader />,
   ssr: false,
 });

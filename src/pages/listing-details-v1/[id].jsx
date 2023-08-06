@@ -12,6 +12,7 @@ import DetailsContent from "../../components/listing-details-v1/DetailsContent";
 import Sidebar from "../../components/listing-details-v1/Sidebar";
 import { useGetSingleListingQuery } from "../../features/listings/listingsApi";
 import { getAddressString } from "../../utils/address";
+import Loader from "../../components/common/Loader";
 
 const ListingDynamicDetailsV1 = () => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const ListingDynamicDetailsV1 = () => {
 
   const { data, isError, error, isLoading } = useGetSingleListingQuery(id);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
   if (isError) return <h1>We got an error! {error.message}</h1>;
 
   const listingData = data?.data;

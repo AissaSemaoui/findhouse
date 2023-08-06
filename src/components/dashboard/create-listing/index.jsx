@@ -17,19 +17,26 @@ const Index = () => {
     const ListingForm = new FormData();
     console.log(listingData);
 
+    // Preparing images for upload
     const propertyMedia = listingData?.propertyMedia;
     listingData.propertyMedia = [];
 
+    const attachment = listingData?.attachments?.[0];
+    listingData.attachments = [];
+
     const planImages = listingData?.floorPlans?.map((floorPlan) => {
       const planImage = floorPlan.planImage[0];
-      floorPlan.planImage = null;
+      floorPlan.planImage = { name: planImage.name };
       return planImage;
     });
     console.log(planImages, propertyMedia);
 
+    // Appending data into the FormData
     propertyMedia.forEach((media) => {
       ListingForm.append("propertyMedia[]", media);
     });
+
+    ListingForm.append("attachments[0]", attachment);
 
     planImages.forEach((media) => {
       ListingForm.append("planImages[]", media);
@@ -37,6 +44,7 @@ const Index = () => {
 
     ListingForm.append("listingData", JSON.stringify(listingData));
 
+    // Submiting the request for creating listing
     const response = await createListing(ListingForm);
 
     if (response.data.success) {

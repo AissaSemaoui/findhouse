@@ -9,6 +9,7 @@ import MobileMenu from "../../components/common/header/MobileMenu";
 import PopupSignInUp from "../../components/common/PopupSignInUp";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Loader from "../../components/common/Loader";
 
 const AgentDetailsDynamic = () => {
   const router = useRouter();
@@ -16,11 +17,10 @@ const AgentDetailsDynamic = () => {
   const id = router.query.id;
 
   useEffect(() => {
-    if (!id) <h1>Loading...</h1>;
-    else setAgentItem(agents.find((item) => item.id == id));
-
-    return () => {};
+    if (id) setAgentItem(agents.find((item) => item.id == id));
   }, [id]);
+
+  if (!id) return <Loader />;
 
   return (
     <>

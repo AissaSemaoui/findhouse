@@ -45,6 +45,12 @@ const propertyListingSchema = new mongoose.Schema({
       filePath: { type: String, required: true },
     },
   ],
+  attachments: [
+    {
+      fileName: { type: String, required: true },
+      filePath: { type: String, required: true },
+    },
+  ],
   floorPlans: [
     {
       planDescription: { type: String, default: "" },

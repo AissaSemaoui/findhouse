@@ -18,30 +18,47 @@ const isValidListing = async (listingData) => {
 
 const getPaginatedListings = async (req, filters = {}) => {
   const isAllPages = req.query?.page === "all";
+  const numberOfResults = await PropertyListing.countDocuments(filters);
 
   if (isAllPages) {
     const listings = await PropertyListing.find(filters);
-    return { totalPages: 1, currentPage: 1, listings };
+    return { totalPages: 1, currentPage: 1, numberOfResults, listings };
   }
 
   const currentPage = Number(req?.query?.page) || 1;
 
-  let totalPages =
-    (await PropertyListing.countDocuments(filters)) / ITEMS_PER_PAGE;
+  let totalPages = numberOfResults / ITEMS_PER_PAGE;
   totalPages = Math.ceil(totalPages);
 
   const listings = await PropertyListing.find(filters)
     .skip((currentPage - 1) * ITEMS_PER_PAGE)
     .limit(ITEMS_PER_PAGE);
 
-  return { totalPages, currentPage, listings };
+  return { totalPages, currentPage, numberOfResults, listings };
 };
 
 const createListing = async (listingData, files, admin) => {
   try {
-    const isValid = await isValidListing(listingData);
-    console.log(isValid);
-    // if (!isValid) throw INVALID_REQUEST;
+    // Upload images
+    if (files) {
+      const propertyMedia = files?.["propertyMedia[]"] || [];
+      if (propertyMedia.length > 0) {
+        listingData.propertyMedia = await uploadFiles(propertyMedia);
+      }
+
+      const attachments = files?.["attachments[]"] || [];
+      listingData.attachments = await uploadFiles(attachments);
+
+      const planImages = files?.["planImages[]"] || [];
+      const planImagesUrls = await uploadFiles(planImages);
+      console.log(planImagesUrls);
+      listingData.floorPlans.forEach((floorPlan) => {
+        const newImage = planImagesUrls.find((image) =>
+          image.fileName?.includes(floorPlan.planImage.name)
+        );
+        if (newImage) floorPlan.planImage = newImage;
+      });
+    }
 
     // Generate ID
     listingData.detailedInfo.propertyID = generateUniqueId();
@@ -54,16 +71,11 @@ const createListing = async (listingData, files, admin) => {
       email: admin.email,
     };
 
-    // Create listing
-    const Listing = await PropertyListing.create(listingData);
+    const isValid = await isValidListing(listingData);
+    console.log(isValid);
+    if (!isValid) throw INVALID_REQUEST;
 
-    // Upload images
-    if (files) {
-      Listing.propertyMedia = await uploadFiles(files.propertyMedia);
-      Listing.floorPlans.forEach((plan) => {
-        plan.image = files.planImages[index];
-      });
-    }
+    const Listing = await PropertyListing.create(listingData);
 
     await Listing.save();
 
@@ -83,6 +95,10 @@ const updateListing = async (listingId, listingData, files) => {
       const newUploadedFiles = await uploadFiles(propertyMedia);
       listingData.propertyMedia.push(...newUploadedFiles);
     }
+
+    const attachments = files?.["attachments[]"] || [];
+    listingData.attachments = await uploadFiles(attachments);
+    console.log(attachments);
 
     const planImages = files?.["planImages[]"] || [];
     if (planImages.length > 0) {
@@ -115,6 +131,9 @@ const removeListing = async (listingId) => {
     if (!Listing) throw LISTING_NOT_FOUND;
 
     Listing.propertyMedia.forEach((media) => deleteImage(media.filePath));
+    Listing.attachments.forEach((attachment) =>
+      deleteImage(attachment.filePath)
+    );
     Listing.floorPlans.forEach((plan) => deleteImage(plan.planImage.filePath));
 
     return await Listing.deleteOne();
@@ -144,6 +163,14 @@ const removeListingImages = async (listingId, propertyName, fileInfo) => {
 
       await deleteImage(fileInfo.filePath);
       plan.planImage = null;
+    } else if (propertyName === "attachments") {
+      const index = Listing.attachments.findIndex(
+        (a) => a.filePath === fileInfo.filePath
+      );
+      if (index < 0) throw IMAGE_NOT_FOUND;
+
+      await deleteImage(fileInfo.filePath);
+      removeFromArray(Listing.attachments, index);
     }
 
     await Listing.save();
@@ -165,6 +192,12 @@ const generateMongooseListingFilters = (filterQueries) => {
         { propertyTitle: new RegExp(filterQueries.keyword, "i") },
         { propertyDescription: new RegExp(filterQueries.keyword, "i") },
       ],
+    });
+  }
+
+  if (filterQueries.status) {
+    andFilters.push({
+      status: { $regex: new RegExp(filterQueries.status, "i") },
     });
   }
 

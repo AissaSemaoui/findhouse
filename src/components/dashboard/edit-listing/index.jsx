@@ -10,8 +10,9 @@ import {
 } from "../../../features/listings/listingsApi";
 import { useRouter } from "next/router";
 import { isObjectFile } from "../../../utils/file";
+import Loader from "../../common/Loader";
 
-const Index = ({ mode }) => {
+const Index = () => {
   const router = useRouter();
   const listingId = router.query?.listingId;
 
@@ -51,6 +52,11 @@ const Index = ({ mode }) => {
       ListingForm.append("propertyMedia[]", media);
     });
 
+    const attachment = listingData?.attachments?.[0];
+    listingData.attachments = [];
+
+    ListingForm.append("attachments[]", attachment);
+
     listingData?.floorPlans?.forEach((floorPlan) => {
       if (isObjectFile(floorPlan?.planImage?.[0])) {
         const planImage = floorPlan.planImage[0];
@@ -68,7 +74,7 @@ const Index = ({ mode }) => {
 
   if (data) console.log("here is the listing dod : ", data);
 
-  if (isLoading) return <h1>Its looading...</h1>;
+  if (isLoading) return <Loader />;
 
   return (
     <>
@@ -123,7 +129,6 @@ const Index = ({ mode }) => {
                 <ListingForm
                   defaultValues={listing?.data}
                   onSubmit={handleUpdateListing}
-                  mode={mode}
                   isError={isError || isUpdateError}
                   error={error || updateError}
                   isLoading={isLoading || isUpdateLoading}

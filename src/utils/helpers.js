@@ -13,6 +13,7 @@ const removeFromArray = (arr, index) => {
 const generateQueryParams = (filterState) => {
   const {
     keyword,
+    status,
     propertyType,
     location,
     price,
@@ -29,6 +30,7 @@ const generateQueryParams = (filterState) => {
   const queryParams = [];
 
   if (keyword) queryParams.push(`keyword=${encodeURIComponent(keyword)}`);
+  if (status) queryParams.push(`status=${encodeURIComponent(status)}`);
   if (propertyType)
     queryParams.push(`propertyType=${encodeURIComponent(propertyType)}`);
   if (location) queryParams.push(`location=${encodeURIComponent(location)}`);

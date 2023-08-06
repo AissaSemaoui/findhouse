@@ -1,12 +1,10 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFeatured,
   addStatusType,
 } from "../../../features/filter/filterSlice";
 import {
-  addAmenities,
   addAreaMax,
   addAreaMin,
   addBathrooms,
@@ -22,8 +20,6 @@ import {
   setAmenities,
 } from "../../../features/properties/propertiesSlice";
 import PricingRangeSlider from "../../common/PricingRangeSlider";
-import { v4 as uuidv4 } from "uuid";
-import { useRouter } from "next/router";
 import {
   AMENITIES_LIST,
   PROPERTY_TYPES,
@@ -212,7 +208,7 @@ const FilteringItem = () => {
             >
               <option value="">Property Type</option>
               {PROPERTY_TYPES.map((type) => (
-                <option value={type} key={status}>
+                <option value={type} key={type}>
                   {type}
                 </option>
               ))}

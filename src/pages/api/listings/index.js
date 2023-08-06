@@ -18,16 +18,18 @@ router.get(async (req, res) => {
   try {
     await connectToDatabase();
 
-    const { listings, currentPage, totalPages } = await getPaginatedListings(
-      req,
-      generateMongooseListingFilters(req.query)
-    );
+    const { listings, currentPage, totalPages, numberOfResults } =
+      await getPaginatedListings(
+        req,
+        generateMongooseListingFilters(req.query)
+      );
 
     res.status(200).json(
-      formatResponse(true, "Yeeey here are all the ", {
+      formatResponse(true, "You've got what you want!", {
         listings,
         currentPage,
         totalPages,
+        numberOfResults,
       })
     );
   } catch (err) {

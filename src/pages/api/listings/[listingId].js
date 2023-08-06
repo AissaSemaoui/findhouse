@@ -58,7 +58,11 @@ router.put(async (req, res) => {
       return res.status(401).json(formatResponse(false, UNAUTHORIZED));
     console.timeEnd("isAdmin");
 
-    const fileTypes = [{ name: "propertyMedia[]" }, { name: "planImages[]" }];
+    const fileTypes = [
+      { name: "propertyMedia[]" },
+      { name: "planImages[]" },
+      { name: "attachments[]" },
+    ];
 
     // Handle file upload
     return upload.fields(fileTypes)(req, res, async (err) => {
@@ -70,8 +74,10 @@ router.put(async (req, res) => {
       const { listingId } = req.query;
       const listingData = JSON.parse(req.body?.listingData);
       const files = req?.files;
+      console.log(files?.["attachments[]"]);
 
       const Listing = await updateListing(listingId, listingData, files);
+      console.log(Listing);
 
       return res
         .status(200)

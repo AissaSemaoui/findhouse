@@ -80,6 +80,7 @@ function ListingForm({
           <h3 className="mb30">Property media</h3>
         </div>
         <PropertyMediaUploader
+          register={register}
           watch={watch}
           setValue={setValue}
           errors={errors?.propertyMedia}

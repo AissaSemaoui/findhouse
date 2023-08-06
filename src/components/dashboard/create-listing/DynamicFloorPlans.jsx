@@ -9,7 +9,7 @@ const DynamicFloorPlans = ({ register, errors, watch, control }) => {
     name: "floorPlans",
   });
 
-  console.log(fields);
+  console.log("all Plans : ", watch("floorPlans"));
   // State to keep track of the currently viewed floor plan index
   const [currentPlanIndex, setCurrentPlanIndex] = useState(0);
 

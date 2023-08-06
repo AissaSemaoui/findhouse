@@ -34,7 +34,11 @@ router.post(async (req, res) => {
     console.timeEnd("isAdmin");
 
     // Define the file types to be uploaded
-    const fileTypes = [{ name: "propertyMedia[]" }, { name: "planImages[]" }];
+    const fileTypes = [
+      { name: "propertyMedia[]" },
+      { name: "planImages[]" },
+      { name: "attachments[]" },
+    ];
 
     // Upload the files
     return upload.fields(fileTypes)(req, res, async (err) => {

@@ -6,7 +6,7 @@ import {
   addStatusType,
 } from "../../../features/filter/filterSlice";
 
-const FilterTopBar = () => {
+const FilterTopBar = ({ numberOfResults }) => {
   const { length } = useSelector((state) => state.properties);
   const { statusType, featured } = useSelector((state) => state.filter);
   const [getStatus, setStatus] = useState(statusType);
@@ -35,13 +35,10 @@ const FilterTopBar = () => {
       <div className="col-sm-12 col-md-4 col-lg-4 col-xl-5">
         <div className="left_area tac-xsd">
           <p>
-            <span className={length === 0 ? "text-danger" : undefined}>
-              {length}{" "}
-            </span>
-            {length !== 0 ? (
-              "Search results"
+            {numberOfResults ? (
+              `${numberOfResults} Result found!`
             ) : (
-              <span className="text-danger">Not found results</span>
+              <span className="text-danger">No result found!</span>
             )}
           </p>
         </div>

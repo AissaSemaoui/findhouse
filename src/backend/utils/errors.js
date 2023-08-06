@@ -1,6 +1,7 @@
 // 404 Not Found
 export const LISTING_NOT_FOUND = "Listing not found!";
-export const IMAGE_NOT_FOUND = "Image not found!";
+export const IMAGE_NOT_FOUND = "File not found!";
+export const NOT_FOUND = "Not found!";
 
 // 400 Bad Request
 export const INVALID_REQUEST = "Invalid request";

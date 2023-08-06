@@ -2,13 +2,14 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import properties from "../../../data/properties";
 import { getAddressString } from "../../../utils/address";
+import Loader from "../../common/Loader";
 
 const FeaturedItem = ({ allListings, isError, isLoading }) => {
   const { statusType, featured, isGridOrList } = useSelector(
     (state) => state.filter
   );
 
-  if (isLoading) return <h1>loading...</h1>;
+  if (isLoading) return <Loader />;
 
   if (isError) return <h1>Ops we got an error!</h1>;
 

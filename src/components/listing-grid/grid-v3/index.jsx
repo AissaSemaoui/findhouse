@@ -101,10 +101,11 @@ const Index = () => {
             <div className="col-md-12 col-lg-8">
               <div className="grid_list_search_result ">
                 <div className="row align-items-center">
-                  <FilterTopBar />
+                  <FilterTopBar
+                    numberOfResults={allListings?.data?.numberOfResults || 0}
+                  />
                 </div>
               </div>
-              {/* End .row */}
               {/* End .row */}
 
               <div className="row">
