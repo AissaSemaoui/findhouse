@@ -6,7 +6,7 @@ import { getAllListings } from "../features/listings";
 export const getServerSideProps = async () => {
   try {
     const { listings } = await getAllListings("page=all&isFeatured=true");
-
+    console.log(process.env);
     return {
       props: {
         featuredListings: listings,
