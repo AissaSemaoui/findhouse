@@ -1,14 +1,11 @@
 import { createRouter } from "next-connect";
 import multer from "multer";
 import { connectToDatabase } from "../../../backend/utils/db";
-import PropertyListing from "../../../backend/models/PropertyListing.schema";
 import {
-  generateUniqueId,
   onError,
   onNoMatch,
   formatResponse,
 } from "../../../backend/utils/apiHelpers";
-import { uploadFiles } from "../../../backend/utils/s3";
 import { verifyAdminAccess } from "../../../backend/controllers/admin.controller";
 import { createListing } from "../../../backend/controllers/listings.controller";
 import { SERVER_ERROR } from "../../../backend/utils/errors";

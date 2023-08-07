@@ -45,7 +45,7 @@ const Index = () => {
     // Submiting the request for creating listing
     const response = await createListing(ListingForm);
 
-    if (response.data.success) {
+    if (response.data?.success) {
       handleReset();
       router.push("/my-dashboard");
     }

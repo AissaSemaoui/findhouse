@@ -11,6 +11,7 @@ import {
   INVALID_REQUEST,
   LISTING_NOT_FOUND,
 } from "../utils/errors";
+import { generateUniqueId } from "../utils/apiHelpers";
 
 const isValidListing = async (listingData) => {
   return await backendPropertyListingSchema.isValid(listingData);
