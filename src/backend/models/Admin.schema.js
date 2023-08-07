@@ -22,7 +22,7 @@ const adminSchema = new mongoose.Schema({
   },
 });
 
-adminSchema.post("save", async (next) => {
+adminSchema.post("save", async function (next) {
   try {
     if (this.isModified && this.isModified()) {
       await mongoose.models.PropertyListing.updateMany({
