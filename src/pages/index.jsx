@@ -5,9 +5,10 @@ import { getAllListings } from "../features/listings";
 
 export const getServerSideProps = async () => {
   const { listings } = await getAllListings("page=all&isFeatured=true");
+
   return {
     props: {
-      featuredListings: listings,
+      featuredListings: listings || [],
     },
   };
 };
