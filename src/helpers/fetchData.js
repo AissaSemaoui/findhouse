@@ -15,6 +15,7 @@ const fetchData = async ({ url, method, body = null, headers = {} }) => {
       throw new Error(response.data.message || "Request failed");
     }
   } catch (error) {
+    console.log("error is in fetchData : ", error);
     throw new Error(error.message || "Request failed");
   }
 };

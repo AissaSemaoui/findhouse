@@ -4,13 +4,22 @@ import HomeMain from "../components/home";
 import { getAllListings } from "../features/listings";
 
 export const getServerSideProps = async () => {
-  const { listings } = await getAllListings("page=all&isFeatured=true");
+  try {
+    const { listings } = await getAllListings("page=all&isFeatured=true");
 
-  return {
-    props: {
-      featuredListings: listings || [],
-    },
-  };
+    return {
+      props: {
+        featuredListings: listings,
+      },
+    };
+  } catch (error) {
+    console.log("Error is here in the getServerSideProps : ", error);
+    return {
+      props: {
+        featuredListings: [],
+      },
+    };
+  }
 };
 
 const Index = ({ featuredListings }) => {

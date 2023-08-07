@@ -24,7 +24,7 @@ const adminSchema = new mongoose.Schema({
 
 adminSchema.post("save", async (next) => {
   try {
-    if (this.isModified()) {
+    if (this.isModified && this.isModified()) {
       await mongoose.models.PropertyListing.updateMany({
         "poster.id": this._id,
       }),
