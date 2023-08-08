@@ -39,8 +39,6 @@ const getPaginatedListings = async (page, filters = {}) => {
 };
 
 const getAllListings = async (query) => {
-  console.log(query);
-
   const page = query?.page;
 
   try {

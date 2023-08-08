@@ -175,12 +175,12 @@ const PropertyMediaUploader = ({
               </div>
             </div>
           ) : (
-            <form className="form-inline d-flex flex-wrap wrap">
+            <div className="form-inline d-flex flex-wrap wrap">
               <label className="upload">
                 <input type="file" {...register("attachments")} />
                 Select Attachment
               </label>
-            </form>
+            </div>
           )}
         </div>
       </div>

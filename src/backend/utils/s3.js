@@ -18,7 +18,7 @@ const uploadFile = (file) => {
     const uploadParams = {
       Bucket: bucketName,
       Body: file.buffer,
-      Key: file.originalname,
+      Key: `${Date.now()}-${file.originalname}`,
       ACL: "public-read",
     };
 

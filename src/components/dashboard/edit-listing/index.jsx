@@ -71,8 +71,6 @@ const Index = () => {
     if (response.data.success) router.push("/my-dashboard");
   };
 
-  if (data) console.log(data);
-
   if (isLoading) return <Loader />;
 
   return (
