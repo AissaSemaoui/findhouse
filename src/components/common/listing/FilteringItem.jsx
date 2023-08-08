@@ -42,6 +42,7 @@ const FilteringItem = () => {
   } = useSelector((state) => state.properties);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isReset, setIsReset] = useState(false);
 
   // input state
   const [getKeyword, setKeyword] = useState(keyword);
@@ -93,12 +94,12 @@ const FilteringItem = () => {
 
     // amenities
     dispath(setAmenities(getCheckedAmenities));
-  }, [dispath, isSubmitted]);
+  }, [dispath, isSubmitted, isReset]);
 
   // clear filter
   const clearHandler = () => {
     clearAllFilters();
-    setIsSubmitted((prev) => !prev);
+    setIsReset((prev) => !prev);
   };
 
   const submitHandler = () => {
@@ -236,7 +237,7 @@ const FilteringItem = () => {
           </div>
           <div className="dd_content2 style2 dropdown-menu">
             <div className="pricing_acontent ">
-              <PricingRangeSlider />
+              <PricingRangeSlider triggerSubmit={isSubmitted} />
             </div>
           </div>
         </div>

@@ -112,4 +112,4 @@ export const DEFAULT_LISTING_FILTER = {
 };
 
 export const MIN_PRICE_RANGE = 0;
-export const MAX_PRICE_RANGE = 20000;
+export const MAX_PRICE_RANGE = 2000;

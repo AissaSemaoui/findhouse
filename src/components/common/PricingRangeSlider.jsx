@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useState } from "react";
 import InputRange from "react-input-range";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPrice } from "../../features/properties/propertiesSlice";
 import {
   DEFAULT_LISTING_FILTER,
@@ -9,8 +9,10 @@ import {
   MIN_PRICE_RANGE,
 } from "../../config/constants";
 
-const RangeSlider = () => {
-  const [price, setPrice] = useState({
+const RangeSlider = ({ triggerSubmit }) => {
+  const price = useSelector((state) => state.properties.price);
+
+  const [getPrice, setPrice] = useState({
     value: {
       min: DEFAULT_LISTING_FILTER.price.min,
       max: DEFAULT_LISTING_FILTER.price.max,
@@ -22,15 +24,17 @@ const RangeSlider = () => {
     setPrice({ value });
   };
 
+  useMemo(() => handleOnChange(price), [price]);
+
   // price add to state
   useEffect(() => {
     dispath(
       addPrice({
-        min: price.value.min,
-        max: price.value.max,
+        min: getPrice.value.min,
+        max: getPrice.value.max,
       })
     );
-  }, [dispath, price]);
+  }, [dispath, triggerSubmit]);
 
   return (
     <div className="nft__filter-price tp-range-slider tp-range-slider-dark mb-20">
@@ -38,13 +42,13 @@ const RangeSlider = () => {
         <div className="nft__filter-price-box">
           <div className="d-flex align-items-center">
             <span>$ </span>
-            <span>{price.value.min}</span>
+            <span>{getPrice.value.min}</span>
           </div>
         </div>
         <div className="nft__filter-price-box">
           <div className="d-flex align-items-center">
             <span>$ </span>
-            <span>{price.value.max}</span>
+            <span>{getPrice.value.max}</span>
           </div>
         </div>
       </div>
@@ -53,7 +57,7 @@ const RangeSlider = () => {
         formatLabel={(value) => ``}
         maxValue={MAX_PRICE_RANGE}
         minValue={MIN_PRICE_RANGE}
-        value={price.value}
+        value={getPrice.value}
         onChange={(value) => handleOnChange(value)}
       />
 
