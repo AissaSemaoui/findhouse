@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Pagination from "../../common/Pagination";
 import CopyrightFooter from "../../common/footer/CopyrightFooter";
 import Footer from "../../common/footer/Footer";
@@ -13,15 +13,22 @@ import BreadCrumb2 from "./BreadCrumb2";
 import FeaturedItem from "./FeaturedItem";
 import { useGetAllListingsQuery } from "../../../features/listings/listingsApi";
 import { useSelector } from "react-redux";
-import { generateQueryParams } from "../../../utils/helpers";
+import { generateQueryParams, getQueryString } from "../../../utils/helpers";
 import { useRouter } from "next/router";
 
 const Index = ({ data, error }) => {
   const [currentPage, setCurrentPage] = useState(data?.currentPage || 1);
-  const filters = useSelector((state) => state.properties);
   const router = useRouter();
+  const filters = useSelector((state) => state.properties);
 
-  const filterQueries = generateQueryParams(filters);
+  const queries = useRef(getQueryString(router.asPath));
+
+  const filterQueries = useMemo(
+    () => queries.current || generateQueryParams(filters),
+    [filters]
+  );
+
+  queries.current = "";
 
   useMemo(() => {
     router.push(`/listing-grid-v3?page=${currentPage}&${filterQueries}`);
@@ -158,4 +165,4 @@ const Index = ({ data, error }) => {
   );
 };
 
-export default Index;
+export default React.memo(Index);

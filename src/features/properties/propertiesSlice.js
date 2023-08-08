@@ -1,29 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-  keyword: "",
-  propertyType: "",
-  location: "",
-  price: {
-    min: 0,
-    max: 0,
-  },
-  amenities: [],
-  status: "",
-  bathrooms: "",
-  bedrooms: "",
-  garages: "",
-  yearBuilt: "",
-  area: {
-    min: "",
-    max: "",
-  },
-  length: 0,
-};
+import { DEFAULT_LISTING_FILTER } from "../../config/constants";
 
 export const propertiesSlice = createSlice({
   name: "properties",
-  initialState,
+  initialState: DEFAULT_LISTING_FILTER,
   reducers: {
     addKeyword: (state, action) => {
       state.keyword = action.payload;

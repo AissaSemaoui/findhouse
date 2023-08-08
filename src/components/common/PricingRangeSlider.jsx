@@ -3,9 +3,19 @@ import { useState } from "react";
 import InputRange from "react-input-range";
 import { useDispatch } from "react-redux";
 import { addPrice } from "../../features/properties/propertiesSlice";
+import {
+  DEFAULT_LISTING_FILTER,
+  MAX_PRICE_RANGE,
+  MIN_PRICE_RANGE,
+} from "../../config/constants";
 
 const RangeSlider = () => {
-  const [price, setPrice] = useState({ value: { min: 0, max: 20000 } });
+  const [price, setPrice] = useState({
+    value: {
+      min: DEFAULT_LISTING_FILTER.price.min,
+      max: DEFAULT_LISTING_FILTER.price.max,
+    },
+  });
   const dispath = useDispatch();
 
   const handleOnChange = (value) => {
@@ -41,8 +51,8 @@ const RangeSlider = () => {
 
       <InputRange
         formatLabel={(value) => ``}
-        maxValue={20000}
-        minValue={0}
+        maxValue={MAX_PRICE_RANGE}
+        minValue={MIN_PRICE_RANGE}
         value={price.value}
         onChange={(value) => handleOnChange(value)}
       />

@@ -11,6 +11,15 @@ const extractYouTubeVideoId = (url) => {
   return match && match[1];
 };
 
+const getQueryString = (url) => {
+  const urlParts = url.split("?");
+  if (urlParts.length < 2) {
+    return "";
+  }
+
+  return "?" + urlParts[1];
+};
+
 const generateQueryParams = (filterState) => {
   const {
     keyword,
@@ -59,4 +68,9 @@ const generateQueryParams = (filterState) => {
   return queryParams.join("&");
 };
 
-export { removeFromArray, generateQueryParams, extractYouTubeVideoId };
+export {
+  getQueryString,
+  removeFromArray,
+  generateQueryParams,
+  extractYouTubeVideoId,
+};

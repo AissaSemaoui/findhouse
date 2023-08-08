@@ -89,3 +89,27 @@ export const MAX_FILE_SIZE = 10240000; //100MB
 export const VALID_FILE_EXTENSIONS = {
   image: ["jpg", "gif", "png", "jpeg", "svg", "webp", "pdf"],
 };
+
+export const DEFAULT_LISTING_FILTER = {
+  keyword: "",
+  propertyType: "",
+  location: "",
+  price: {
+    min: 0,
+    max: 20000,
+  },
+  amenities: [],
+  status: "",
+  bathrooms: "",
+  bedrooms: "",
+  garages: "",
+  yearBuilt: "",
+  area: {
+    min: "",
+    max: "",
+  },
+  length: 0,
+};
+
+export const MIN_PRICE_RANGE = 0;
+export const MAX_PRICE_RANGE = 20000;

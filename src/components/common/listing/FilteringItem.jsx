@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFeatured,
@@ -22,6 +22,7 @@ import {
 import PricingRangeSlider from "../../common/PricingRangeSlider";
 import {
   AMENITIES_LIST,
+  DEFAULT_LISTING_FILTER,
   PROPERTY_TYPES,
   STATUS,
 } from "../../../config/constants";
@@ -109,7 +110,12 @@ const FilteringItem = () => {
     setLocation("");
     setStatus("");
     setPropertiesType("");
-    dispath(addPrice({ min: 0, max: 20000 }));
+    dispath(
+      addPrice({
+        min: DEFAULT_LISTING_FILTER.price.min,
+        max: DEFAULT_LISTING_FILTER.price.max,
+      })
+    );
     setBathroom("");
     setBedroom("");
     setGarages("");
@@ -419,4 +425,4 @@ const FilteringItem = () => {
   );
 };
 
-export default FilteringItem;
+export default React.memo(FilteringItem);
