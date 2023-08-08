@@ -8,9 +8,10 @@ export const getServerSideProps = async () => {
   try {
     await connectToDatabase();
 
-    let { listings: listingsDoc } = await getAllListings(
-      "page=all&isFeatured=true"
-    );
+    let { listings: listingsDoc } = await getAllListings({
+      page: "all",
+      isFeatured: true,
+    });
 
     const listings = JSON.parse(JSON.stringify(listingsDoc));
 
