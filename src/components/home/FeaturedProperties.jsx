@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Slider from "react-slick";
 import properties from "../../data/properties";
+import PropertyItem from "../common/listing-details/PropertyItem";
 
 const FeaturedProperties = ({ featuredListings = [] }) => {
   const settings = {
@@ -96,6 +97,7 @@ const FeaturedProperties = ({ featuredListings = [] }) => {
                         </a>
                       </li>
                     ))} */}
+                    <PropertyItem listing={listing} />
                   </ul>
                 </div>
               </div>
