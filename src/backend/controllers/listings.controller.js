@@ -17,8 +17,8 @@ const isValidListing = async (listingData) => {
   return await backendPropertyListingSchema.isValid(listingData);
 };
 
-const getPaginatedListings = async (req, filters = {}) => {
-  const isAllPages = req.query?.page === "all";
+const getPaginatedListings = async (page, filters = {}) => {
+  const isAllPages = page === "all";
   const numberOfResults = await PropertyListing.countDocuments(filters);
 
   if (isAllPages) {
@@ -26,7 +26,7 @@ const getPaginatedListings = async (req, filters = {}) => {
     return { totalPages: 1, currentPage: 1, numberOfResults, listings };
   }
 
-  const currentPage = Number(req?.query?.page) || 1;
+  const currentPage = Number(page) || 1;
 
   let totalPages = numberOfResults / ITEMS_PER_PAGE;
   totalPages = Math.ceil(totalPages);
@@ -36,6 +36,24 @@ const getPaginatedListings = async (req, filters = {}) => {
     .limit(ITEMS_PER_PAGE);
 
   return { totalPages, currentPage, numberOfResults, listings };
+};
+
+const getAllListings = async (query) => {
+  console.log(query);
+
+  const page = query?.page;
+
+  try {
+    const filters = generateMongooseListingFilters(query);
+
+    const { totalPages, currentPage, numberOfResults, listings } =
+      await getPaginatedListings(page, filters);
+
+    return { totalPages, currentPage, numberOfResults, listings };
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
 
 const createListing = async (listingData, files, admin) => {
@@ -180,7 +198,7 @@ const removeListingImages = async (listingId, propertyName, fileInfo) => {
   }
 };
 
-const generateMongooseListingFilters = (filterQueries) => {
+const generateMongooseListingFilters = (filterQueries = {}) => {
   const filters = {};
 
   // Check and add filters based on the filterQueries
@@ -285,6 +303,7 @@ const generateMongooseListingFilters = (filterQueries) => {
 };
 
 export {
+  getAllListings,
   createListing,
   updateListing,
   removeListing,

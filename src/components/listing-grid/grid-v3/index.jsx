@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Pagination from "../../common/Pagination";
 import CopyrightFooter from "../../common/footer/CopyrightFooter";
 import Footer from "../../common/footer/Footer";
@@ -14,22 +14,27 @@ import FeaturedItem from "./FeaturedItem";
 import { useGetAllListingsQuery } from "../../../features/listings/listingsApi";
 import { useSelector } from "react-redux";
 import { generateQueryParams } from "../../../utils/helpers";
+import { useRouter } from "next/router";
 
-const Index = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+const Index = ({ data, error }) => {
+  const [currentPage, setCurrentPage] = useState(data?.currentPage || 1);
   const filters = useSelector((state) => state.properties);
+  const router = useRouter();
 
   const filterQueries = generateQueryParams(filters);
 
-  const {
-    data: allListings,
-    error,
-    isError,
-    isLoading,
-    status,
-    isFetching,
-    refetch,
-  } = useGetAllListingsQuery({ currentPage, filterQueries });
+  useMemo(() => {
+    router.push(`/listing-grid-v3?page=${currentPage}&${filterQueries}`);
+  }, [currentPage, filterQueries]);
+
+  // const {
+  //   data: allListings,
+  //   error,
+  //   isError,
+  //   isLoading,
+  //   isFetching,
+  //   refetch,
+  // } = useGetAllListingsQuery({ currentPage, filterQueries });
 
   return (
     <>
@@ -99,19 +104,17 @@ const Index = () => {
             <div className="col-md-12 col-lg-8">
               <div className="grid_list_search_result ">
                 <div className="row align-items-center">
-                  <FilterTopBar
-                    numberOfResults={allListings?.data?.numberOfResults || 0}
-                  />
+                  <FilterTopBar numberOfResults={data?.numberOfResults || 0} />
                 </div>
               </div>
               {/* End .row */}
 
               <div className="row">
                 <FeaturedItem
-                  allListings={allListings?.data?.listings}
-                  isError={isError}
-                  isLoading={isFetching || isLoading}
-                  refetch={refetch}
+                  allListings={data?.listings}
+                  isError={!!error}
+                  isLoading={false}
+                  refetch={() => router.reload()}
                 />
               </div>
               {/* End .row */}
@@ -120,10 +123,8 @@ const Index = () => {
                 <div className="col-lg-12 mt20">
                   <div className="mbp_pagination">
                     <Pagination
-                      currentPage={
-                        allListings?.data?.currentPage || currentPage
-                      }
-                      totalPages={allListings?.data?.totalPages || currentPage}
+                      currentPage={data?.currentPage || currentPage}
+                      totalPages={data?.totalPages || currentPage}
                       onPageChange={setCurrentPage}
                     />
                   </div>

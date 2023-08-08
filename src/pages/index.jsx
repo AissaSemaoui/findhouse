@@ -1,19 +1,26 @@
 import dynamic from "next/dynamic";
 import Seo from "../components/common/seo";
 import HomeMain from "../components/home";
-import { getAllListings } from "../features/listings";
+import { getAllListings } from "../backend/controllers/listings.controller";
+import { connectToDatabase } from "../backend/utils/db";
 
 export const getServerSideProps = async () => {
   try {
-    const { listings } = await getAllListings("page=all&isFeatured=true");
-    console.log(process.env);
+    await connectToDatabase();
+
+    let { listings: listingsDoc } = await getAllListings(
+      "page=all&isFeatured=true"
+    );
+
+    const listings = JSON.parse(JSON.stringify(listingsDoc));
+
     return {
       props: {
         featuredListings: listings,
       },
     };
-  } catch (error) {
-    console.log("Error is here in the getServerSideProps : ", error);
+  } catch (err) {
+    console.log(err);
     return {
       props: {
         featuredListings: [],

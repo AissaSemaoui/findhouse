@@ -26,7 +26,7 @@ const FeaturedItem = ({ allListings, isError, isLoading, refetch }) => {
       className={`${
         isGridOrList ? "col-12 feature-list" : "col-md-6 col-lg-6"
       } `}
-      key={listing.__id}
+      key={listing._id}
     >
       <div
         className={`feat_property home7 style4 ${
