@@ -9,7 +9,7 @@ import {
   MIN_PRICE_RANGE,
 } from "../../config/constants";
 
-const RangeSlider = ({ triggerSubmit }) => {
+const RangeSlider = ({ triggerSubmit = false }) => {
   const price = useSelector((state) => state.properties.price);
 
   const [getPrice, setPrice] = useState({
