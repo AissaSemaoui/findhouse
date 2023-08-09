@@ -9,6 +9,7 @@ import PricingRangeSlider from "./PricingRangeSlider";
 import CheckBoxFilter from "./CheckBoxFilter";
 import GlobalSelectBox from "./GlobalSelectBox";
 import { PROPERTY_TYPES } from "../../config/constants";
+import { useRef } from "react";
 
 const GlobalFilter = ({ className = "" }) => {
   const dispatch = useDispatch();
@@ -16,6 +17,8 @@ const GlobalFilter = ({ className = "" }) => {
   const submitHandler = () => {
     Router.push("/listing-grid-v3");
   };
+
+  const inputId = useRef(`location-${Date.now()}`);
 
   return (
     <div className={`home1-advnc-search ${className}`}>
@@ -54,13 +57,13 @@ const GlobalFilter = ({ className = "" }) => {
         <li className="list-inline-item">
           <div className="form-group">
             <input
-              id="location"
+              id={inputId}
               type="text"
               className="form-control"
               placeholder="Sector"
               onChange={(e) => dispatch(addLocation(e.target.value))}
             />
-            <label htmlFor="location">
+            <label htmlFor={inputId}>
               <span className="flaticon-maps-and-flags"></span>
             </label>
           </div>
