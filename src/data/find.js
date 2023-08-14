@@ -1,26 +1,26 @@
 module.exports = [
   {
     id: 1,
-    title: "Modern Villa",
-    icon: "flaticon-house",
-    text: `Aliquam dictum elit vitae mauris facilisis, at dictum urna.`,
+    title: 'Vile Moderne',
+    icon: 'flaticon-house',
+    text: `Descriere pentru vile moderne.`,
   },
   {
     id: 2,
-    title: "Family House",
-    icon: "flaticon-house-1",
-    text: `Aliquam dictum elit vitae mauris facilisis, at dictum urna.`,
+    title: 'Casă pentru familie',
+    icon: 'flaticon-house-1',
+    text: `Descriere pentru casa de familie.`,
   },
   {
     id: 3,
-    title: "Town House",
-    icon: "flaticon-house-2",
-    text: `Aliquam dictum elit vitae mauris facilisis, at dictum urna.`,
+    title: 'Town House',
+    icon: 'flaticon-house-2',
+    text: `Descriere pentru town house.`,
   },
   {
     id: 4,
-    title: "Apartment",
-    icon: "flaticon-building",
-    text: `Aliquam dictum elit vitae mauris facilisis, at dictum urna.`,
+    title: 'Apartamente',
+    icon: 'flaticon-building',
+    text: `Descriere pentru apartamente.`,
   },
 ];
