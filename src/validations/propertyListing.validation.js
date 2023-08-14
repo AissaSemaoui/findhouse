@@ -28,15 +28,6 @@ const fileSchema = yup
         typeof value?.fileName === "string")
   );
 
-const backendFileSchema = yup
-  .object()
-  .shape({
-    fileName: yup.string().required("File name is required"),
-    filePath: yup.string(),
-    file: yup.mixed().nullable(),
-  })
-  .notRequired();
-
 const floorPlansSchema = yup.array().of(
   yup.object().shape({
     planDescription: yup.string().default(""),
@@ -60,6 +51,7 @@ const propertyListingSchema = yup.object().shape({
   propertyDescription: yup.string().required("Description is required"),
   propertyType: yup.string().required("Property type is required"),
   status: yup.string().required("Status is required"),
+  isFeatured: yup.boolean().default(false),
   price: yup
     .number("Price is required")
     .required("Price is required")
@@ -101,6 +93,7 @@ const propertyListingSchema = yup.object().shape({
     virtualTour360: yup.string().default(""),
   }),
   amenities: yup.array().of(yup.string()).default([]),
+  attachments: yup.mixed(),
   propertyMedia: yup
     .array()
     .of(fileSchema)
@@ -108,13 +101,20 @@ const propertyListingSchema = yup.object().shape({
   floorPlans: floorPlansSchema,
 });
 
+const backendFileSchema = yup.object().shape({
+  fileName: yup.string().required("File name is required"),
+  filePath: yup.string().required("File path is required"),
+});
+
 const backendFloorPlansSchema = yup.object().shape({
   ...floorPlansSchema.fields,
-  planImage: fileSchema,
+  planImage: backendFileSchema,
 });
 
 const backendPropertyListingSchema = yup.object().shape({
   ...propertyListingSchema.fields,
+  propertyMedia: yup.array().of(backendFileSchema),
+  attachments: yup.array().of(fileSchema),
   floorPlans: yup.array().of(backendFloorPlansSchema),
 });
 

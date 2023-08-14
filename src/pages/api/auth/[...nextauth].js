@@ -43,7 +43,6 @@ const authOptions = {
       credentials: {},
       authorize(credentials) {
         const { email, password } = credentials;
-        console.log(email, password);
         return {
           id: "",
           email: email,

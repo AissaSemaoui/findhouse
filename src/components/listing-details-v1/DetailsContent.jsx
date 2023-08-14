@@ -24,7 +24,7 @@ const DetailsContent = ({ listingData }) => {
         {/* End .lsd_list */}
 
         <h4 className="mb30">Description</h4>
-        {listingData?.propertyDescription && (
+        {!!listingData?.propertyDescription && (
           <PropertyDescriptions
             description={listingData?.propertyDescription}
           />
@@ -52,12 +52,14 @@ const DetailsContent = ({ listingData }) => {
       </div> */}
       {/* End .additional_details */}
 
-      <div className="property_attachment_area">
-        <h4 className="mb30">Property Attachments</h4>
-        <div className="iba_container style2">
-          <Attachments />
+      {listingData?.attachments?.length > 0 && (
+        <div className="property_attachment_area">
+          <h4 className="mb30">Property Attachments</h4>
+          <div className="iba_container style2">
+            <Attachments attachments={listingData.attachments} />
+          </div>
         </div>
-      </div>
+      )}
       {/* End .property_attachment_area */}
 
       <div className="application_statics mt30">
@@ -73,7 +75,7 @@ const DetailsContent = ({ listingData }) => {
       {/* End .feature_area */}
 
       <div className="application_statics mt30">
-        <h4 className="mb30">
+        <h4 className="mb0">
           Location
           <small className="float-end">
             {getAddressString(listingData?.location)}

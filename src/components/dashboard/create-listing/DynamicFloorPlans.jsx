@@ -3,13 +3,19 @@ import { useFieldArray } from "react-hook-form";
 import FloorPlan from "./FloorPlan";
 import { DEFAULT_FLOOR_PLAN } from "../../../config/constants";
 
-const DynamicFloorPlans = ({ register, errors, watch, control }) => {
+const DynamicFloorPlans = ({
+  register,
+  setValue,
+  errors,
+  watch,
+  control,
+  listingId,
+}) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "floorPlans",
   });
 
-  console.log(fields);
   // State to keep track of the currently viewed floor plan index
   const [currentPlanIndex, setCurrentPlanIndex] = useState(0);
 
@@ -58,11 +64,13 @@ const DynamicFloorPlans = ({ register, errors, watch, control }) => {
       <div className="row">
         {fields.length > 0 && (
           <FloorPlan
+            setValue={setValue}
             watch={watch}
             register={register}
             errors={errors}
             item={fields[currentPlanIndex]}
             index={currentPlanIndex}
+            listingId={listingId}
           />
         )}
 

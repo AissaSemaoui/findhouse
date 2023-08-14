@@ -1,8 +1,13 @@
+import { deleteFileFromDB } from "../../../features/listings";
 import { isObjectFile } from "../../../utils/file";
 import FormInput from "../../common/FormInput";
 
-const FloorPlan = ({ register, errors, watch, index }) => {
+const FloorPlan = ({ register, errors, watch, index, setValue, listingId }) => {
   const item = watch(`floorPlans.${index}`);
+
+  const setPlanImage = (value) => {
+    setValue(`floorPlans.${index}.planImage`, value);
+  };
 
   const planImageUrl =
     typeof item?.planImage?.filePath === "string"
@@ -10,6 +15,22 @@ const FloorPlan = ({ register, errors, watch, index }) => {
       : isObjectFile(item?.planImage?.[0])
       ? URL.createObjectURL(item.planImage?.[0])
       : "";
+
+  // delete planImage
+  const deletePlanImage = async (planImage) => {
+    const isUploaded = typeof planImage?.filePath === "string";
+    const isFile = isObjectFile(planImage);
+    let deleted = planImage;
+    if (isFile) {
+      deleted = null;
+    } else if (isUploaded) {
+      await deleteFileFromDB(listingId, "floorPlans", planImage);
+      deleted = null;
+    } else {
+      deleted = null;
+    }
+    setPlanImage(deleted);
+  };
 
   return (
     <div key={index}>
@@ -72,27 +93,41 @@ const FloorPlan = ({ register, errors, watch, index }) => {
           <div className="my_profile_setting_input form-group">
             <label>Plan Image</label>
             <div className="avatar-upload">
-              <div
-                className={`avatar-edit ${
-                  errors?.[index]?.planImage?.message && "is-invalid"
-                } `}
-              >
-                <input
-                  className={`btn btn-thm}`}
-                  type="file"
-                  // disabled={!!planImageUrl}
-                  id="imageUpload"
-                  multiple={false}
-                  accept=".png, .jpg, .jpeg"
-                  {...register(`floorPlans.${index}.planImage`)}
-                />
-                <label htmlFor="imageUpload"></label>
-              </div>
+              {!planImageUrl ? (
+                <div
+                  className={`avatar-edit ${
+                    errors?.[index]?.planImage?.message && "is-invalid"
+                  } `}
+                >
+                  <input
+                    className={`btn btn-thm}`}
+                    type="file"
+                    // disabled={!!planImageUrl}
+                    id="imageUpload"
+                    multiple={false}
+                    accept=".png, .jpg, .jpeg"
+                    {...register(`floorPlans.${index}.planImage`)}
+                  />
+                  <label htmlFor="imageUpload"></label>
+                </div>
+              ) : (
+                <div className="avatar-preview w-min-content position-relative is-invalid">
+                  <a onClick={() => deletePlanImage(item?.planImage)}>
+                    <div
+                      className="edu_stats_list "
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Delete"
+                      data-original-title="Delete"
+                    >
+                      <span className="flaticon-garbage"></span>
+                    </div>
+                  </a>
+                  <img src={planImageUrl} id="imagePreview" />
+                </div>
+              )}
               <div className="invalid-feedback">
                 {errors?.[index]?.planImage?.message}
-              </div>
-              <div className="avatar-preview">
-                <img src={planImageUrl} id="imagePreview"></img>
               </div>
             </div>
           </div>

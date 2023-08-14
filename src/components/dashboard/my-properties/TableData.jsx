@@ -4,6 +4,7 @@ import Link from "next/link";
 import properties from "../../../data/properties";
 import { getAddressString } from "../../../utils/address";
 import { deleteListing } from "../../../features/listings";
+import Loader from "../../common/Loader";
 
 const TableData = ({ allListings, error, isLoading }) => {
   const [listings, setListings] = useState(allListings || []);
@@ -33,7 +34,7 @@ const TableData = ({ allListings, error, isLoading }) => {
 
   if (error) return <h1>Ops we got an error! {error}</h1>;
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   let tbodyContent = listings?.map((listing) => (
     <tr key={listing._id}>

@@ -8,95 +8,99 @@ import {
 } from "../../../backend/utils/apiHelpers";
 import { connectToDatabase } from "../../../backend/utils/db";
 import PropertyListing from "../../../backend/models/PropertyListing.schema";
-import { deleteImage, uploadFiles } from "../../../backend/utils/s3";
 import { verifyAdminAccess } from "../../../backend/controllers/admin.controller";
+import {
+  removeListing,
+  updateListing,
+} from "../../../backend/controllers/listings.controller";
+import {
+  INVALID_REQUEST,
+  LISTING_NOT_FOUND,
+  SERVER_ERROR,
+  UNAUTHORIZED,
+} from "../../../backend/utils/errors";
 
 const router = createRouter();
 
+// Route for getting a single listing data
 router.get(async (req, res) => {
-  console.log("we are getting a signle data!");
   try {
     await connectToDatabase();
 
     const { listingId } = req.query;
 
-    const listing = await PropertyListing.findById(listingId);
+    const Listing = await PropertyListing.findById(listingId);
 
     res
       .status(200)
-      .json(formatResponse(true, "Yeeey here are all the ", listing));
+      .json(formatResponse(true, "Success! Here's the data", Listing));
   } catch (err) {
     console.log(err);
-    res.status(400).json(formatResponse(false, "Request Failed!"));
+    res.status(400).json(formatResponse(false, INVALID_REQUEST));
   }
 });
 
+// Set up multer for file upload
 const upload = multer({
   storage: multer.memoryStorage(),
 });
 
+// Route for updating listing data
 router.put(async (req, res) => {
-  console.log("we are updating it", req.query);
   try {
     await connectToDatabase();
 
     console.time("isAdmin");
     const admin = await verifyAdminAccess(req);
     if (!admin)
-      return res.status(403).json(formatResponse(false, "Unauthorized"));
+      return res.status(401).json(formatResponse(false, UNAUTHORIZED));
     console.timeEnd("isAdmin");
 
-    const fileTypes = [{ name: "propertyMedia[]" }, { name: "planImages[]" }];
+    const fileTypes = [
+      { name: "propertyMedia[]" },
+      { name: "planImages[]" },
+      { name: "attachments[]" },
+    ];
 
+    // Handle file upload
     return upload.fields(fileTypes)(req, res, async (err) => {
       if (err) {
         console.log(err);
-        return res
-          .status(400)
-          .json({ success: false, message: "Multer error" });
+        return res.status(500).json({ success: false, message: SERVER_ERROR });
       }
 
       const { listingId } = req.query;
-
       const listingData = JSON.parse(req.body?.listingData);
-      const ListingData = await PropertyListing.findOne({ _id: listingId });
+      const files = req?.files;
 
-      console.time("first");
-      const propertyMedia = req.files?.["propertyMedia[]"] || [];
-      if (propertyMedia.length > 0) {
-        const newUploadedFiles = await uploadFiles(propertyMedia);
-        listingData.propertyMedia.push(...newUploadedFiles);
-      }
-      console.timeEnd("first");
-
-      console.time("second");
-      const planImages = req.files?.["planImages[]"] || [];
-      if (planImages.length > 0) {
-        const planImagesUrls = await uploadFiles(planImages);
-        listingData?.floorPlans?.forEach((floorPlan, index) => {
-          const newImage = planImagesUrls.find(
-            (image) => image?.fileName === floorPlan?.planImage?.name
-          );
-
-          if (newImage) floorPlan.planImage = newImage;
-        });
-      }
-      console.timeEnd("second");
-
-      Object.assign(ListingData, listingData);
-
-      await ListingData.save();
+      const Listing = await updateListing(listingId, listingData, files);
 
       return res
         .status(200)
-        .json(formatResponse(true, "Yeeey! it's success", ListingData));
+        .json(formatResponse(true, "Success! Data has been updated", Listing));
     });
   } catch (err) {
+    let error = {
+      statusCode: 500,
+      message: SERVER_ERROR,
+    };
+
+    if (err === LISTING_NOT_FOUND) {
+      error.statusCode = 404;
+      error.message = LISTING_NOT_FOUND;
+    } else if (err === INVALID_REQUEST) {
+      error.statusCode = 400;
+      error.message = INVALID_REQUEST;
+    }
+
     console.log(err);
-    return res.status(500).json(formatResponse(false, err.message));
+    return res
+      .status(error.statusCode)
+      .json(formatResponse(false, error.message));
   }
 });
 
+// Route for deleting listing
 router.delete(async (req, res) => {
   try {
     await connectToDatabase();
@@ -104,33 +108,34 @@ router.delete(async (req, res) => {
     console.time("isAdmin");
     const admin = await verifyAdminAccess(req);
     if (!admin)
-      return res.status(403).json(formatResponse(false, "Unauthorized"));
+      return res.status(401).json(formatResponse(false, UNAUTHORIZED));
     console.timeEnd("isAdmin");
 
     const { listingId } = req.query;
-    const ListingData = await PropertyListing.findById(listingId);
-    if (!ListingData)
-      return res.status(404).json(formatResponse(false, "Listing not found!"));
-
-    ListingData.propertyMedia.forEach((media) => deleteImage(media.filePath));
-
-    ListingData.floorPlans.forEach((floorPlan) =>
-      deleteImage(floorPlan.planImage.filePath)
-    );
-
-    const isDeleted = await ListingData.deleteOne();
+    const isDeleted = await removeListing(listingId);
 
     return res
       .status(200)
       .json(formatResponse(true, "Listing deleted successfully!", isDeleted));
   } catch (err) {
+    let error = {
+      statusCode: 500,
+      message: SERVER_ERROR,
+    };
+
+    if (err === LISTING_NOT_FOUND) {
+      error.statusCode = 404;
+      error.message = LISTING_NOT_FOUND;
+    }
+
     console.log(err);
     return res
-      .status(500)
-      .json(formatResponse(false, "Failed deleting listing"));
+      .status(error.statusCode)
+      .json(formatResponse(false, error.message));
   }
 });
 
+// Set up API configuration
 export const config = {
   api: {
     bodyParser: false,

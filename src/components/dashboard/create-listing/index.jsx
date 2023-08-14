@@ -7,7 +7,7 @@ import ListingForm from "./ListingForm";
 import { useCreateListingMutation } from "../../../features/listings/listingsApi";
 import { useRouter } from "next/router";
 
-const Index = ({ mode }) => {
+const Index = () => {
   const [createListing, { data, isError, error, isLoading }] =
     useCreateListingMutation();
 
@@ -15,21 +15,26 @@ const Index = ({ mode }) => {
 
   const handleCreateNewListing = async (listingData, handleReset) => {
     const ListingForm = new FormData();
-    console.log(listingData);
 
+    // Preparing images for upload
     const propertyMedia = listingData?.propertyMedia;
     listingData.propertyMedia = [];
 
+    const attachment = listingData?.attachments?.[0];
+    listingData.attachments = [];
+
     const planImages = listingData?.floorPlans?.map((floorPlan) => {
       const planImage = floorPlan.planImage[0];
-      floorPlan.planImage = null;
+      floorPlan.planImage = { name: planImage.name };
       return planImage;
     });
-    console.log(planImages, propertyMedia);
 
+    // Appending data into the FormData
     propertyMedia.forEach((media) => {
       ListingForm.append("propertyMedia[]", media);
     });
+
+    ListingForm.append("attachments[0]", attachment);
 
     planImages.forEach((media) => {
       ListingForm.append("planImages[]", media);
@@ -37,15 +42,14 @@ const Index = ({ mode }) => {
 
     ListingForm.append("listingData", JSON.stringify(listingData));
 
+    // Submiting the request for creating listing
     const response = await createListing(ListingForm);
 
-    if (response.data.success) {
+    if (response.data?.success) {
       handleReset();
       router.push("/my-dashboard");
     }
   };
-
-  if (data) console.log(data);
 
   return (
     <>
@@ -98,7 +102,6 @@ const Index = ({ mode }) => {
                 {/* End .col */}
 
                 <ListingForm
-                  mode={mode}
                   onSubmit={handleCreateNewListing}
                   isError={isError}
                   error={error}

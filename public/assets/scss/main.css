@@ -16278,7 +16278,7 @@ legend span {
   width: 200px;
 }
 
-.portfolio_item .edu_stats_list {
+ .edu_stats_list {
   border-radius: 8px;
   background-color: rgb(255, 90, 95);
   cursor: pointer;
@@ -16291,7 +16291,7 @@ legend span {
   width: 35px;
 }
 
-.portfolio_item .edu_stats_list span {
+ .edu_stats_list span {
   color: rgb(255, 255, 255);
 }
 

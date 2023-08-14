@@ -12,7 +12,6 @@ import DynamicFloorPlans from "./DynamicFloorPlans";
 import { DEFAULT_LISTING } from "../../../config/constants";
 
 function ListingForm({
-  mode = "create",
   defaultValues = DEFAULT_LISTING,
   onSubmit,
   isError,
@@ -33,15 +32,11 @@ function ListingForm({
     defaultValues,
   });
 
-  console.log("here is the property Media : ", watch("propertyMedia"));
-
-  console.log(errors);
-
   const handleReset = () => {
     reset(DEFAULT_LISTING);
   };
 
-  if (isError) console.log("this is the response error : ", error);
+  if (isError) console.log(error);
 
   return (
     <form
@@ -81,6 +76,7 @@ function ListingForm({
           <h3 className="mb30">Property media</h3>
         </div>
         <PropertyMediaUploader
+          register={register}
           watch={watch}
           setValue={setValue}
           errors={errors?.propertyMedia}
@@ -93,6 +89,8 @@ function ListingForm({
           register={register}
           watch={watch}
           errors={errors?.floorPlans}
+          setValue={setValue}
+          listingId={listingId}
         />
       </div>
 

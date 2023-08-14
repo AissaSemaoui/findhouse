@@ -5,10 +5,9 @@ import {
   onNoMatch,
   formatResponse,
 } from "../../../backend/utils/apiHelpers";
-import { deleteImage } from "../../../backend/utils/s3";
 import { connectToDatabase } from "../../../backend/utils/db";
-import PropertyListing from "../../../backend/models/PropertyListing.schema";
-import { removeFromArray } from "../../../utils/helpers";
+import { removeListingImages } from "../../../backend/controllers/listings.controller";
+import { IMAGE_NOT_FOUND } from "../../../backend/utils/errors";
 
 const router = createRouter();
 
@@ -18,44 +17,30 @@ router.post(async (req, res) => {
     await connectToDatabase();
     const { listingId, propertyName, fileInfo } = req.body;
 
-    const ListingData = await PropertyListing.findById(listingId);
-    if (!ListingData)
-      return res.status(404).json(formatResponse(false, "Listing not found!"));
-
-    if (propertyName === "propertyMedia") {
-      const fileIndex = ListingData?.propertyMedia?.findIndex(
-        (media) => media?.filePath === fileInfo?.filePath
-      );
-      console.log(fileIndex);
-
-      console.log(ListingData.propertyMedia, fileInfo);
-      if (fileIndex === undefined || fileIndex === -1)
-        return res.status(404).json(formatResponse(false, "Image not found!"));
-      await deleteImage(fileInfo?.filePath);
-      removeFromArray(ListingData?.propertyMedia, fileIndex);
-    }
-
-    if (propertyName === "floorPlans") {
-      const floorPlan = ListingData?.floorPlans?.find(
-        (floorPlan) => floorPlan.planImage?.filePath === fileInfo?.filePath
-      );
-      if (!floorPlan)
-        return res.status(404).json(formatResponse(false, "Image not found!"));
-      await deleteImage(fileInfo?.filePath);
-      floorPlan.planImage = null;
-    }
-
-    console.log(ListingData.propertyMedia);
-    await ListingData.save();
+    const Listing = await removeListingImages(
+      listingId,
+      propertyName,
+      fileInfo
+    );
 
     return res
       .status(200)
-      .json(formatResponse(true, "Image delete successfully"));
+      .json(formatResponse(true, "Image delete successfully", Listing));
   } catch (err) {
-    console.log("Error deleting image from listing : ", err);
+    let error = {
+      statusCode: 500,
+      message: SERVER_ERROR,
+    };
+
+    if (err === IMAGE_NOT_FOUND) {
+      error.statusCode = 404;
+      error.message = IMAGE_NOT_FOUND;
+    }
+
+    console.log(err);
     return res
-      .status(500)
-      .json(formatResponse(false, "Failed image deletion!"));
+      .status(error.statusCode)
+      .json(formatResponse(false, error.message));
   }
 });
 

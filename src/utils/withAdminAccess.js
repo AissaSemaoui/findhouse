@@ -1,12 +1,11 @@
 import { useSelector } from "react-redux";
 
 import NotFound from "../components/404";
+import Loader from "../components/common/Loader";
 
 export const withAdminAccess = async (WrappedComponent) => {
   const WithAdminAccess = (props) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-    console.log("isAuthenticated : ", isAuthenticated);
 
     // useEffect(() => {
     //   if (isAuthenticated === false) {
@@ -15,7 +14,7 @@ export const withAdminAccess = async (WrappedComponent) => {
     // }, [isAuthenticated, router]);
 
     if (isAuthenticated === null) {
-      return <h1>Loading...</h1>;
+      return <Loader />;
     }
 
     if (isAuthenticated === false) {

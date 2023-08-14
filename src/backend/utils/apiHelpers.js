@@ -1,3 +1,5 @@
+import { SERVER_ERROR } from "./errors";
+
 const formatResponse = (
   success = false,
   message = "Internal Server Error",
@@ -12,11 +14,15 @@ const formatResponse = (
 
 const onError = (err, req, res) => {
   console.error(err.stack);
-  res.status(err.statusCode || 500).end(err.message);
+  res
+    .status(err.statusCode || 500)
+    .json(formatResponse(false, err.message || SERVER_ERROR));
 };
 
 const onNoMatch = (req, res) => {
-  res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+  res
+    .status(405)
+    .json(formatResponse(false, `Method '${req.method}' Not Allowed`));
 };
 
 const generateUniqueId = () => {

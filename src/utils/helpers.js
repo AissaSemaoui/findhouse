@@ -1,18 +1,29 @@
 const removeFromArray = (arr, index) => {
   if (index < 0 || index >= arr.length) return;
 
-  // Move last element to index
-  arr[index] = arr[arr.length - 1];
+  return arr.filter((_, i) => i !== index);
+};
 
-  // Truncate array
-  arr.length--;
+const extractYouTubeVideoId = (url) => {
+  const match = url.match(
+    /(?:\?v=|\/embed\/|\/\d\/|\/vi\/|\/v\/|https:\/\/www\.youtube\.com\/watch\?v=|https:\/\/youtu\.be\/)([^#\&\?\n]*)/
+  );
+  return match && match[1];
+};
 
-  return arr;
+const getQueryString = (url) => {
+  const urlParts = url.split("?");
+  if (urlParts.length < 2) {
+    return "";
+  }
+
+  return "?" + urlParts[1];
 };
 
 const generateQueryParams = (filterState) => {
   const {
     keyword,
+    status,
     propertyType,
     location,
     price,
@@ -23,12 +34,13 @@ const generateQueryParams = (filterState) => {
     area,
     amenities,
     statusType,
-    featured,
+    isFeatured,
   } = filterState;
 
   const queryParams = [];
 
   if (keyword) queryParams.push(`keyword=${encodeURIComponent(keyword)}`);
+  if (status) queryParams.push(`status=${encodeURIComponent(status)}`);
   if (propertyType)
     queryParams.push(`propertyType=${encodeURIComponent(propertyType)}`);
   if (location) queryParams.push(`location=${encodeURIComponent(location)}`);
@@ -50,9 +62,15 @@ const generateQueryParams = (filterState) => {
 
   if (statusType)
     queryParams.push(`statusType=${encodeURIComponent(statusType)}`);
-  if (featured) queryParams.push(`featured=${encodeURIComponent(featured)}`);
+  if (isFeatured)
+    queryParams.push(`featured=${encodeURIComponent(isFeatured)}`);
 
   return queryParams.join("&");
 };
 
-export { removeFromArray, generateQueryParams };
+export {
+  getQueryString,
+  removeFromArray,
+  generateQueryParams,
+  extractYouTubeVideoId,
+};

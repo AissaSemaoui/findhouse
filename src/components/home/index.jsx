@@ -1,18 +1,18 @@
-import MobileMenu from '../common/header/MobileMenu';
-import AgentsTeam from './AgentsTeam';
-import FeaturedProperties from './FeaturedProperties';
-import FindProperties from './FindProperties';
-import Header from './Header';
-import LookingItem from './LookingItem';
-import Blogs from '../common/Blogs';
-import Partners from '../common/Partners';
-import Footer from '../common/footer/Footer';
-import CopyrightFooter from '../common/footer/CopyrightFooter';
-import PopupSignInUp from '../common/PopupSignInUp';
-import Hero from './Hero';
-import { useSession } from 'next-auth/react';
+import MobileMenu from "../common/header/MobileMenu";
+import AgentsTeam from "./AgentsTeam";
+import FeaturedProperties from "./FeaturedProperties";
+import FindProperties from "./FindProperties";
+import Header from "./Header";
+import LookingItem from "./LookingItem";
+import Blogs from "../common/Blogs";
+import Partners from "../common/Partners";
+import Footer from "../common/footer/Footer";
+import CopyrightFooter from "../common/footer/CopyrightFooter";
+import PopupSignInUp from "../common/PopupSignInUp";
+import Hero from "./Hero";
+import Link from "next/link";
 
-const Index = () => {
+const Index = ({ featuredListings }) => {
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -35,10 +35,12 @@ const Index = () => {
               <div className="main-title mb40">
                 <h2>Oferte fierbinți</h2>
                 <p>
-                  Oferte imobiliare alese cu atenție de echipa noastră.{' '}
-                  <a className="float-end" href="#">
-                    Filtrează ofertele <span className="flaticon-next"></span>
-                  </a>
+                  Oferte imobiliare alese cu atenție de echipa noastră.{' '}.{" "}
+                  <Link href="/listing-grid-v3">
+                    <a className="float-end">
+                      Filtrează ofertele <span className="flaticon-next"></span>
+                    </a>
+                  </Link>
                 </p>
               </div>
             </div>
@@ -51,7 +53,7 @@ const Index = () => {
         <div className="feature_property_home6_slider ">
           <div className="container ml--xxl-0">
             <div className="gutter-x15">
-              <FeaturedProperties />
+              <FeaturedProperties featuredListings={featuredListings} />
             </div>
           </div>
         </div>

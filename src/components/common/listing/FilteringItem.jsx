@@ -1,12 +1,10 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFeatured,
   addStatusType,
 } from "../../../features/filter/filterSlice";
 import {
-  addAmenities,
   addAreaMax,
   addAreaMin,
   addBathrooms,
@@ -22,10 +20,9 @@ import {
   setAmenities,
 } from "../../../features/properties/propertiesSlice";
 import PricingRangeSlider from "../../common/PricingRangeSlider";
-import { v4 as uuidv4 } from "uuid";
-import { useRouter } from "next/router";
 import {
   AMENITIES_LIST,
+  DEFAULT_LISTING_FILTER,
   PROPERTY_TYPES,
   STATUS,
 } from "../../../config/constants";
@@ -45,6 +42,7 @@ const FilteringItem = () => {
   } = useSelector((state) => state.properties);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isReset, setIsReset] = useState(false);
 
   // input state
   const [getKeyword, setKeyword] = useState(keyword);
@@ -62,8 +60,6 @@ const FilteringItem = () => {
   const [getCheckedAmenities, setCheckedAmenities] = useState(amenities);
 
   const dispath = useDispatch();
-
-  console.log(getBathroom);
 
   // keyword
   useEffect(() => {
@@ -98,26 +94,29 @@ const FilteringItem = () => {
 
     // amenities
     dispath(setAmenities(getCheckedAmenities));
-  }, [dispath, isSubmitted]);
+  }, [dispath, isSubmitted, isReset]);
 
   // clear filter
   const clearHandler = () => {
     clearAllFilters();
-    setIsSubmitted((prev) => !prev);
+    setIsReset((prev) => !prev);
   };
 
   const submitHandler = () => {
     setIsSubmitted((prev) => !prev);
   };
 
-  console.log(getCheckedAmenities);
-
   const clearAllFilters = () => {
     setKeyword("");
     setLocation("");
     setStatus("");
     setPropertiesType("");
-    dispath(addPrice({ min: 0, max: 20000 }));
+    dispath(
+      addPrice({
+        min: DEFAULT_LISTING_FILTER.price.min,
+        max: DEFAULT_LISTING_FILTER.price.max,
+      })
+    );
     setBathroom("");
     setBedroom("");
     setGarages("");
@@ -212,7 +211,7 @@ const FilteringItem = () => {
             >
               <option value="">Property Type</option>
               {PROPERTY_TYPES.map((type) => (
-                <option value={type} key={status}>
+                <option value={type} key={type}>
                   {type}
                 </option>
               ))}
@@ -238,7 +237,7 @@ const FilteringItem = () => {
           </div>
           <div className="dd_content2 style2 dropdown-menu">
             <div className="pricing_acontent ">
-              <PricingRangeSlider />
+              <PricingRangeSlider triggerSubmit={isSubmitted} />
             </div>
           </div>
         </div>
@@ -427,4 +426,4 @@ const FilteringItem = () => {
   );
 };
 
-export default FilteringItem;
+export default React.memo(FilteringItem);
