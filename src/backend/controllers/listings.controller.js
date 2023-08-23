@@ -259,7 +259,9 @@ const generateMongooseListingFilters = (filterQueries = {}) => {
 
   if (filterQueries.garages) {
     const garagesValue =
-      parseInt(filterQueries.garages) === 1 ? { $gte: 1 } : 0;
+      parseInt(filterQueries.garages) === 1
+        ? { $gte: 1 }
+        : { $not: { $gte: 1 } };
     andFilters.push({
       "detailedInfo.garages": garagesValue,
     });
